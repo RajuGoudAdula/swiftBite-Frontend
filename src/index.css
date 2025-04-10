@@ -1,0 +1,101 @@
+/* =============================
+   🍽️ Food-Themed SwiftBite Theme
+   ============================= */
+
+/* Color Variables */
+:root {
+  --primary-color: linear-gradient(90deg, #FF7F3F, #FF3F3F);
+  --secondary-color: #FF3F3F; /* Bold Red for important elements */
+  --accent-color: #4CAF50; /* Fresh Green for highlights */
+  --bg-light: #fff8e16f; /* Warm Creamy White for background */
+  --bg-dark: #2E2E2E; /* Dark Mode Background */
+  --text-primary: #2C2C2C; /* Deep Black for main text */
+  --text-secondary: #666666; /* Gray for secondary text */
+  --success-color: #4CAF50; /* Green for success messages */
+  --warning-color: #FFD700; /* Golden Yellow for warnings */
+  --disabled-color: #BDBDBD; /* Light Gray for disabled elements */
+  --card-bg: #e0e0ff; /* Soft Orange Tint for cards */
+  --glass-bg: rgba(255, 255, 255, 0.85); /* Frosted Glass Effect */
+  --glass-border: rgba(255, 255, 255, 0.4);
+}
+
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  /* background-color: #fff8e16f; */
+  color: var(--text-primary);
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Frosted Glass Effect */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.button {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Cards */
+.card {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease-in-out;
+}
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Alerts */
+.alert-success {
+  background-color: var(--success-color);
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+}
+.alert-warning {
+  background-color: var(--warning-color);
+  color: var(--text-primary);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Navigation Bar */
+.navbar {
+  background-color: var(--accent-color);
+  padding: 15px 20px;
+  border-radius: 12px;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--bg-dark);
+  color: var(--text-secondary);
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+}

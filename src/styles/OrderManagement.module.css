@@ -1,0 +1,350 @@
+/* OrderManagement.module.css */
+.container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #1c1c1e;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f2f2f7;
+  }
+  
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #000;
+    margin: 0;
+  }
+  
+  .scanButton {
+    background-color: #007AFF;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .scanButton:hover {
+    background-color: #0066CC;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 122, 255, 0.2);
+  }
+  
+  .scanButton:active {
+    background-color: #0052A3;
+    transform: translateY(0);
+  }
+  
+  .qrScanner {
+    margin: 24px 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .statusButtons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .statusButtons::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+  
+  .statusButton {
+    background: none;
+    border: 1px solid #d1d1d6;
+    border-radius: 22px;
+    padding: 10px 20px;
+    font-size: 15px;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+  }
+  
+  .statusButton.active {
+    background-color: #007AFF;
+    color: white;
+    border-color: #007AFF;
+    box-shadow: 0 2px 6px rgba(0, 122, 255, 0.2);
+  }
+  
+  .orderList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+  
+  .orderCard {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e5ea;
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    overflow: hidden;
+  }
+  
+  .orderCard.highlighted {
+    box-shadow: 0 6px 16px rgba(0, 122, 255, 0.15);
+    border-color: rgba(0, 122, 255, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .orderId {
+    font-weight: 600;
+    color: #000;
+    font-size: 16px;
+  }
+  
+  .statusBadge {
+    font-size: 13px;
+    padding: 5px 12px;
+    border-radius: 22px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
+  
+  .Pending {
+    background-color: rgba(255, 204, 0, 0.12);
+    color: #FFCC00;
+  }
+  
+  .Preparing {
+    background-color: rgba(255, 149, 0, 0.12);
+    color: #FF9500;
+  }
+  
+  .ReadyForPickup {
+    background-color: rgba(52, 199, 89, 0.12);
+    color: #34C759;
+  }
+
+  .Paid{
+    background-color: rgba(52, 199, 89, 0.12);
+    color: #34C759;
+  }
+  
+  .Completed {
+    background-color: rgba(142, 142, 147, 0.12);
+    color: #8E8E93;
+  }
+  
+  .orderContent {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  
+  .items {
+    flex: 1;
+  }
+  
+  .item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 15px;
+    line-height: 1.4;
+    width: 70%;
+  }
+  
+  .itemName {
+    color: #000;
+    font-weight: 500;
+  }
+  
+  .itemQuantity {
+    color: #636366;
+  }
+  
+  .orderTotal {
+    font-weight: 600;
+    color: #000;
+    font-size: 16px;
+    align-self: flex-start;
+  }
+  
+  .orderDetails {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #f2f2f7;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .detailRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .detailLabel {
+    color: #636366;
+    font-weight: 500;
+  }
+  
+  .statusControl {
+    margin-top: 20px;
+    position: relative;
+  }
+  
+  .statusControl label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #636366;
+  }
+  
+  .statusSelect {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d6;
+    font-size: 15px;
+    background-color: #fff;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    transition: border-color 0.2s;
+  }
+  
+  .statusSelect:focus {
+    outline: none;
+    border-color: #007AFF;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+  }
+  
+  .modalContent {
+    /* max-height: 65vh;
+    overflow-y: auto; */
+    padding-right: 8px;
+  }
+  
+  .modalSection {
+    margin-bottom: 24px;
+  }
+  
+  .modalSection h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: #000;
+    letter-spacing: -0.2px;
+  }
+  
+  .modalItems {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .modalItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f2f2f7;
+    font-size: 15px;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      padding: 16px;
+    }
+    
+    .header {
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .orderList {
+      grid-template-columns: 1fr;
+    }
+    
+    .statusButtons {
+      gap: 8px;
+    }
+    
+    .statusButton {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  }
+
+  /* Add to OrderManagement.module.css */
+.scanMessage {
+    padding: 12px;
+    background-color: #f5f5f7;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #636366;
+    text-align: center;
+    margin-top: 8px;
+  }
+  
+  .statusControl {
+    margin-top: 16px;
+  }
+  
+  .statusControl label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #636366;
+  }
+  
+  .statusSelect {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d6;
+    font-size: 15px;
+    background-color: #fff;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    transition: border-color 0.2s;
+  }
+  
+  .statusSelect:disabled {
+    opacity: 0.7;
+    background-color: #f5f5f7;
+  }

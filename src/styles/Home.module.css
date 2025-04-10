@@ -1,0 +1,25 @@
+.menu-container {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+  }
+
+.home{
+    margin-top: 3%;
+}
+  
+  /* 📱 Mobile: 2 items per row */
+  @media (max-width: 768px) {
+    .menu-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* 💻 Desktop: 6 items per row */
+  @media (min-width: 769px) {
+    .menu-container {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+  

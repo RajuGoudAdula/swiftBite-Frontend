@@ -1,0 +1,506 @@
+.container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .heading {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+    color: #1d1d1f;
+  }
+  
+  .subheading {
+    font-size: 14px;
+    color: #86868b;
+    margin: 4px 0 0;
+  }
+  
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .actionButton {
+    background: #f5f5f7;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .actionButton:hover {
+    background: #e5e5e9;
+  }
+  
+  .dateInputContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dateInput {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+  
+  .dateIcon {
+    color: #007aff;
+  }
+  
+  .filterIcon {
+    color: #007aff;
+    margin-left: 4px;
+  }
+  
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    padding: 10px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #86868b;
+    position: relative;
+  }
+  
+  .tab.active {
+    color: #007aff;
+    font-weight: 500;
+  }
+  
+  .tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #007aff;
+  }
+  
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .statCard {
+    min-height: 120px;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .cardContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .statHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .statIcon {
+    background: #f5f5f7;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    color: #007aff;
+  }
+  
+  .label {
+    font-size: 14px;
+    color: #86868b;
+    margin: 0;
+  }
+  
+  .valueContainer {
+    margin-top: auto;
+  }
+  
+  .value {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: #1d1d1f;
+  }
+  
+  .change {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  
+  .positive {
+    background: rgba(52, 199, 89, 0.1);
+    color: #34c759;
+  }
+  
+  .negative {
+    background: rgba(255, 59, 48, 0.1);
+    color: #ff3b30;
+  }
+  
+  .chartContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .mainChartCard {
+    margin-bottom: 16px;
+  }
+  
+  .chartHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .chartTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: #1d1d1f;
+  }
+  
+  .chartControls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .timeRangeSelect {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 14px;
+    background: white;
+  }
+  
+  .chartTypeToggle {
+    display: flex;
+    background: #f5f5f7;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .chartTypeButton {
+    border: none;
+    background: none;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  
+  .chartTypeButton.active {
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+  }
+  
+  .secondaryCharts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  
+  .secondaryCard {
+    height: 100%;
+  }
+  
+  .activityList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .activityItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .activityIcon {
+    background: #f5f5f7;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #007aff;
+  }
+  
+  .activityContent {
+    flex: 1;
+  }
+  
+  .activityText {
+    font-size: 14px;
+    margin: 0;
+    color: #1d1d1f;
+  }
+  
+  .activityTime {
+    font-size: 12px;
+    margin: 2px 0 0;
+    color: #86868b;
+  }
+  
+  /* Skeleton loading states */
+  .skeleton {
+    background: linear-gradient(90deg, #f5f5f7 25%, #e5e5e9 50%, #f5f5f7 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  .valueSkeleton {
+    width: 80px;
+    height: 32px;
+    margin-top: 8px;
+  }
+  
+  .chartSkeleton {
+    width: 100%;
+    height: 400px;
+  }
+  
+  .pieSkeleton {
+    width: 100%;
+    height: 300px;
+  }
+  
+  .activitySkeleton {
+    width: 100%;
+    height: 300px;
+  }
+
+  /* Base styles remain the same (your original code) */
+/* Add the following responsive styles at the end of your CSS */
+
+@media (max-width: 1024px) {
+    .statsGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .secondaryCharts {
+      grid-template-columns: 1fr;
+    }
+  
+    .heading {
+      font-size: 24px;
+    }
+  
+    .chartTitle {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  
+    .actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+  
+    .heading {
+      font-size: 22px;
+    }
+  
+    .statCard {
+      min-height: 100px;
+    }
+  
+    .chartControls {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .statsGrid {
+      grid-template-columns: 1fr;
+    }
+  
+    .chartHeader {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    .tab {
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+  
+    .chartTypeButton {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+  
+    .value {
+      font-size: 20px;
+    }
+  
+    .change {
+      font-size: 11px;
+    }
+  
+    .timeRangeSelect {
+      width: 100%;
+    }
+  
+    .container {
+      padding: 12px;
+    }
+  }
+
+  
+  /* Reviews Table Styles */
+.reviewsTableCard {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.reviewsTableContainer {
+  overflow-x: auto;
+  margin-top: 15px;
+}
+
+.reviewsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reviewsTable th, 
+.reviewsTable td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.reviewsTable th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+/* Response Form Styles */
+.responseForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.responseInput {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-height: 60px;
+  resize: vertical;
+}
+
+.responseButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.submitButton {
+  padding: 6px 12px;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancelButton {
+  padding: 6px 12px;
+  background-color: #ff3b30;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.respondButton {
+  padding: 6px 12px;
+  background-color: #34c759;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .reviewsTable th, 
+  .reviewsTable td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+}

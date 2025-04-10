@@ -1,0 +1,180 @@
+/* styles/Toast.module.css */
+
+.toastContainer {
+  position: fixed;
+  top: 15%;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  width: 70%;
+}
+
+.toast {
+  position: relative;
+  padding: 14px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  overflow: hidden;
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 0.3s ease;
+  animation: slideIn 0.3s ease-out;
+  border-left: 4px solid;
+}
+
+.toastContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toastIcon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.toastIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.toastMessage {
+  flex-grow: 1;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 8px;
+  transition: opacity 0.2s;
+  color: #666;
+}
+
+.closeButton:hover {
+  opacity: 1;
+  color: #333;
+}
+
+.closeButton svg {
+  display: block;
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  transform-origin: left;
+  animation: progressBar linear;
+  opacity: 0.2;
+}
+
+/* Toast types with your requested color scheme */
+.success {
+  border-left-color: #34C759;
+}
+
+.success .toastIcon {
+  color: #34C759;
+}
+
+.success .progressBar {
+  background-color: #34C759;
+}
+
+.error {
+  border-left-color: #FF3B30;
+}
+
+.error .toastIcon {
+  color: #FF3B30;
+}
+
+.error .progressBar {
+  background-color: #FF3B30;
+}
+
+.warning {
+  border-left-color: #FF9500;
+}
+
+.warning .toastIcon {
+  color: #FF9500;
+}
+
+.warning .progressBar {
+  background-color: #FF9500;
+}
+
+.info {
+  border-left-color: #007AFF;
+}
+
+.info .toastIcon {
+  color: #007AFF;
+}
+
+.info .progressBar {
+  background-color: #007AFF;
+}
+
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes progressBar {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* Exit animation */
+.toast.exit {
+  animation: slideOut 0.3s ease-in forwards;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .toastContainer {
+    right: 0px;
+    max-width: none;
+    width: 60%;
+    top: 8%;
+  }
+  
+  .toast {
+    padding: 12px;
+    font-size: 0.1rem;
+    font-weight: 500;
+  }
+}

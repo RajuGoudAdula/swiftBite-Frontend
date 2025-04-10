@@ -1,0 +1,283 @@
+/* Profile.module.css */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 17px;
+  color: #8e8e93;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #f2f2f7;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+}
+
+.avatarContainer {
+  margin-right: 20px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #f2f2f7;
+}
+
+.avatarFallback {
+  width: 80px;
+  height: 80px;
+  color: #d1d1d6;
+  font-size: 80px;
+}
+
+.userInfo {
+  flex: 1;
+}
+
+.userName {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #1c1c1e;
+}
+
+.userEmail {
+  font-size: 16px;
+  color: #636366;
+  margin: 0;
+}
+
+/* Mobile Menu */
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.menuItem {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 16px;
+  font-size: 17px;
+  color: #1c1c1e;
+  border-radius: 10px;
+  background-color: #f2f2f7;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.menuItem:active {
+  background-color: #e5e5ea;
+}
+
+/* Desktop Layout */
+.desktopContainer {
+  display: flex;
+  margin-top: 24px;
+  gap: 24px;
+  flex-grow: 1;
+  min-height: 0; /* Allows content area to scroll */
+}
+
+.sidebar {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+}
+
+.content {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Custom scrollbar for webkit browsers */
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Menu Items */
+.menuItem {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 16px;
+  color: #1c1c1e;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: bold;
+}
+
+.menuItem:hover {
+  background-color: #f2f2f7;
+}
+
+.menuItem.active {
+  background-color: #007AFF;
+  color: white;
+  font-weight: 500;
+}
+
+/* Sign Out Button */
+.signOutButton {
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  color: #FF3B30;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.signOutButton:hover {
+  background-color: rgba(255, 59, 48, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .container {
+    height: auto;
+    min-height: 100vh;
+    padding: 16px;
+  }
+  
+  .header {
+    padding: 16px 0;
+  }
+  
+  .avatar,
+  .avatarFallback {
+    width: 64px;
+    height: 64px;
+    font-size: 64px;
+  }
+  
+  .userName {
+    font-size: 20px;
+  }
+  
+  .userEmail {
+    font-size: 15px;
+  }
+  
+  .mobileMenu {
+    max-height: none;
+  }
+  
+  .desktopContainer {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    max-height: none;
+    margin-bottom: 20px;
+  }
+  
+  .content {
+    max-height: none;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: ligt) {
+  .container {
+    background-color: #000;
+  }
+  
+  .userName {
+    color: #fff;
+  }
+  
+  .userEmail {
+    color: #aeaeb2;
+  }
+  
+  .menuItem {
+    color: #fff;
+  }
+  
+  .menuItem:hover {
+    background-color: #2c2c2e;
+  }
+  
+  .menuItem.active {
+    background-color: #0A84FF;
+  }
+  
+  .content {
+    background-color: #1c1c1e;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  
+  .content::-webkit-scrollbar-track {
+    background: #2c2c2e;
+  }
+  
+  .content::-webkit-scrollbar-thumb {
+    background: #4a4a4a;
+  }
+  
+  .content::-webkit-scrollbar-thumb:hover {
+    background: #5e5e5e;
+  }
+  
+  .signOutButton {
+    color: #FF453A;
+  }
+  
+  .signOutButton:hover {
+    background-color: rgba(255, 69, 58, 0.1);
+  }
+  
+  .avatarFallback {
+    color: #3a3a3c;
+  }
+}

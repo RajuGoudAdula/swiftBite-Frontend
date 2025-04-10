@@ -1,0 +1,212 @@
+/* Base Styles */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color: #1d1d1f;
+  }
+  
+  /* Header Styles */
+  .header {
+    margin-bottom: 30px;
+  }
+  
+  .title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1d1d1f;
+  }
+  
+  /* Section Styles */
+  .section {
+    margin-bottom: 30px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sectionHeader {
+    padding: 16px;
+    border-bottom: 1px solid #f5f5f7;
+  }
+  
+  .sectionTitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1d1d1f;
+  }
+  
+  /* Field Styles */
+  .field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #f5f5f7;
+  }
+  
+  
+  .field:last-child {
+    border-bottom: none;
+  }
+  
+  .fieldLabel {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #1d1d1f;
+  }
+  
+  .fieldValue {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .icon {
+    width: 20px;
+    height: 20px;
+    fill: #86868b;
+    margin-right: 10px;
+  }
+  
+  /* Input Styles */
+  .input {
+    padding: 8px 12px;
+    border: 1px solid #d2d2d7;
+    border-radius: 8px;
+    font-size: 16px;
+    flex-grow: 1;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #0071e3;
+  }
+  
+  /* Button Styles */
+  .editButton {
+    background: none;
+    border: none;
+    color: #0071e3;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  
+  .editButton:hover {
+    background-color: rgba(0, 125, 250, 0.1);
+  }
+  
+  .saveButton {
+    background-color: #0071e3;
+    color: white;
+    border: none;
+    border-radius: 980px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .saveButton:hover {
+    background-color: #0062c4;
+  }
+  
+  .cancelButton {
+    background: none;
+    border: 1px solid #d2d2d7;
+    border-radius: 980px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  
+  .cancelButton:hover {
+    background-color: #f5f5f7;
+  }
+  
+  .actionButton {
+    background-color: #0071e3;
+    color: white;
+    border: none;
+    border-radius: 980px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 10px;
+    white-space: nowrap;
+  }
+  
+  .actionButton:hover {
+    background-color: #0062c4;
+  }
+  
+  .buttonIcon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+  
+  .editIcon {
+    width: 18px;
+    height: 18px;
+    fill: #0071e3;
+  }
+  
+  /* Edit Container Styles */
+  .editContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    gap: 8px;
+    align-self: flex-end;
+  }
+  
+  /* OTP and Password Containers */
+  .otpContainer, 
+  .passwordContainer,
+  .emailContainer {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+  }
+  
+  /* Error Message */
+  .error {
+    color: #ff3b30;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 600px) {
+    .container {
+      padding: 16px;
+    }
+    
+    .otpContainer,
+    .passwordContainer,
+    .emailContainer {
+      flex-direction: column;
+    }
+    
+    .actionButton {
+      margin-left: 0;
+      margin-top: 8px;
+      width: 100%;
+    }
+  }
