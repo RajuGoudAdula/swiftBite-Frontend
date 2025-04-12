@@ -45,19 +45,6 @@ const MenuItem = ({ item, isAdmin, onAddToCart }) => {
     )
   );
 
-  const renderTags = () => {
-    if (!item.productId.tags || item.productId.tags.length === 0) return null;
-    
-    return (
-      <div className={styles.tagsContainer}>
-        {item.productId.tags.map((tag, index) => (
-          <span key={index} className={styles.tag}>
-            {tag}
-          </span>
-        ))}
-      </div>
-    );
-  };
 
   if (isMobile) {
     return (

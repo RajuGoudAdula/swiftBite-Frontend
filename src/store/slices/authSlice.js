@@ -19,7 +19,7 @@ export const verifyUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://127.0.0.1:5000/api/auth/verify-user', {
+      const res = await axios.get('https://swiftbite-backend-production.up.railway.app/api/auth/verify-user', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

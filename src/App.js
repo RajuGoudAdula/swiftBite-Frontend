@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Unauthorized from './pages/auth/Unauthorized';
 import AdminRoutes from './routes/AdminRoutes';
 import CanteenRoutes from './routes/CanteenRoutes';
