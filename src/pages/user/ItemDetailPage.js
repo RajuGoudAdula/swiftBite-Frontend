@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaPepperHot, FaClock, FaFire, FaLeaf, FaCarrot, FaDrumstickBite, FaSeedling , FaStar, FaRegStar } from "react-icons/fa";
+import { FaPepperHot, FaClock, FaFire, FaLeaf, FaCarrot, FaDrumstickBite, FaSeedling , FaStar, FaRegStar, FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../store/slices/cartSlice";
 import userApi from "../../api/userApi";
 import styles from "../../styles/ItemDetailPage.module.css";
+import { addToast } from "../../store/slices/toastSlice";
 
 const ItemDetailPage = () => {
   const { itemId } = useParams();
@@ -19,6 +20,7 @@ const ItemDetailPage = () => {
     const fetchItemDetails = async () => {
       try {
         const response = await userApi.getItemDetails(itemId);
+        console.log(response.data)
         setItem(response.data);
       } catch (err) {
         setError("Failed to fetch item details");
@@ -59,25 +61,46 @@ const ItemDetailPage = () => {
 
   const handleAddToCart = () => {
     if (!isAuthenticated) {
-      alert("Please login to add items to your cart");
-      navigate("/login");
+      dispatch(addToast({
+              id: Date.now(),
+              type: 'warning',
+              message: 'Please login to add items to your cart',
+              duration: 3000,
+            })).then(()=>{
+              navigate("/login");
+            });
       return;
     }
 
     dispatch(addToCart({
       userId: user.id,
-      itemId: item.item._id,
-      quantity: 1,
-    }));
+      data :{
+        itemId: item.item._id,
+        quantity: 1,
+      }
+    })).then(()=>{
+      dispatch(addToast({
+              id: Date.now(),
+              type: 'success',
+              message: `${item.item.name} added to cart`,
+              duration: 3000,
+            }));
+    }).then(()=>{
+      navigate("/cart");
+    });
 
-    alert(`${item.item.name} added to cart`);
-    navigate("/cart");
   };
 
   const handleLike = async (productId, reviewId) => {
     if (!isAuthenticated) {
-      alert("Please login to like a review.");
-      navigate("/login");
+      dispatch(addToast({
+        id: Date.now(),
+        type: 'warning',
+        message: `Please login to add items to your cart`,
+        duration: 3000,
+      })).then(()=>{
+        navigate("/login");
+      });
       return;
     }
 
@@ -99,14 +122,25 @@ const ItemDetailPage = () => {
         ),
       }));
     } catch (err) {
-      alert("Failed to like the review.");
+      dispatch(addToast({
+        id: Date.now(),
+        type: 'error',
+        message: `Failed to like the review.`,
+        duration: 3000,
+      }))
     }
   };
 
   const handleDislike = async (productId, reviewId) => {
     if (!isAuthenticated) {
-      alert("Please login to dislike a review.");
-      navigate("/login");
+      dispatch(addToast({
+        id: Date.now(),
+        type: 'warning',
+        message: 'Please login to add items to your cart',
+        duration: 3000,
+      })).then(()=>{
+        navigate("/login");
+      });
       return;
     }
 
@@ -128,7 +162,12 @@ const ItemDetailPage = () => {
         ),
       }));
     } catch (err) {
-      alert("Failed to dislike the review.");
+      dispatch(addToast({
+        id: Date.now(),
+        type: 'error',
+        message: 'Failed to dislike the review.',
+        duration: 3000,
+      }));
     }
   };
 
@@ -150,46 +189,61 @@ const ItemDetailPage = () => {
           </div>
           
           <div className={styles.productMeta}>
-            <div className={`${styles.availabilityTag} ${item.item.isAvailable ? styles.inStock : styles.outOfStock}`}>
-              {item.item.isAvailable ? 'In Stock' : 'Out of Stock'}
-            </div>
-            
-            <h1 className={styles.productTitle}>{item.product.name}</h1>
-            
-            <div className={styles.priceContainer}>
-              <span className={styles.currentPrice}>₹{item.item.price}</span>
+            <div>
+              <div className={`${styles.availabilityTag} ${item.item.isAvailable ? styles.inStock : styles.outOfStock}`}>
+                {item.item.isAvailable ? 'In Stock' : 'Out of Stock'}
+              </div>
+              
+              <h1 className={styles.productTitle}>{item.product.name}</h1>
+              <p className={styles.netWeight}>1 {item.product.unit} . {item.product.netWeight}</p>
+              <div className={styles.priceContainer}>
+                <span className={styles.currentPrice}>₹{item.item.price}</span>
+                {item.item.offers.length > 0 && (
+                  <span className={styles.originalPrice}>₹{item.item.price + item.item.offers[0].discount}</span>
+                )}
+              </div>
+              
               {item.item.offers.length > 0 && (
-                <span className={styles.originalPrice}>₹{item.item.price + item.item.offers[0].discount}</span>
-              )}
-            </div>
-            
-            {item.item.offers.length > 0 && (
-              <div className={styles.offerTag}>
-                <FaFire className={styles.offerIcon} />
-                <span>Save ₹{item.item.offers[0].discount} ({item.item.offers[0].offerType})</span>
-              </div>
-            )}
-            
-            <div className={styles.deliveryInfo}>
-              <FaClock className={styles.deliveryIcon} />
-              <span>Prepared in {item.item.preparationTime} mins</span>
-            </div>
-            
-            {item.product.tags.includes("Spicy") && (
-              <div className={styles.spiceIndicator}>
-                <div className={styles.spiceIcons}>
-                  {getSpiceIcons("Hot")}
+                <div className={styles.offerTag}>
+                  <FaFire className={styles.offerIcon} />
+                  <span>Save ₹{item.item.offers[0].discount} ({item.item.offers[0].offerType})</span>
                 </div>
-                <span>Spicy</span>
+              )}
+              
+              <div className={styles.deliveryInfo}>
+                <FaClock className={styles.deliveryIcon} />
+                <span>Prepared in {item.item.preparationTime} mins</span>
               </div>
-            )}
-            <button 
-              className={styles.addToCart}
-              onClick={handleAddToCart}
-              disabled={!item.item.isAvailable}
-            >
-              Add to Bag
-            </button>
+              
+              {item.product.tags.includes("Spicy") && (
+                <div className={styles.spiceIndicator}>
+                  <div className={styles.spiceIcons}>
+                    {getSpiceIcons("Hot")}
+                  </div>
+                  <span>Spicy</span>
+                </div>
+              )}
+              <div className={styles.desktopAddToCartSection}>
+              <button 
+                className={styles.addToCart}
+                onClick={handleAddToCart}
+                disabled={!item.item.isAvailable}
+              >
+                Add to Bag
+              </button>
+              </div>
+            </div>
+            <div>
+            <div className={styles.mobileAddToCartSection}>
+              <button 
+                className={styles.addToCart}
+                onClick={handleAddToCart}
+                disabled={!item.item.isAvailable}
+              >
+                Add to Cart
+              </button>
+              </div>
+            </div>
           </div>
         {/* </div> */}
       </div>
@@ -284,7 +338,7 @@ const ItemDetailPage = () => {
             {item.reviews.map((review) => (
               <div key={review._id} className={styles.reviewCard}>
                 <div className={styles.reviewHeader}>
-                  <span className={styles.reviewer}>{review.user.name}</span>
+                  <span className={styles.reviewer}><FaUserCircle size={24} color="#007AFF" />{review.user.name}</span>
                   <span className={styles.reviewRating}>
                     {renderRating(review.rating)}
                   </span>

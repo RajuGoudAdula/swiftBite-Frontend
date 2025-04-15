@@ -191,9 +191,8 @@ const EditProfile = () => {
         userDetails.username = inputValue;
         localStorage.setItem("user", JSON.stringify(userDetails));
       }
-  
-      await dispatch(fetchProfile({ userId: user.id }));
       closeModal();
+      window.location.reload();
   
     } catch (err) {
       setError(err.message || "Something went wrong");

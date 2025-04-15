@@ -123,11 +123,11 @@ const userApi = {
 
   //Reviews
 
-  addReview : ( productId,orderId,canteenId,review,rating,userId,collegeId) => {
-    return axiosInstance.post(`/user/add-review/${productId}`,{orderId,canteenId,review,rating,userId,collegeId});
+  addReview : ( productId,orderId,canteenId,review,rating,userId,collegeId,isAnonymous) => {
+    return axiosInstance.post(`/user/add-review/${productId}`,{orderId,canteenId,review,rating,userId,collegeId,isAnonymous});
   },
-  updateReview : (productId, canteenId, rating, review, userId,collegeId,orderId) => {
-    return axiosInstance.put(`/user/update-review/${productId}/${orderId}`,{rating,review,userId,collegeId,canteenId});
+  updateReview : (productId, canteenId, rating, review, userId,collegeId,orderId,isAnonymous) => {
+    return axiosInstance.put(`/user/update-review/${productId}/${orderId}`,{rating,review,userId,collegeId,canteenId,isAnonymous});
   },
   deleteReview : ( productId, orderId ,userId ) => {
     return axiosInstance.delete(`/user/delete-review/${productId}/${orderId}?userId=${userId}`);
@@ -153,6 +153,16 @@ const userApi = {
   debouncedSearch : (query) => {
     return axiosInstance.get(`/user/menu/search?q=${query}`);
   },
+  //Favourite items
+  addFavouriteItem : (userId, canteenId, itemId) => {
+    return axiosInstance.post(`/user/add-favourite-item/${userId}/${canteenId}`,{itemId});
+  },
+  deleteFavouriteItem : (userId,canteenId,itemId) => {
+    return axiosInstance.delete(`/user/remove-favourite-item/${userId}/${canteenId}/${itemId}`);
+  },
+  getFavouriteItems : (userId,canteenId) => {
+    return axiosInstance.get(`/user/fetch-favourite-items/${userId}?canteenId=${canteenId}`);
+  }
 
 
  

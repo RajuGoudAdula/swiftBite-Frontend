@@ -3,6 +3,7 @@ import axios from 'axios';
 import userApi from '../../api/userApi';
 import { fetchCartItems } from './cartSlice';
 
+
 // Initial state
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
@@ -19,7 +20,7 @@ export const verifyUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('https://swiftbite-backend-production.up.railway.app/api/auth/verify-user', {
+      const res = await axios.get(`${process.env.BACKEND_URL}/api/auth/verify-user`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

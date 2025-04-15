@@ -68,7 +68,11 @@ function Payment() {
   return (
     <>
       <div className={styles.buttonContainer}>
-        <button className={styles.paymentButton} onClick={() => setIsModalOpen(true)}>
+        <button className={styles.paymentButton} onClick={() => {
+          setIsModalOpen(true)
+          dispatch(fetchCartItems(userId));
+          
+          }}>
           <span className={styles.buttonText}>Pay Now Rs.{totalAmount}</span>
         </button>
       </div>

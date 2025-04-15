@@ -114,7 +114,6 @@ const menuSlice = createSlice({
 
       // ✅ Update Menu Item
       .addCase(updateMenuItem.fulfilled, (state, action) => {
-        console.log("Updating state with:", action.payload);
         const index = state.items.findIndex((item) => item._id === action.payload._id);
         if (index !== -1) {
           state.items[index] = action.payload;

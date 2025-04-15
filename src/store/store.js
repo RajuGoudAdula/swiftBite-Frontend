@@ -9,6 +9,7 @@ import canteenReducer from './slices/canteenSlice';
 import profileReducer from './slices/profileSlice';
 import reviewReducer from './slices/reviewSlice';
 import toastReducer from './slices/toastSlice';
+import favouriteReducer from './slices/favouriteItemsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     profile : profileReducer,
     reviews : reviewReducer,
     toast: toastReducer,
+    favouriteItems : favouriteReducer,
   },
 });
 

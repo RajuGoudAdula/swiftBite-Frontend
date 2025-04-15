@@ -9,6 +9,7 @@ import {
 import { fetchProducts } from "../../store/slices/productSlice";
 import ModalPopup from "../../components/common/ModalPopup";
 import styles from "../../styles/ManageMenu.module.css";
+import { addToast } from "../../store/slices/toastSlice";
 
 const ManageMenu = () => {
   const dispatch = useDispatch();
@@ -26,12 +27,30 @@ const ManageMenu = () => {
     dispatch(fetchMenuItems());
   }, [dispatch]);
 
+ 
+
   const handleAddItem = () => {
     if (selectedProduct === "") {
-      alert("Please select a product.");
+      dispatch(addToast({
+        id: Date.now(),
+        type: 'warning',
+        message: `Please select a product.`,
+        duration: 3000,
+      }));
+      return;
+    }
+    const item= menu.find((i)=>i.productId._id === selectedProduct );
+    if(item){
+       dispatch(addToast({
+              id: Date.now(),
+              type: 'warning',
+              message: `${item.name} already added into menu.`,
+              duration: 3000,
+            }));
       return;
     }
     const product = products.find((p) => p._id === selectedProduct);
+
     if (product) {
       dispatch(
         addMenuItem({
@@ -46,7 +65,15 @@ const ManageMenu = () => {
           offers: [],
           availability: { startTime: "", endTime: "" },
         })
-      );
+      )
+      .then(()=>{
+        dispatch(addToast({
+          id: Date.now(),
+          type: 'success',
+          message: `${product.name} added into menu.`,
+          duration: 3000,
+        }));
+      })
     }
     setSelectedProduct("");
   };
@@ -66,8 +93,16 @@ const ManageMenu = () => {
   };
 
   const handleUpdateItem = () => {
-    dispatch(updateMenuItem({ id: editingItem, data: updatedFields }));
-    console.log(updatedFields);
+    dispatch(updateMenuItem({ id: editingItem, data: updatedFields }))
+       .then(()=>{
+        const item = menu.find((i)=> i._id === editingItem);
+        dispatch(addToast({
+          id: Date.now(),
+          type: 'success',
+          message: `${item?.name} updated successfully.`,
+          duration: 3000,
+        }));
+       })
     setIsModalOpen(false);
     setEditingItem(null);
   };
@@ -136,12 +171,11 @@ const ManageMenu = () => {
         <div className={styles.menuList}>
           {menu.length > 0 ? (
             menu.map((item) => {
-              const product = products.find((p) => p._id === item.productId) || {};
+              const product = products.find((p) => p._id === item.productId._id) || {};
               return (
-                <div key={product._id} className={styles.menuItem}>
-                  <img src={product.image} alt={product.name} className={styles.image} />
+                <div key={item._id} className={styles.menuItem}>
+                  <img src={item.productId.image} alt={item.productId.name} className={styles.image} title={item.productId.name}/>
                   <h2>{product.name}</h2>
-
                   <p>
                     <strong>Price:</strong> ₹{item.price}
                   </p>
@@ -191,7 +225,16 @@ const ManageMenu = () => {
                     <button onClick={() => handleEditClick(item)} className={styles.button}>
                       Edit
                     </button>
-                    <button onClick={() => dispatch(deleteMenuItem(item._id))} className={styles.deleteButton}>
+                    <button onClick={() => {
+                       dispatch(deleteMenuItem(item._id)).then(()=>{
+                        dispatch(addToast({
+                          id: Date.now(),
+                          type: 'success',
+                          message: `${item?.name} deleted successfully.`,
+                          duration: 3000,
+                        }));
+                       })
+                    }} className={styles.deleteButton}>
                       Delete
                     </button>
                   </div>

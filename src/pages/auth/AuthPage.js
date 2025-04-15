@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import styles from '../../styles/AuthPage.module.css';
 import Login from './Login';
 import Register from './Register';
-import loginImage from '../../assets/login-image.jpeg';
-import registerImage from '../../assets/register-image.jpeg';
+import LoginAnimationData from '../../animations/Login.json';
+import RegisterAnimationData from '../../animations/Register.json';
+import Lottie from 'lottie-react';
 
 const AuthPage = ({ initialMode = 'login' }) => {
   const [isLogin, setIsLogin] = useState(initialMode === 'login');
@@ -16,11 +17,11 @@ const AuthPage = ({ initialMode = 'login' }) => {
     <div className={styles.container}>
       <div className={`${styles.authBox} ${isLogin ? styles.loginMode : styles.registerMode}`}>
         <div className={styles.imageContainer}>
-          <img
-            src={isLogin ? loginImage : registerImage}
-            alt={isLogin ? 'Login' : 'Register'}
-            className={styles.image}
-          />
+          {isLogin ? (
+            <Lottie animationData={LoginAnimationData} loop={true} style={{maxWidth:"500px" ,maxHeight:"500px",background : "white" }}/>
+          ) : (
+            <Lottie animationData={RegisterAnimationData} loop={true} style={{maxWidth:"500px" ,maxHeight:"500px" ,background : "white" }}/>
+          )}
         </div>
 
         <div className={styles.formContainer}>

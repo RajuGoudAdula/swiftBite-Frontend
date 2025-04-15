@@ -12,6 +12,7 @@ import ModalPopup from '../../components/common/ModalPopup';
 import MenuItem from '../../components/common/MenuItem';
 import LoadingErrorHandler from '../../components/common/LoadingErrorHandler';
 import styles from "../../styles/Home.module.css";
+import { fetchFavouriteItems } from '../../store/slices/favouriteItemsSlice';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,12 @@ const Home = () => {
   const { items: items, loading, error } = useSelector(state => state.menu || {});
   const { user, isAuthenticated } = useSelector(state => state.auth || {});
   const { colleges = [], canteens = [] } = useSelector(state => state.college || {});
+  const favourites = useSelector((state) => state.favouriteItems.items || {});    
+  let favouriteItemsList;
+  if(favourites.length > 0){
+    const favouriteItemIds = favourites.map((fav) => fav.itemId);
+    favouriteItemsList = items.filter((item) => favouriteItemIds.includes(item._id));
+  }
 
   const [selectedCollege, setSelectedCollege] = useState('');
   const [selectedCanteen, setSelectedCanteen] = useState('');
@@ -30,12 +37,12 @@ const Home = () => {
       setModalOpen(true);
     } else {
       dispatch(fetchMenuOfCanteen(user.canteen._id));
+      dispatch(fetchFavouriteItems({userId : user.id,canteenId : user.canteen._id}))
     }
   }, [user, dispatch ,user?.college , user?.canteen]);
 
-  useEffect(()=>{
-    console.log(user,items);
-  },[])
+
+
 
   useEffect(() => {
     dispatch(fetchColleges());
@@ -104,7 +111,6 @@ const Home = () => {
 
   return (
     <div className={styles["home"]}>
-      <h2 className="home-title">Menu</h2>
       
       <ModalPopup isOpen={modalOpen} title="Select Your College and Canteen" >
         <Dropdown label="College" options={colleges} value={selectedCollege} onChange={e => setSelectedCollege(e.target.value)} />
@@ -115,7 +121,25 @@ const Home = () => {
           <button onClick={handleConfirmSelection}>Confirm</button>
         )}
       </ModalPopup>
-      
+      {favouriteItemsList?.length > 0 && (
+      <>
+        <h5 className={styles.title}>Your Favourite Items</h5>
+        <LoadingErrorHandler loading={loading} error={error} data={items}>
+          <div className={styles["favourites-container"]}>
+            {favouriteItemsList?.map(item => (
+              <MenuItem 
+                key={item._id} 
+                item={item} 
+                onClick={() => navigate(`/item/${item._id}`)} 
+                onAddToCart={() => handleAddToCart(item)}
+                isFavourites={true}
+              />
+            ))}
+          </div>
+        </LoadingErrorHandler>
+      </>
+      )}
+      <h2 className={styles.title}>Canteen Menu</h2>
       <LoadingErrorHandler loading={loading} error={error} data={items}>
         <div className={styles["menu-container"]}>
           {items.map(item => (
@@ -124,6 +148,7 @@ const Home = () => {
               item={item} 
               onClick={() => navigate(`/item/${item._id}`)} 
               onAddToCart={() => handleAddToCart(item)}
+              isFavourites={false}
             />
           ))}
         </div>

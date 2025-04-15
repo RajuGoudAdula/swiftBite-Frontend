@@ -1,18 +1,23 @@
 .menu-container {
     display: grid;
-    gap: 20px;
-    padding: 20px;
+    padding:0 4%;
     justify-content: center;
   }
 
 .home{
-    margin-top: 3%;
+    margin-top: 10%;
 }
   
   /* 📱 Mobile: 2 items per row */
   @media (max-width: 768px) {
     .menu-container {
       grid-template-columns: repeat(2, 1fr);
+      gap: 5%;
+    }
+    .favourites-container{
+      height: 13rem;
+      gap: 3%;
+      padding: 3%;
     }
   }
   
@@ -20,6 +25,35 @@
   @media (min-width: 769px) {
     .menu-container {
       grid-template-columns: repeat(6, 1fr);
+      gap: 1.4%;
     }
+    .favourites-container{
+      height: 310px;
+      gap: 1%;
+      padding: 1%;
+    }
+
   }
+
+.favourites-container{
+  overflow-x: auto;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  box-sizing: border-box;
+  font-size: 0.1rem;
+  margin:1% 4%;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(28, 28, 28, 0.08);
+  border: 1px solid #e8e8e8;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.title{
+  padding : 0 4%;
+  font-size: 18px;
+  margin: 2%;
+}
   

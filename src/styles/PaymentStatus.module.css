@@ -36,7 +36,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
   }
   
   .iconContainer {
@@ -46,7 +46,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px;
   }
   
   .iconContainer.success {

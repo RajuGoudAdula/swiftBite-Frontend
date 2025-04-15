@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import userApi from "../../api/userApi";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from '../../styles/PaymentStatus.module.css';
 
 const PaymentStatus = () => {
   const location = useLocation();
+  const navigate=useNavigate();
   const [status, setStatus] = useState("Checking payment status...");
   const [statusType, setStatusType] = useState("checking");
   const [loading, setLoading] = useState(true);
@@ -159,9 +160,11 @@ const PaymentStatus = () => {
               </motion.p>
               
               <motion.div variants={itemVariants}>
-                <button className={styles.actionButton}>
-                  {statusType === "success" ? "View Order" : "Try Again"}
+              {statusType === "success" &&
+                <button className={styles.actionButton} onClick={()=>navigate("/orders")}>
+                  View Order
                 </button>
+              }
               </motion.div>
             </motion.div>
           )}

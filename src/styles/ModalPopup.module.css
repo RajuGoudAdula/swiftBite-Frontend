@@ -9,12 +9,13 @@
   padding: 0;
   max-width: 90%;
   width: 500px;
-  max-height: 90vh; /* limit max height */
+  max-height: 80vh; /* limit max height */
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   outline: none;
   z-index: 1000;
+  height: fit-content;
 }
 
 .overlay {

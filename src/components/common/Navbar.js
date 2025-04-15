@@ -15,6 +15,7 @@ import debounce from 'lodash.debounce';
 import styles from "../../styles/Navbar.module.css";
 
 const Navbar = () => {
+  const { cartItems = [] } = useSelector((state) => state.cart || {});
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchError, setSearchError] = useState(null);
@@ -386,7 +387,9 @@ const Navbar = () => {
           {user?.role === "user" && (
             <Link to="/cart" className={styles.cartIcon}>
               <FaShoppingCart size={20} />
-              <span className={styles.cartBadge}>2</span>
+              {cartItems.length>0 &&(
+                <span className={styles.cartBadge}>{cartItems.length}</span>
+              )}
             </Link>
           )}
         </div>

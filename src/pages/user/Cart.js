@@ -5,6 +5,8 @@ import {
   updateQuantity,
   removeItem,
 } from "../../store/slices/cartSlice";
+import Lottie from 'lottie-react';
+import animationData from '../../animations/cartIsEmpty.json';
 import { addToast } from "../../store/slices/toastSlice";
 import styles from "../../styles/Cart.module.css";
 import Payment from "../user/Payment";
@@ -22,6 +24,7 @@ const Cart = () => {
       dispatch(fetchCartItems(userId));
     }
   }, [dispatch, userId]);
+
 
   const handleIncrease = (itemId, quantity) => {
     dispatch(updateQuantity({ userId, itemId, quantity: quantity + 1 }));
@@ -63,25 +66,44 @@ const Cart = () => {
       ) : error ? (
         <p className={styles.error}>{error}</p>
       ) : cartItems?.length === 0 ? (
+        <>
         <p className={styles.empty}>Your cart is empty.</p>
+        <div className={styles.animationWrapper}>
+           <Lottie animationData={animationData} loop={true} style={{maxWidth:"500px" ,maxHeight:"500px" }}/>
+         </div>
+        </>
       ) : (
         <div className={styles.cartContainer}>
           {cartItems.map((item) => (
-            <div key={item.productId} className={styles.item}>
+            <div key={item.productId._id} className={styles.item}>
               <img
-                src={item.image}
-                alt={item.name}
+                src={item.productId.image}
+                alt={item.productId.name}
                 className={styles.itemImage}
               />
               <div className={styles.itemDetails}>
                 <div className={styles.itemName}>
-                  <h3 className={styles.itemTitle}>{item.name}</h3>
-                  <p className={styles.itemPrice}>₹{item.price}</p>
+                  <h4 className={styles.itemTitle}>{item.productId.name}</h4>
+                   {item.itemId?.offers?.length > 0 && (
+                    <span className={styles.discountText}>{item.itemId.offers[0]?.discount}% OFF</span>
+                  )}
+                
+                <div className={styles.pricing}>
+                  {item.itemId?.offers?.length > 0 ? (
+                    <div>
+                      <span className={styles.currentPrice}>₹{(item.itemId?.price)-(item.itemId?.price)*(item.itemId?.offers[0]?.discount)/100}</span>
+                      <span className={styles.originalPrice}>₹{item.itemId?.price}</span>
+                    </div>
+                  ):(
+                    <span className={styles.currentPrice}>₹{item.itemId?.price}</span>
+                  )}
+                </div>
+                 
                 </div>
                 <div className={styles.quantityControls}>
                   <button
                     onClick={() =>
-                      handleDecrease(item.productId, item.quantity)
+                      handleDecrease(item.productId._id, item.quantity)
                     }
                     className={styles.quantityButton}
                   >
@@ -92,7 +114,7 @@ const Cart = () => {
                   <span className={styles.quantity}>{item.quantity}</span>
                   <button
                     onClick={() =>
-                      handleIncrease(item.productId, item.quantity)
+                      handleIncrease(item.productId._id, item.quantity)
                     }
                     className={styles.quantityButton}
                   >
@@ -102,7 +124,7 @@ const Cart = () => {
                   </button>
                 </div>
                 <button
-                  onClick={() => handleRemove(item.productId, item.name)}
+                  onClick={() => handleRemove(item.productId._id, item.productId.name)}
                   className={styles.deleteButton}
                   aria-label={`Remove ${item.name} from cart`}
                 >

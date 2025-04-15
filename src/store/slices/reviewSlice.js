@@ -17,9 +17,9 @@ export const fetchReviewOfUser = createAsyncThunk(
 // Add a new review
 export const addReview = createAsyncThunk(
   "reviews/addReview",
-  async ({ productId,orderId,canteenId,review,rating,userId,collegeId }, { rejectWithValue }) => {
+  async ({ productId,orderId,canteenId,review,rating,userId,collegeId,isAnonymous }, { rejectWithValue }) => {
     try {
-      const response = await userApi.addReview(productId,orderId,canteenId,review,rating,userId,collegeId);
+      const response = await userApi.addReview(productId,orderId,canteenId,review,rating,userId,collegeId,isAnonymous);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Failed to add review");
@@ -30,9 +30,9 @@ export const addReview = createAsyncThunk(
 // Update a review
 export const updateReview = createAsyncThunk(
   "reviews/updateReview",
-  async ({ productId, canteenId,collegeId , rating, review, userId ,orderId}, { rejectWithValue }) => {
+  async ({ productId, canteenId,collegeId , rating, review, userId ,orderId,isAnonymous}, { rejectWithValue }) => {
     try {
-      const response = await userApi.updateReview(productId, canteenId, rating, review, userId,collegeId,orderId);
+      const response = await userApi.updateReview(productId, canteenId, rating, review, userId,collegeId,orderId,isAnonymous);
       return response.data.review;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Failed to update review");
@@ -95,8 +95,6 @@ const reviewSlice = createSlice({
       })
       .addCase(updateReview.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
-    
         const updatedReviewId = Object.keys(action.payload.updatedReview)[0]; 
         const updatedReviewData = action.payload.updatedReview[updatedReviewId]; 
     

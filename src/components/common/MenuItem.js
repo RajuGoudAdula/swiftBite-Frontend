@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../styles/MenuItem.module.css';
+import FavouriteButton from '../../pages/user/FavouriteButton';
+import { useSelector } from 'react-redux';
 
-const MenuItem = ({ item, isAdmin, onAddToCart }) => {
+const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
+  const { user } = useSelector(state => state.auth || {});
   
   const CustomPlus = () => (
     <svg
@@ -48,7 +51,7 @@ const MenuItem = ({ item, isAdmin, onAddToCart }) => {
 
   if (isMobile) {
     return (
-      <div className={styles.mobileContainer}>
+      <div className={isFavourites ? styles.mobileFavouritesContainer : styles.mobileContainer }>
         <div className={styles.mobileTopSection}>
           <div className={styles.mobileDetails} onClick={() => navigate(`/item/${item._id}`)}>
             <h3 className={styles.productName}>{item.name}</h3>
@@ -86,13 +89,14 @@ const MenuItem = ({ item, isAdmin, onAddToCart }) => {
           </div>
         </div>
         
-        <div className={styles.mobileImageWrapper} onClick={() => navigate(`/item/${item._id}`)}>
+        <div className={isFavourites ? styles.mobileFavouriteImageWrapper : styles.mobileImageWrapper} onClick={() => navigate(`/item/${item._id}`)}>
           <img
             src={item.productId.image}
             alt={item.name}
             className={styles.mobileProductImage}
             loading="lazy"
           />
+        <FavouriteButton userId={user.id} canteenId={user.canteen._id} itemId={item._id}/>
         </div>
       </div>
     );
@@ -109,6 +113,7 @@ const MenuItem = ({ item, isAdmin, onAddToCart }) => {
           loading="lazy"
         />
         <OfferBadge />
+        <FavouriteButton userId={user.id} canteenId={user.canteen._id} itemId={item._id}/>
       </div>
       
       <div className={styles.desktopBottomSection}>

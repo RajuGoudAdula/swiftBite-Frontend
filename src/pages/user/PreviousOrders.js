@@ -14,7 +14,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 
-function Order() {
+function PreviousOrder() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { orders, loading, error } = useSelector((state) => state.order);
@@ -158,10 +158,7 @@ function Order() {
     <div className={isMobile ? styles.mobileContainer : styles.desktopContainer}>
       {/* Orders List */}
       <div className={isMobile ? styles.mobileOrderList : styles.desktopOrderList}>
-        <div className={styles.titleSection}>
-          <h2 className={styles.sectionTitle}>Your Orders</h2>
-          <button className={styles.previousButton} onClick={() => navigate('/previous-orders')}>Previous Orders</button>
-        </div>
+        <h2 className={styles.sectionTitle}>Previous Orders</h2>
         {loading && (
           <div className={styles.loading}>
             <div className={styles.spinner}></div>
@@ -172,13 +169,7 @@ function Order() {
 
         {!loading && Array.isArray(orders) && orders.length > 0 ? (
           <div className={styles.orderItems}>
-            {orders.map((order) => ( (
-              (order.orderStatus.toLowerCase() !== "completed") || (
-                new Date(order.updatedAt).getDate() === new Date().getDate() && 
-                new Date(order.updatedAt).getMonth() === new Date().getMonth() && 
-                new Date(order.updatedAt).getYear() === new Date().getYear() 
-              )
-            ) &&
+            {orders.map((order) => ( order.orderStatus.toLowerCase() === "completed" &&
               <React.Fragment key={order._id}>
                 <div
                   className={`${styles.orderCard} ${
@@ -871,4 +862,4 @@ function Order() {
   );
 }
 
-export default Order;
+export default PreviousOrder;
