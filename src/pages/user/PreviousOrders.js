@@ -167,6 +167,10 @@ function PreviousOrder() {
 
         {error && <p className={styles.error}>{error}</p>}
 
+        {Array.isArray(orders) && orders.length === 0 && (
+           <p>No Previous Orders</p>
+        )} 
+
         {!loading && Array.isArray(orders) && orders.length > 0 ? (
           <div className={styles.orderItems}>
             {orders.map((order) => ( order.orderStatus.toLowerCase() === "completed" &&

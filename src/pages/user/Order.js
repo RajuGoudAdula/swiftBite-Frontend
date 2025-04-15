@@ -31,7 +31,9 @@ function Order() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isAnonymous,setIsAnonymous] = useState(false);
   
-
+ useEffect(()=>{
+  console.log(orders);
+ },[orders]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -193,7 +195,7 @@ function Order() {
                       <div className={styles.orderImages}>
                         {order.items.slice(0, 3).map((item, index) => (
                           <img
-                            src={item?.image || "/default-image.jpg"}
+                            src={item?.productId?.image || "/default-image.jpg"}
                             key={`${item._id}-${index}`}
                             alt="item"
                             className={styles.orderItemImage}
@@ -268,14 +270,14 @@ function Order() {
                           <div key={item._id} style={{borderBottom: "solid 1px #80808042"}}>
                             <div className={styles.itemCard}>
                               <img
-                                src={item?.image || "/default-image.jpg"}
+                                src={item?.productId?.image || "/default-image.jpg"}
                                 alt={item.name}
                                 className={styles.itemImage}
                               />
                               <div className={styles.itemDetails}>
-                                <h5 className={styles.itemName}>{item.name}</h5>
+                                <h5 className={styles.itemName}>{item?.productId?.name}</h5>
                                 <span className={styles.itemUnits}>
-                                  {item.productId?.netWeight}. 1{item.productId?.unit}
+                                  {item.productId?.netWeight}. 1{item?.productId?.unit}
                                 </span>
                               </div>
                               <div className={styles.priceAndReview}>

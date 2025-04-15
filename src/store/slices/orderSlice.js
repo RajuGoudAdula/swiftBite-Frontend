@@ -7,6 +7,7 @@ export const fetchOrders = createAsyncThunk(
   async ({userId , canteenId}, { rejectWithValue }) => {
     try {
       const response = await userApi.fetchOrders(userId,canteenId);
+      console.log(response);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch orders');
