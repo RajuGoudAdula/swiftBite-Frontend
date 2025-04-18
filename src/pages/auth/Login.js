@@ -47,7 +47,12 @@ const Login = () => {
       }
     } catch (error) {
       console.error('Login error:', error);
-      alert('Login failed. Please try again.');
+      dispatch(addToast({
+        id: Date.now(),
+        type: 'error',
+        message: error.response.data.message,
+        duration: 3000,
+      }));
     }
   };
 

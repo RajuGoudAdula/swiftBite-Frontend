@@ -6,19 +6,27 @@ import ManageMenu from '../pages/canteen/ManageMenu';
 import Dashboard from '../pages/canteen/Dashboard';
 import Profile from '../pages/user/Profile';
 import ReviewList from '../pages/canteen/CanteenReviewPage';
+import VideoSplashScreen from '../components/common/VideoSplashScreen';
 
 
 const CanteenRoutes = () => {
+   const [showSplash, setShowSplash] = useState(true);
   return (
-    <Routes>
-      <Route path="dashboard" element={<Dashboard />} />
-      <Route path="menu" element={<ManageMenu />} />
-      <Route path="orders" element={<ManageOrders />} />
-      <Route path="profile" element={<Profile />} />
-      {/* <Route path="/revenue" element={<Revenue />} /> */}
-      <Route path='analytics' element={<Analytics />} /> 
-      <Route path='reviews' element={<ReviewList />} />
-    </Routes>
+    <>
+     {showSplash ? (
+        <VideoSplashScreen onFinish={() => setShowSplash(false)} />
+      ) : (
+      <Routes>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="menu" element={<ManageMenu />} />
+        <Route path="orders" element={<ManageOrders />} />
+        <Route path="profile" element={<Profile />} />
+        {/* <Route path="/revenue" element={<Revenue />} /> */}
+        <Route path='analytics' element={<Analytics />} /> 
+        <Route path='reviews' element={<ReviewList />} />
+      </Routes>
+      )}
+    </>
   );
 };
 

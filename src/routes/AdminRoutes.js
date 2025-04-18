@@ -5,17 +5,25 @@ import ManageProducts from '../pages/admin/ManageProducts';
 import ManageColleges from '../pages/admin/ManageColleges';
 import ManageCanteens from '../pages/admin/ManageCanteens';
 import Profile from '../pages/user/Profile';
+import VideoSplashScreen from '../components/common/VideoSplashScreen';
 
 
 const AdminRoutes = () => {
+  const [showSplash, setShowSplash] = useState(true);
   return (
-    <Routes>
-      <Route path="dashboard" element={<AdminDashboard />} />
-      <Route path="products" element={<ManageProducts />} />
-      <Route path="colleges" element={<ManageColleges />} />
-      <Route path="canteens" element={<ManageCanteens />} />
-      <Route path="profile" element={<Profile />} />
-    </Routes>
+    <>
+    {showSplash ? (
+        <VideoSplashScreen onFinish={() => setShowSplash(false)} />
+      ) : (
+        <Routes>
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="products" element={<ManageProducts />} />
+          <Route path="colleges" element={<ManageColleges />} />
+          <Route path="canteens" element={<ManageCanteens />} />
+          <Route path="profile" element={<Profile />} />
+        </Routes>
+      )}
+    </>
   );
 };
 
