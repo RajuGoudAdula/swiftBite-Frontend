@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Unauthorized from './pages/auth/Unauthorized';
 import AdminRoutes from './routes/AdminRoutes';
@@ -8,8 +8,10 @@ import PrivateRoute from './routes/PrivateRoute';
 import Navbar from './components/common/Navbar';
 import Toast from './components/common/Toast';
 import AuthPage from './pages/auth/AuthPage';
+import VideoSplashScreen from './components/common/VideoSplashScreen';
 
 function App() {
+    const [showSplash, setShowSplash] = useState(true);
 
   return (
     <Router>
@@ -27,8 +29,14 @@ function App() {
               path="/admin/*"
               element={
                 <PrivateRoute allowedRoles={['admin']}>
-                  <Navbar />
-                  <AdminRoutes />
+                  {showSplash ? (
+                        <VideoSplashScreen onFinish={() => setShowSplash(false)} />
+                      ) : (
+                      <>
+                        <Navbar />
+                        <AdminRoutes />
+                      </>
+                  )}
                 </PrivateRoute>
               }
             />
@@ -37,8 +45,14 @@ function App() {
               path="/canteen/*"
               element={
                 <PrivateRoute allowedRoles={['canteen']}>
-                  <Navbar />
-                  <CanteenRoutes />
+                  {showSplash ? (
+                        <VideoSplashScreen onFinish={() => setShowSplash(false)} />
+                      ) : (
+                      <>
+                        <Navbar />
+                        <CanteenRoutes />     
+                      </>
+                      )}
                 </PrivateRoute>
               }
             />
@@ -47,8 +61,14 @@ function App() {
               path="/*"
               element={
                 <PrivateRoute allowedRoles={['user']}>
-                  <Navbar />
-                  <StudentRoute />
+                   {showSplash ? (
+                        <VideoSplashScreen onFinish={() => setShowSplash(false)} />
+                      ) : (
+                      <>
+                         <Navbar />
+                         <StudentRoute />
+                      </>
+                        )}
                 </PrivateRoute>
               }
             />

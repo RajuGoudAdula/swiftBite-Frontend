@@ -9,17 +9,11 @@ import EditProfile from '../pages/user/EditProfile';
 import ItemDetailPage from '../pages/user/ItemDetailPage';
 import FloatingCartButton from '../pages/user/FloatingCartButton';
 import PreviousOrder from '../pages/user/PreviousOrders';
-import VideoSplashScreen from '../components/common/VideoSplashScreen'; // ✅ Import this component
 
 const StudentRoutes = () => {
-  const [showSplash, setShowSplash] = useState(true);
 
   return (
     <>
-      {showSplash ? (
-        <VideoSplashScreen onFinish={() => setShowSplash(false)} />
-      ) : (
-        <>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<Cart />} />
@@ -32,8 +26,6 @@ const StudentRoutes = () => {
           </Routes>
           <FloatingCartButton />
         </>
-      )}
-    </>
   );
 };
 

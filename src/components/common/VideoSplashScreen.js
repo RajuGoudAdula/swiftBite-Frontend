@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import videoSrc from "../../assets/swiftbite-intro.mp4"
+import styles from "../../styles/VideoSplashScreen.module.css";
 
 const VideoSplashScreen = ({ onFinish }) => {
   const videoRef = useRef();
@@ -16,11 +17,11 @@ const VideoSplashScreen = ({ onFinish }) => {
   }, [onFinish]);
 
   return (
-    <div className="flex items-center justify-center h-screen bg-black">
+    <div className={styles.container}>
       <video
         ref={videoRef}
         src={videoSrc}
-        className="w-full h-full object-cover"
+        className={styles.video}
         muted
         autoPlay
       />
