@@ -18,7 +18,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { items: items, loading, error } = useSelector(state => state.menu || {});
+  const { items, loading, error } = useSelector(state => state.menu || {});
   const { user, isAuthenticated } = useSelector(state => state.auth || {});
   const { colleges = [], canteens = [] } = useSelector(state => state.college || {});
   const favourites = useSelector((state) => state.favouriteItems.items || {});    
@@ -109,16 +109,22 @@ const Home = () => {
     setModalOpen(false);
   };
 
+  const modalButtons=[
+    {
+      label : "Confirm",
+      onClick : handleConfirmSelection,
+      variant: 'primary',
+      disabled: !(selectedCollege && selectedCanteen),
+    }
+  ]
+
   return (
     <div className={styles["home"]}>
       
-      <ModalPopup isOpen={modalOpen} title="Select Your College and Canteen" >
+      <ModalPopup isOpen={modalOpen} title="Select Your College and Canteen" buttons={modalButtons} >
         <Dropdown label="College" options={colleges} value={selectedCollege} onChange={e => setSelectedCollege(e.target.value)} />
         {selectedCollege && (
           <Dropdown label="Canteen" options={canteens} value={selectedCanteen} onChange={e => setSelectedCanteen(e.target.value)} />
-        )}
-        {selectedCollege && selectedCanteen && (
-          <button onClick={handleConfirmSelection}>Confirm</button>
         )}
       </ModalPopup>
       {favouriteItemsList?.length > 0 && (

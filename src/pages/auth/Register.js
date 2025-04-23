@@ -3,19 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import userApi from '../../api/userApi';
 import styles from '../../styles/Register.module.css';
+import { addToast } from '../../store/slices/toastSlice';
+import { useDispatch } from 'react-redux';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
-  const [message, setMessage] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
@@ -23,13 +25,28 @@ const Register = () => {
       const response = await userApi.sendOtp({ email });
       if (response.data.success) {
         setOtpSent(true);
-        setMessage(response.data.message);
+         dispatch(addToast(
+                          {id: Date.now(),
+                          type: 'success',
+                          message: response.data.message,
+                          duration: 3000,}
+                        ));
       } else {
-        setMessage('Failed to send OTP. Please try again.');
+         dispatch(addToast(
+                          {id: Date.now(),
+                          type: 'error',
+                          message:response.data.message,
+                          duration: 3000,}
+                        ));
       }
     } catch (error) {
       console.error('Error sending OTP:', error);
-      setMessage('An error occurred. Please try again.');
+       dispatch(addToast(
+                        {id: Date.now(),
+                        type: 'error',
+                        message: "Something went wrong.Please try later.",
+                        duration: 3000,}
+                      ));
     }
   };
 
@@ -37,39 +54,80 @@ const Register = () => {
     e.preventDefault();
     try {
       if (!email || !otp) {
-        setMessage('Email and OTP are required.');
+        dispatch(addToast(
+                         {id: Date.now(),
+                         type: 'warning',
+                         message: "Email and OTP is required",
+                         duration: 3000,}
+                       ));
         return;
       }
       const response = await userApi.verifyOtp({ email, otp });
       if (response.data.success) {
         setOtpVerified(true);
-        setMessage(response.data.message);
+        dispatch(addToast(
+                         {id: Date.now(),
+                         type: 'success',
+                         message: response.data.message,
+                         duration: 3000,}
+                       ));
       } else {
-        setMessage('Failed to verify email. Please try again.');
+         dispatch(addToast(
+                          {id: Date.now(),
+                          type: 'error',
+                          message: response.data.message,
+                          duration: 3000,}
+                        ));
       }
     } catch (error) {
       console.error('Error verifying OTP:', error);
-      setMessage('An error occurred. Please try again.');
+      dispatch(addToast(
+        {id: Date.now(),
+        type: 'error',
+        message: "Something went wrong.Please try later.",
+        duration: 3000,}
+      ));
     }
   };
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
+      dispatch(addToast(
+        {id: Date.now(),
+        type: 'warning',
+        message: "Passwords did not match.",
+        duration: 3000,}
+      ));
       return;
     }
     try {
       const response = await userApi.register({ email, password, username });
       if (response.data.success) {
-        setMessage('Registration successful! You can now log in.');
-        navigate('/login');
+        dispatch(addToast(
+          {id: Date.now(),
+          type: 'success',
+          message:response.data.message,
+          duration: 3000,}
+        )).then(()=>{
+          navigate('/login');
+        });
       } else {
-        setMessage('Failed to set password. Please try again.');
+        dispatch(addToast(
+          {id: Date.now(),
+          type: 'error',
+          message: response.data.message,
+          duration: 3000,}
+        ));
       }
     } catch (error) {
       console.error('Error setting password:', error);
-      setMessage('An error occurred. Please try again.');
+      dispatch(addToast(
+        {id: Date.now(),
+        type: 'error',
+        message: "Something went wrong.Please try later.",
+        duration: 3000,}
+      ));
     }
   };
 
@@ -164,7 +222,6 @@ const Register = () => {
           </>
         )}
       </form>
-      {message && <p className={styles.message}>{message}</p>}
     </div>
   );
 };
