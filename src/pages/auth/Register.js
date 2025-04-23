@@ -109,9 +109,8 @@ const Register = () => {
           type: 'success',
           message:response.data.message,
           duration: 3000,}
-        )).then(()=>{
+        ))
           navigate('/login');
-        });
       } else {
         dispatch(addToast(
           {id: Date.now(),
