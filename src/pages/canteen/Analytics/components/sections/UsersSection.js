@@ -4,6 +4,7 @@ import ChartCard from '../Cards/ChartCard';
 import { FiUser, FiTrendingUp, FiShoppingCart, FiAward } from 'react-icons/fi';
 import LineChart from '../Charts/BarLineChart';
 import PieChartComponent from '../Charts/PieChartComponent';
+import styles from '../../../../../styles/SalesData.module.css';
 
 const UsersSection = ({ loading, usersData }) => {
   const userStats = [
@@ -35,7 +36,7 @@ const UsersSection = ({ loading, usersData }) => {
 
   return (
     <div className="tab-content">
-      <div className="stats-grid">
+      <div className={styles.statGrid}>
         {userStats?.map((stat, index) => (
           <StatCard key={index} stat={stat} loading={loading} />
         ))}

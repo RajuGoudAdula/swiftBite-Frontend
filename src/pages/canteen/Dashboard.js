@@ -14,13 +14,9 @@ const CanteenDashboard = () => {
     const fetchDashboardData = async () => {
       try {
         const todayOrdersRes = await canteenApi.todayOrders();
-        console.log(todayOrdersRes);
         const pendingOrdersRes = await canteenApi.pendingOrders();
-        console.log(pendingOrdersRes);
         const revenueRes = await canteenApi.revenue();
-        console.log(revenueRes);
         const activityRes = await canteenApi.activity();
-        console.log(activityRes);
        
   
         setStats([
@@ -31,20 +27,19 @@ const CanteenDashboard = () => {
             positive: todayOrdersRes?.data?.positive ?? true
           },
           {
-            title: "Pending Orders",
+            title: "Today's Pending Orders",
             value: pendingOrdersRes?.data?.count ?? 0,
             change: pendingOrdersRes?.data?.change ?? '0%',
             positive: pendingOrdersRes?.data?.positive ?? true
           },
           {
-            title: "Total Revenue",
+            title: "Today's Total Revenue",
             value: `₹${(revenueRes?.data?.revenue ?? 0).toLocaleString()}`,
             change: revenueRes?.data?.change ?? '0%',
             positive: revenueRes?.data?.positive ?? true
           },
           
         ]);
-        console.log(stats);
   
         setRecentActivity(activityRes?.data ?? []);
       } catch (error) {
@@ -54,10 +49,6 @@ const CanteenDashboard = () => {
   
     fetchDashboardData();
   }, []);
-
-  useEffect(()=>{
-    console.log(stats);
-  },[stats]);
   
 
   const quickActions = [

@@ -16,16 +16,6 @@ const BarLineChart = ({ data, loading, timeRange, setTimeRange }) => {
   return (
     <>
       <div className={styles.chartControls}>
-        <select 
-          className={styles.timeRangeSelect} 
-          value={timeRange} 
-          onChange={(e) => setTimeRange(e.target.value)}
-        >
-          <option value="day">Day</option>
-          <option value="week">Week</option>
-          <option value="month">Month</option>
-          <option value="year">Year</option>
-        </select>
         <div className={styles.chartTypeToggle}>
           <button 
             className={`${styles.chartTypeButton} ${chartType === 'bar' ? styles.active : ''}`} 

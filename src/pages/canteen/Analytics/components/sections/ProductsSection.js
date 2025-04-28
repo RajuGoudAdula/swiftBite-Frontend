@@ -4,6 +4,7 @@ import ChartCard from '../Cards/ChartCard';
 import { FiPackage, FiShoppingCart, FiDollarSign, FiStar } from 'react-icons/fi';
 import BarChart from '../Charts/BarLineChart';
 import ScatterChartComponent from '../Charts/ScatterChartComponent';
+import styles from '../../../../../styles/SalesData.module.css';
 
 const ProductsSection = ({ loading, productsData }) => {
   const productStats = [
@@ -35,7 +36,7 @@ const ProductsSection = ({ loading, productsData }) => {
 
   return (
     <div className="tab-content">
-      <div className="stats-grid">
+      <div className={styles.statGrid}>
         {productStats.map((stat, index) => (
           <StatCard key={index} stat={stat} loading={loading} />
         ))}

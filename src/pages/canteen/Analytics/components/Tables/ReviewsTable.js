@@ -3,16 +3,18 @@ import StarRating from '../Utility/StarRating';
 import ResponseForm from '../Utility/ResponseForm';
 import styles from '../../../../../styles/Analytics.module.css';
 import canteenApi from '../../../../../api/canteenApi';
+import { useSelector } from 'react-redux';
 
-const ReviewsTable = ({ data, loading, setReviewsData }) => {
+const ReviewsTable = ({ data, loading }) => {
   const [editingResponse, setEditingResponse] = useState(null);
   const [responseText, setResponseText] = useState('');
+  const { user } = useSelector((state) => state.auth);
 
-  const handleResponseSubmit = async (reviewId) => {
+  const handleResponseSubmit = async (reviewId,response,orderId) => {
     try {
-      await canteenApi.submitReviewResponse(reviewId, responseText);
-      const reviewsRes = await canteenApi.fetchReviewsData();
-      setReviewsData(reviewsRes.data);
+      const canteenId = user?.canteen?._id;
+      await canteenApi.submitReviewResponse(canteenId , reviewId, response,orderId);
+      await canteenApi.fetchReviewsData(canteenId);
       setEditingResponse(null);
       setResponseText('');
     } catch (err) {
@@ -42,20 +44,21 @@ const ReviewsTable = ({ data, loading, setReviewsData }) => {
         <tbody>
           {data.map((review) => (
             <tr key={review._id}>
-              <td>#{review.orderId}</td>
-              <td>{review.productName}</td>
-              <td>{review.userName}</td>
+              <td>#{review?.orderId?._id}</td>
+              <td>{review.product}</td>
+              <td>{review.user}</td>
               <td>
                 <StarRating rating={review.rating} />
               </td>
-              <td>{review.comment}</td>
+              <td>{review.review}</td>
               <td>{new Date(review.createdAt).toLocaleDateString()}</td>
               <td>
-                {review.response ? (
-                  review.response
+                {review.canteenResponse.text ? (
+                  review.canteenResponse.text
                 ) : editingResponse === review._id ? (
                   <ResponseForm
                     reviewId={review._id}
+                    orderId={review.orderId?._id}
                     onSubmit={handleResponseSubmit}
                     onCancel={() => {
                       setEditingResponse(null);

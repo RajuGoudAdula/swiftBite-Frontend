@@ -3,6 +3,7 @@ import styles from '../../../../../styles/Analytics.module.css';
 
 const ResponseForm = ({ 
   reviewId, 
+  orderId,
   onSubmit, 
   onCancel,
   initialValue = '' 
@@ -10,7 +11,7 @@ const ResponseForm = ({
   const [response, setResponse] = useState(initialValue);
 
   const handleSubmit = () => {
-    onSubmit(reviewId, response);
+    onSubmit(reviewId, response,orderId);
   };
 
   return (

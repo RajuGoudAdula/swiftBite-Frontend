@@ -44,11 +44,8 @@ const canteenApi = {
   },
 
   //Reviews 
-  getReviews : async (canteenId) => {
-    return axiosInstance.get(`/canteen/reviews/${canteenId}`)
-  },
-  replayReview : async (reviewId,replayText) => {
-    return axiosInstance.post(`/canteen/add-replay/${reviewId}`,{replayText});
+  submitReviewResponse : async (canteenId,reviewId,response,orderId) => {
+    return axiosInstance.post(`/canteen/${canteenId}/add-response`,{reviewId,response,orderId})
   },
   //Canteen dashboard
   todayOrders : async () => {
@@ -67,14 +64,17 @@ const canteenApi = {
     return axiosInstance.get('/canteen/orders/recent');
   },
   //Canteen Analytics
-  fetchStats : async () => {
-    return axiosInstance.get('/canteen/analytics/stats');
+  fetchSalesData : async (startDate,endDate,canteenId) => {
+    return axiosInstance.get(`/canteen/${canteenId}/analytics/sales-data?startDate=${startDate}&endDate=${endDate}`);
   },
-  fetchChartData : async (range) => {
-    return axiosInstance.get(`/canteen/analytics/chart/${range}`);
+  fetchUsersData : async (startDate,endDate,canteenId) => {
+    return axiosInstance.get(`/canteen/${canteenId}/analytics/user-data?startDate=${startDate}&endDate=${endDate}`);
   },
-  fetchPieData : async () => {
-    return axiosInstance.get('/canteen/analytics/pie');
+  fetchProductsData : async (startDate,endDate,canteenId) => {
+    return axiosInstance.get(`/canteen/${canteenId}/analytics/product-data?startDate=${startDate}&endDate=${endDate}`);
+  },
+  fetchReviewsData : async (canteenId) => {
+    return axiosInstance.get(`/canteen/${canteenId}/analytics/reviews-data`);
   },
 };
 

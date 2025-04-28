@@ -1,5 +1,5 @@
 // src/pages/canteen/Analytics/components/Common/DateRangePicker.js
-import { FiCalendar, FiFilter } from 'react-icons/fi';
+import { FiCalendar } from 'react-icons/fi';
 import styles from '../../../../../styles/Analytics.module.css';
 
 const DateRangePicker = ({ startDate, endDate, setStartDate, setEndDate }) => (
@@ -18,7 +18,6 @@ const DateRangePicker = ({ startDate, endDate, setStartDate, setEndDate }) => (
       onChange={(e) => setEndDate(e.target.value)} 
       className={styles.dateInput} 
     />
-    <FiFilter className={styles.filterIcon} />
   </div>
 );
 

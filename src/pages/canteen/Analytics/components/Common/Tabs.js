@@ -3,7 +3,7 @@ import styles from '../../../../../styles/Analytics.module.css';
 
 const Tabs = ({ activeTab, setActiveTab }) => (
   <div className={styles.tabs}>
-    {['overview', 'sales', 'users', 'products', 'reviews and rating'].map(tab => (
+    {['sales', 'users', 'products', 'reviews and rating'].map(tab => (
       <button
         key={tab}
         className={`${styles.tab} ${activeTab === tab ? styles.active : ''}`}

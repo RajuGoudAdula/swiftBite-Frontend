@@ -4,8 +4,9 @@ import ChartCard from '../Cards/ChartCard';
 import { FiDollarSign, FiShoppingCart, FiTrendingUp, FiAward } from 'react-icons/fi';
 import LineChart from '../Charts/BarLineChart';
 import BarChart from '../Charts/BarLineChart';
+import styles from '../../../../../styles/SalesData.module.css';
 
-const SalesSection = ({ loading, salesData }) => {
+const SalesSection = ({ loading, salesData}) => {
   const salesStats = [
     {
       label: 'Total Revenue',
@@ -35,7 +36,7 @@ const SalesSection = ({ loading, salesData }) => {
 
   return (
     <div className="tab-content">
-      <div className="stats-grid">
+      <div className={styles.statGrid}>
         {salesStats.map((stat, index) => (
           <StatCard key={index} stat={stat} loading={loading} />
         ))}

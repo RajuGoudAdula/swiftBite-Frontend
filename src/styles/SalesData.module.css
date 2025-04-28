@@ -1,0 +1,11 @@
+.statGrid{
+    display: flex;
+    gap: 1rem;
+    padding: 1.5%;
+}
+
+@media (max-width : 768px) {
+    .statGrid{
+        flex-direction: column;
+    }
+}

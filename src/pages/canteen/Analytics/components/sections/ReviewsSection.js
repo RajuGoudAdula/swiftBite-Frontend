@@ -4,41 +4,33 @@ import ChartCard from '../Cards/ChartCard';
 import { FiStar, FiUser, FiPackage } from 'react-icons/fi';
 import RatingDistributionChart from '../Charts/RatingDistributionChart';
 import ReviewsTable from '../Tables/ReviewsTable';
+import styles from '../../../../../styles/CanteenDashboard.module.css'
 
 const ReviewsSection = ({ loading, reviewsData, setReviewsData }) => {
-  const calculateMostActive = (key) => {
-    if (reviewsData.length === 0) return 'N/A';
-    
-    const counts = reviewsData.reduce((acc, review) => {
-      acc[review[key]] = (acc[review[key]] || 0) + 1;
-      return acc;
-    }, {});
-    
-    return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
-  };
+  
 
   const reviewStats = [
     {
       label: 'Total Reviews',
-      value: reviewsData.length,
+      value: reviewsData?.totalReviews,
       change: 0,
       icon: <FiStar />
     },
     {
       label: 'Average Rating',
-      value: (reviewsData.reduce((acc, review) => acc + review.rating, 0) / reviewsData.length )|| 0,
+      value: reviewsData?.averageRating || 0,
       change: 0,
       icon: <FiStar />
     },
     {
       label: 'Most Active Reviewer',
-      value: calculateMostActive('user'),
+      value: `${reviewsData?.mostActiveReviewer?.name}(${reviewsData?.mostActiveReviewer?.email})`   ,
       change: 0,
       icon: <FiUser />
     },
     {
       label: 'Most Reviewed Product',
-      value: calculateMostActive('product'),
+      value: `${reviewsData?.mostReviewedProduct?.name}(#${reviewsData?.mostReviewedProduct?._id})`,
       change: 0,
       icon: <FiPackage />
     }
@@ -46,7 +38,7 @@ const ReviewsSection = ({ loading, reviewsData, setReviewsData }) => {
 
   return (
     <div className="tab-content">
-      <div className="stats-grid">
+      <div className={styles.statsGrid}>
         {reviewStats.map((stat, index) => (
           <StatCard key={index} stat={stat} loading={loading} />
         ))}
@@ -56,11 +48,11 @@ const ReviewsSection = ({ loading, reviewsData, setReviewsData }) => {
         <ChartCard title="Rating Distribution">
           <RatingDistributionChart 
             data={[
-              { name: '5 Stars', value: reviewsData.filter(r => r.rating === 5).length },
-              { name: '4 Stars', value: reviewsData.filter(r => r.rating === 4).length },
-              { name: '3 Stars', value: reviewsData.filter(r => r.rating === 3).length },
-              { name: '2 Stars', value: reviewsData.filter(r => r.rating === 2).length },
-              { name: '1 Star', value: reviewsData.filter(r => r.rating === 1).length },
+              { name: '5 Stars', value: reviewsData?.allReviews?.filter(r => r.rating === 5).length },
+              { name: '4 Stars', value: reviewsData?.allReviews?.filter(r => r.rating === 4).length },
+              { name: '3 Stars', value: reviewsData?.allReviews?.filter(r => r.rating === 3).length },
+              { name: '2 Stars', value: reviewsData?.allReviews?.filter(r => r.rating === 2).length },
+              { name: '1 Star', value: reviewsData?.allReviews?.filter(r => r.rating === 1).length },
             ]} 
             loading={loading}
           />
@@ -68,7 +60,7 @@ const ReviewsSection = ({ loading, reviewsData, setReviewsData }) => {
 
         <ChartCard title="Customer Reviews">
           <ReviewsTable 
-            data={reviewsData} 
+            data={reviewsData.allReviews} 
             loading={loading}
             setReviewsData={setReviewsData}
           />
