@@ -121,7 +121,7 @@ const Login = () => {
 
       <div className={styles.googleLogin}>
         <GoogleLogin
-          onSuccess={handleGoogleSuccess}
+          onSuccess={(credentialResponse) => handleGoogleSuccess(credentialResponse)}
           onError={() => alert('Google Login Failed')}
         />
       </div>
