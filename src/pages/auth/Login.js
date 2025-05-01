@@ -6,6 +6,7 @@ import { loginSuccess } from '../../store/slices/authSlice';
 import userApi from '../../api/userApi';
 import styles from '../../styles/Login.module.css'; // ✅ CSS Module import
 import { addToast } from '../../store/slices/toastSlice';
+import { userAllNotifications } from '../../store/slices/notificationSlice';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,10 +18,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await userApi.login({ email, password });
-      if (response.data.success) {
+      if (response?.data?.success) {
         dispatch(loginSuccess({
-          user: response.data.user,
-          token: response.data.token,
+          user: response?.data?.user,
+          token: response?.data?.token,
         }))
        dispatch(addToast(
                   {id: Date.now(),
@@ -28,10 +29,12 @@ const Login = () => {
                   message: `Welcome! You are now logged in.`,
                   duration: 3000,}
                 ));
+
+        dispatch(userAllNotifications(response?.data?.user?.id));
              
-        if (response.data.user.role === 'admin') {
+        if (response?.data?.user?.role === 'admin') {
           navigate('/admin/dashboard');
-        } else if (response.data.user.role === 'canteen') {
+        } else if (response?.data?.user?.role === 'canteen') {
           navigate('/canteen/dashboard');
         } else {
           navigate('/');
@@ -50,7 +53,7 @@ const Login = () => {
       dispatch(addToast({
         id: Date.now(),
         type: 'error',
-        message: error.response.data.message,
+        message: error?.response?.data?.message,
         duration: 3000,
       }));
     }
@@ -60,10 +63,10 @@ const Login = () => {
     try {
       const res = await userApi.googleLogin({ token: response.credential });
 
-      if (res.data.success) {
+      if (res?.data?.success) {
         dispatch(loginSuccess({
-          user: res.data.user,
-          token: res.data.token,
+          user: res?.data?.user,
+          token: res?.data?.token,
         }))
           dispatch(addToast(
             {id: Date.now(),
@@ -71,15 +74,15 @@ const Login = () => {
             message: `Welcome! You are now logged in.`,
             duration: 3000,}
           ));
-        if (res.data.user.role === 'admin') {
+        if (res?.data?.user?.role === 'admin') {
           navigate('/admin/dashboard');
-        } else if (res.data.user.role === 'canteen') {
+        } else if (res?.data?.user?.role === 'canteen') {
           navigate('/canteen/dashboard');
         } else {
           navigate('/');
         }
       } else {
-        alert(res.data.message);
+        alert(res?.data?.message);
       }
     } catch (error) {
       console.error('Google login error:', error);

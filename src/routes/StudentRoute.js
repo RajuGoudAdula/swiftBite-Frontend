@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/user/Home';
 import Cart from '../pages/user/Cart';
@@ -9,6 +9,7 @@ import EditProfile from '../pages/user/EditProfile';
 import ItemDetailPage from '../pages/user/ItemDetailPage';
 import FloatingCartButton from '../pages/user/FloatingCartButton';
 import PreviousOrder from '../pages/user/PreviousOrders';
+import NotificationPanel from '../components/common/NotificationPanel';
 
 const StudentRoutes = () => {
 
@@ -23,6 +24,7 @@ const StudentRoutes = () => {
             <Route path="/item/:itemId" element={<ItemDetailPage />} />
             <Route path="/payment-status" element={<PaymentStatus />} />
             <Route path="/previous-orders" element={<PreviousOrder />} />
+            <Route path='/notifications' element={<NotificationPanel />} />
           </Routes>
           <FloatingCartButton />
         </>

@@ -348,15 +348,14 @@
   .reviewCard {
     background: white;
     border-radius: 12px;
-    padding: 20px;
+    padding: 1%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   }
   
   .reviewHeader {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    margin-bottom: 12px;
   }
   
   .reviewer {
@@ -365,21 +364,27 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+    padding: 2%;
   }
   
   .reviewRating {
     color: #FF9500;
+    padding: 2%;
   }
   
   .reviewText {
     line-height: 1.6;
-    margin-bottom: 16px;
-    color: #515154;
+    padding:0 0 2% 0;
+    font-size: 1rem;
+    color: #333;
+    font-style: italic;
   }
   
   .reviewActions {
     display: flex;
     justify-content: flex-end;
+    margin: 0 3%;
+    gap: 1.3%;
   }
   
   .actionButton {
@@ -406,15 +411,19 @@
   }
   
   .canteenResponse {
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid #e5e5e5;
+    background-color: #f6f6ff;
+    border: 1px solid #f6f6ff;
+    border-radius: 20px;
+    padding: 2%;
+    margin: 0 3% 2% 3%;
+    display: flex;
+    flex-direction: column;
   }
   
   .responseLabel {
     font-weight: 600;
     color: #0071E3;
-    margin-bottom: 8px;
+    padding: 0 0 2% 0;
   }
   
   .noReviews {
@@ -472,7 +481,7 @@
     .container{
       padding: 4%;
     }
-    .inStock{
+    .inStock,.outOfStock{
       margin-bottom: 0;
       position: absolute;
       top: 13.6%;
@@ -514,4 +523,34 @@
     color: #808080c4;
     font-size: 0.8rem;
     font-weight: bold;
+  }
+
+  .reviewSection{
+    display: flex;
+    padding: 0 3%;
+    flex-direction: column;
+  }
+  .reviewDetails{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .reviewerName{
+    font-weight: bold;
+    padding: 2%;
+  }
+
+  .reviewDate{
+    line-height: 1.6;
+    padding:0 0 2% 0;
+    font-size: 0.875rem;
+    color: #888;
+  }
+
+  .canteenResponseText{
+    line-height: 1.6;
+    padding:0 0 2% 0;
+    color: #2e7d32;
+    font-size: 0.95rem;
   }

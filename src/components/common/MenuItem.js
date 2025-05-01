@@ -70,23 +70,23 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
             </div>
           </div>
           
-          <div className={styles.mobileActionSection}>
             {item.isAvailable ? (
               <>
-                <button 
-                  className={styles.mobileAddButton}
-                  onClick={() => onAddToCart(item)}
-                >
-                  <CustomPlus className={styles.plusIcon} />
-                </button>
-                {item.stock < 10 && (
-                  <span className={styles.lowStock}>Only {item.stock} left</span>
-                )}
+                <div className={styles.mobileActionSection}>
+                      <button 
+                        className={styles.mobileAddButton}
+                        onClick={() => onAddToCart(item)}
+                      >
+                        <CustomPlus className={styles.plusIcon} />
+                      </button>
+                      {item.stock < 10 && (
+                        <span className={styles.lowStock}>Only {item.stock} left</span>
+                      )}
+                </div>
               </>
             ) : (
               <span className={styles.outOfStock}>Out of stock</span>
             )}
-          </div>
         </div>
         
         <div className={isFavourites ? styles.mobileFavouriteImageWrapper : styles.mobileImageWrapper} onClick={() => navigate(`/item/${item._id}`)}>
@@ -134,23 +134,23 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
           </div>
         </div>
         
-        <div className={styles.desktopActionSection}>
           {item.isAvailable ? (
             <>
-              <button 
-                className={styles.desktopAddButton}
-                onClick={() => onAddToCart(item)}
-              >
-                ADD
-              </button>
-              {item.stock < 10 && (
-                <span className={styles.lowStock}>Only {item.stock} left</span>
-              )}
+              <div className={styles.desktopActionSection}>
+                    <button 
+                      className={styles.desktopAddButton}
+                      onClick={() => onAddToCart(item)}
+                    >
+                      ADD
+                    </button>
+                    {item.stock < 10 && (
+                      <span className={styles.lowStock}>Only {item.stock} left</span>
+                    )}
+              </div>
             </>
           ) : (
             <span className={styles.outOfStock}>Out of stock</span>
           )}
-        </div>
       </div>
     </div>
   );

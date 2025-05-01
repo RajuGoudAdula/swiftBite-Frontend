@@ -370,6 +370,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding:0 2%;
 }
 
 .reviewDisplay {
@@ -382,7 +383,10 @@
 .reviewRating {
   font-size: 14px;
   color: #86868B;
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .ratingStars {
@@ -582,4 +586,33 @@ color: #86868b;
 
 .previousButton:hover{
   background-color: #ff00c0;
+}
+
+.canteenResponse {
+  background-color: #f6f6ff;
+  border: 1px solid #f6f6ff;
+  border-radius: 20px;
+  padding: 2%;
+  margin: 0 3% 2% 3%;
+  display: flex;
+  flex-direction: column;
+}
+.responseLabel {
+  font-weight: 600;
+  color: #0071E3;
+  padding: 0 0 2% 0;
+}
+
+.reviewDate{
+  line-height: 1.6;
+  padding:0 0 2% 0;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.canteenResponseText{
+  line-height: 1.6;
+  padding:0 0 2% 0;
+  color: #2e7d32;
+  font-size: 0.95rem;
 }

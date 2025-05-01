@@ -1,0 +1,150 @@
+.panel {
+   
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 4%;
+  }
+  
+  .title ,.mainTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  
+  .clearBtn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background-color: rgba(255, 59, 48, 0.1);
+    color: #FF3B30;
+  }
+  
+  .clearBtn:hover {
+    background-color: rgba(255, 59, 48, 0.2);
+  }
+  
+  .listItem {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem;
+    flex-direction: row;
+    align-items: flex-start;
+    border: solid 1px #e9ecef;
+    border-radius: 1rem;
+    justify-content: space-around;
+  }
+  
+  .unread {
+    background-color: #ebf8ff;
+  }
+  
+  .read {
+    background-color: #f9fafb;
+  }
+  
+  .message {
+    font-size: 0.875rem;
+    color: #374151;
+    margin: 0 0 3% 0;
+  }
+  
+  .timestamp {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin: 0;
+  }
+  
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: center;
+  }
+  
+  .actionBtn {
+    padding: 0.3rem;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background-color: rgba(0, 122, 255, 0.1);
+    color: #3b82f6;
+  }
+  
+  .actionBtn:hover {
+    background-color: rgba(0, 122, 255, 0.2);
+  }
+  
+  .deleteBtn {
+    color: #9ca3af;
+    background: none;
+    border: none;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+  
+  .deleteBtn:hover {
+    color: red;
+  }
+  
+  .empty {
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    text-align: center;
+    color: #6b7280;
+  }
+  
+  .title{
+    margin: 0 0 3% 0;
+  }
+  .allItems {
+    padding:0 4%;
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 1rem; 
+    margin: 0;
+  }
+  
+  /* Media query for desktop (≥768px) */
+  @media (min-width: 768px) {
+    .allItems {
+      grid-template-columns: repeat(3, 1fr); 
+    }
+  }
+  
+  .flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .topSection{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .innerTopSection{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .bottomSection{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+  

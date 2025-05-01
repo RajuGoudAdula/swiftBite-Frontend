@@ -96,9 +96,13 @@
 }
 
 .outOfStock {
-  font-size: 12px;
+  font-size: 0.7rem;
   color: #ff6b6b;
   font-weight: 600;
+  background-color: rgb(252 27 27 / 24%);
+    height: fit-content;
+    padding: 2%;
+    border-radius: 5px;
 }
 
 /* Desktop Specific Styles */

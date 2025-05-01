@@ -700,9 +700,9 @@ function Order() {
                                 <div className={styles.reviewDisplay}>
                                   <p>
                                     {reviews[item.productId._id]?.isAnonymous ? 
-                                    <FaUserCircle size={24} />
+                                    <FaUserCircle size={40} />
                                     : 
-                                    <FaUserCircle size={24} color="#007AFF" />                           
+                                    <FaUserCircle size={40} color="#007AFF" />                           
                                     }
                                   </p>
                                   <div className={styles.reviewRating}>

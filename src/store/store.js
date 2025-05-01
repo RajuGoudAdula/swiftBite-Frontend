@@ -10,6 +10,7 @@ import profileReducer from './slices/profileSlice';
 import reviewReducer from './slices/reviewSlice';
 import toastReducer from './slices/toastSlice';
 import favouriteReducer from './slices/favouriteItemsSlice';
+import notificationReducer from './slices/notificationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     reviews : reviewReducer,
     toast: toastReducer,
     favouriteItems : favouriteReducer,
+    notifications: notificationReducer,
   },
 });
 

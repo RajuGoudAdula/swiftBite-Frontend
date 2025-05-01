@@ -5,6 +5,7 @@ import ManageProducts from '../pages/admin/ManageProducts';
 import ManageColleges from '../pages/admin/ManageColleges';
 import ManageCanteens from '../pages/admin/ManageCanteens';
 import Profile from '../pages/user/Profile';
+import NotificationPanel from '../components/common/NotificationPanel';
 
 
 const AdminRoutes = () => {
@@ -15,6 +16,7 @@ const AdminRoutes = () => {
       <Route path="colleges" element={<ManageColleges />} />
       <Route path="canteens" element={<ManageCanteens />} />
       <Route path="profile" element={<Profile />} />
+      <Route path='/notifications' element={<NotificationPanel />} />
     </Routes>
   );
 };

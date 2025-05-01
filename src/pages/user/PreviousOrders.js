@@ -154,6 +154,7 @@ function PreviousOrder() {
     }
   };
 
+
   return (
     <div className={isMobile ? styles.mobileContainer : styles.desktopContainer}>
       {/* Orders List */}
@@ -188,7 +189,7 @@ function PreviousOrder() {
                       <div className={styles.orderImages}>
                         {order.items.slice(0, 3).map((item, index) => (
                           <img
-                            src={item?.image || "/default-image.jpg"}
+                            src={item?.productId?.image || "/default-image.jpg"}
                             key={`${item._id}-${index}`}
                             alt="item"
                             className={styles.orderItemImage}
@@ -263,7 +264,7 @@ function PreviousOrder() {
                           <div key={item._id} style={{borderBottom: "solid 1px #80808042"}}>
                             <div className={styles.itemCard}>
                               <img
-                                src={item?.image || "/default-image.jpg"}
+                                src={item?.productId?.image || "/default-image.jpg"}
                                 alt={item.name}
                                 className={styles.itemImage}
                               />
@@ -363,17 +364,17 @@ function PreviousOrder() {
                             {fetchedReviews?.orderId === order._id && reviews?.[item.productId._id] && (
                               <div className={styles.existingReview}>
                                 <div className={styles.reviewDisplay}>
-                                  <p>
+                                  <span>
                                     {reviews[item.productId._id]?.isAnonymous ? 
-                                    <FaUserCircle size={24} />
+                                    <FaUserCircle size={40} />
                                     : 
-                                    <FaUserCircle size={24} color="#007AFF" />                           
+                                    <FaUserCircle size={40} color="#007AFF" />                           
                                     }
-                                  </p>
+                                  </span>
                                   <div className={styles.reviewRating}>
-                                    <p className={styles.reviewText}>
+                                    <span className={styles.reviewText}>
                                       {reviews[item.productId._id]?.review}
-                                    </p>
+                                    </span>
                                     <span className={styles.ratingStars}>
                                       {"★".repeat(reviews[item.productId._id]?.rating || 0)}
                                       {"☆".repeat(5 - (reviews[item.productId._id]?.rating || 0))}
@@ -422,13 +423,12 @@ function PreviousOrder() {
                                   </div>
                                 </div>
                                 {reviews[item.productId._id]?.canteenResponse?.text && (
-                                    <div>
-                                      <h5>Canteen Response</h5>
-                                      <p>Reply: {reviews[item.productId._id]?.canteenResponse?.text}</p>
-                                      <p>
-                                        respondedAt:{" "}
-                                        {reviews[item.productId._id]?.canteenResponse?.respondedAt}
-                                      </p>
+                                    <div className={styles.canteenResponse}>
+                                      <div className={styles.responseLabel}>Canteen Response</div>
+                                      <span className={styles.canteenResponseText}>{reviews[item.productId._id]?.canteenResponse?.text}</span>
+                                      <span className={styles.reviewDate}>
+                                        {formatDate(reviews[item.productId._id]?.canteenResponse?.respondedAt)}
+                                      </span>
                                     </div>
                                   )}
 
@@ -585,13 +585,13 @@ function PreviousOrder() {
             </div>
           )}
 
-<h4 className={styles.itemsTitle}>Items Details</h4>
+         <h4 className={styles.itemsTitle}>Items Details</h4>
                     <div className={styles.itemsList}>
                         {selectedOrder.items?.map((item) => (
                           <div key={item._id} style={{borderBottom: "solid 1px #80808042"}}>
                             <div className={styles.itemCard}>
                               <img
-                                src={item?.image || "/default-image.jpg"}
+                                src={item?.productId?.image || "/default-image.jpg"}
                                 alt={item.name}
                                 className={styles.itemImage}
                               />
@@ -691,17 +691,17 @@ function PreviousOrder() {
                             {fetchedReviews?.orderId === selectedOrder._id && reviews?.[item.productId._id] && (
                               <div className={styles.existingReview}>
                                 <div className={styles.reviewDisplay}>
-                                  <p>
+                                  <span>
                                     {reviews[item.productId._id]?.isAnonymous ? 
-                                    <FaUserCircle size={24} />
+                                    <FaUserCircle size={40} />
                                     : 
-                                    <FaUserCircle size={24} color="#007AFF" />                           
+                                    <FaUserCircle size={40} color="#007AFF" />                           
                                     }
-                                  </p>
+                                  </span>
                                   <div className={styles.reviewRating}>
-                                    <p className={styles.reviewText}>
+                                    <span className={styles.reviewText}>
                                       {reviews[item.productId._id]?.review}
-                                    </p>
+                                    </span>
                                     <span className={styles.ratingStars}>
                                       {"★".repeat(reviews[item.productId._id]?.rating || 0)}
                                       {"☆".repeat(5 - (reviews[item.productId._id]?.rating || 0))}
@@ -750,13 +750,12 @@ function PreviousOrder() {
                                   </div>
                                 </div>
                                 {reviews[item.productId._id]?.canteenResponse?.text && (
-                                    <div>
-                                      <h5>Canteen Response</h5>
-                                      <p>Reply: {reviews[item.productId._id]?.canteenResponse?.text}</p>
-                                      <p>
-                                        respondedAt:{" "}
-                                        {reviews[item.productId._id]?.canteenResponse?.respondedAt}
-                                      </p>
+                                    <div className={styles.canteenResponse}>
+                                      <div className={styles.responseLabel}>Canteen Response</div>
+                                      <span className={styles.canteenResponseText}>{reviews[item.productId._id]?.canteenResponse?.text}</span>
+                                      <span className={styles.reviewDate}>
+                                        {formatDate(reviews[item.productId._id]?.canteenResponse?.respondedAt)}
+                                      </span>
                                     </div>
                                   )}
 

@@ -16,6 +16,7 @@ import styles from "../../styles/Navbar.module.css";
 
 const Navbar = () => {
   const { cartItems = [] } = useSelector((state) => state.cart || {});
+  const notifications = useSelector(state => state.notifications.notifications);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchError, setSearchError] = useState(null);
@@ -30,6 +31,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const searchRef = useRef(null);
   const notificationsRef = useRef(null);
+  const [newNotifications,setNewNotifications] = useState(notifications?.filter(e => e.isRead === false) || []);
 
 
   // Close dropdowns when clicking outside
@@ -49,6 +51,15 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+
+  useEffect(()=>{
+    const newNotify = notifications.filter(e => e.isRead === false);
+    if(newNotify.length === 0){
+      setNewNotifications(notifications);
+    }else{
+      setNewNotifications(newNotify);
+    }
+  },[notifications]);
   // Fetch popular items
   useEffect(() => {
     const fetchPopularItems = async () => {
@@ -137,6 +148,37 @@ const Navbar = () => {
     setDropdownOpen(false);
   };
 
+  const NoOfNotifications = () => {
+    const count = notifications?.filter(e => e.isRead === false);
+    return count.length;
+  }
+
+  function formatNotificationTime(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(now.getDate() - 1);
+  
+    const isSameDay = (a, b) =>
+      a.getDate() === b.getDate() &&
+      a.getMonth() === b.getMonth() &&
+      a.getFullYear() === b.getFullYear();
+  
+    if (isSameDay(date, now)) {
+      return `Today at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    } else if (isSameDay(date, yesterday)) {
+      return `Yesterday at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    } else {
+      return date.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+      });
+    }
+  }
+  
   
   return (
     <>
@@ -297,19 +339,20 @@ const Navbar = () => {
               aria-label="Notifications"
             >
               <FaBell size={20} />
-              <span className={styles.notificationBadge}>3</span>
+              {NoOfNotifications()>0 && <span className={styles.notificationBadge}>{NoOfNotifications()}</span>}
             </button>
             {notificationsOpen && (
               <div className={styles.notificationDropdown}>
                 <div className={styles.dropdownHeader}>Notifications</div>
-                <div className={styles.notificationItem}>
-                  <div className={styles.notificationTitle}>Order Confirmed</div>
-                  <div className={styles.notificationTime}>2 mins ago</div>
-                </div>
-                <div className={styles.notificationItem}>
-                  <div className={styles.notificationTitle}>Special Offer</div>
-                  <div className={styles.notificationTime}>1 hour ago</div>
-                </div>
+                {newNotifications?.slice(0,3)?.map(notification => {
+                  return (
+                    <div className={styles.notificationItem} key={notification.id}>
+                      <div className={styles.notificationTitle}>{notification.title}</div>
+                      <div className={styles.notificationTime}>{formatNotificationTime(notification.createdAt)}</div>
+                    </div>
+                  );
+                })}
+
                 <Link 
                   to="/notifications" 
                   className={styles.viewAll}

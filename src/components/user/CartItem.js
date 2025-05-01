@@ -1,6 +1,6 @@
 import React from 'react';
 import CartItemControls from './CartItemControls';
-import { FaTrashAlt } from 'react-icons/fa';
+
 
 const CartItem = ({ item, handleQuantityChange, handleRemoveItem }) => {
   return (

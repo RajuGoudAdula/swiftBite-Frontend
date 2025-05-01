@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Unauthorized from './pages/auth/Unauthorized';
 import AdminRoutes from './routes/AdminRoutes';
@@ -9,9 +9,19 @@ import Navbar from './components/common/Navbar';
 import Toast from './components/common/Toast';
 import AuthPage from './pages/auth/AuthPage';
 import VideoSplashScreen from './components/common/VideoSplashScreen';
+import { useDispatch, useSelector } from 'react-redux';
+import { userAllNotifications } from './store/slices/notificationSlice';
 
 function App() {
     const [showSplash, setShowSplash] = useState(true);
+    const {user , isAuthenticated} = useSelector(state => state.auth);
+    const dispatch=useDispatch();
+
+    useEffect(()=>{
+      if(isAuthenticated){
+        dispatch(userAllNotifications(user?.id));
+      }
+    },[dispatch]);
 
   return (
     <Router>

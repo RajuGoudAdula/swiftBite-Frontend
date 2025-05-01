@@ -171,6 +171,18 @@ const ItemDetailPage = () => {
     }
   };
 
+  function formatDate(isoDateString) {
+    const date = new Date(isoDateString);
+  
+    const options = {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    };
+  
+    return date.toLocaleDateString('en-GB', options); 
+  }
+
   if (loading) return <p className={styles.loading}>Loading item details...</p>;
   if (error) return <p className={styles.error}>{error}</p>;
   if (!item) return <p className={styles.notFound}>No item found.</p>;
@@ -338,35 +350,42 @@ const ItemDetailPage = () => {
             {item.reviews.map((review) => (
               <div key={review._id} className={styles.reviewCard}>
                 <div className={styles.reviewHeader}>
-                  <span className={styles.reviewer}><FaUserCircle size={24} color="#007AFF" />{review.user.name}</span>
-                  <span className={styles.reviewRating}>
-                    {renderRating(review.rating)}
-                  </span>
+                  <span className={styles.reviewer}><FaUserCircle size={45} color="#007AFF" /></span>
+                  <div className={styles.reviewDetails}>
+                    <span className={styles.reviewerName}>{review.user.name}</span>
+                    <span className={styles.reviewRating}>
+                      {renderRating(review.rating)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className={styles.reviewSection}>
+                  <span className={styles.reviewText}>{review.review}</span>
+                  <span className={styles.reviewDate}>{formatDate(review.createdAt)}</span>
                 </div>
                 
-                <p className={styles.reviewText}>{review.review}</p>
-                
-                <div className={styles.reviewActions}>
-                  <button 
-                    className={`${styles.actionButton} ${review.userLiked ? styles.active : ''}`}
-                    onClick={() => handleLike(item.product._id, review._id)}
-                  >
-                    <span>👍</span> {review.likes}
-                  </button>
-                  <button 
-                    className={`${styles.actionButton} ${review.userDisliked ? styles.active : ''}`}
-                    onClick={() => handleDislike(item.product._id, review._id)}
-                  >
-                    <span>👎</span> {review.dislikes}
-                  </button>
-                </div>
                 
                 {review.canteenResponse.text && (
                   <div className={styles.canteenResponse}>
                     <div className={styles.responseLabel}>Canteen Response:</div>
-                    <p>{review.canteenResponse.text}</p>
+                    <span className={styles.canteenResponseText}>{review.canteenResponse.text}</span>
+                    <span className={styles.reviewDate}>{formatDate(review?.canteenResponse?.respondedAt)}</span>
                   </div>
                 )}
+                 <div className={styles.reviewActions}>
+                    <button 
+                      className={`${styles.actionButton} ${review.userLiked ? styles.active : ''}`}
+                      onClick={() => handleLike(item.product._id, review._id)}
+                    >
+                      <span>👍</span> {review.likes}
+                    </button>
+                    <button 
+                      className={`${styles.actionButton} ${review.userDisliked ? styles.active : ''}`}
+                      onClick={() => handleDislike(item.product._id, review._id)}
+                    >
+                      <span>👎</span> {review.dislikes}
+                    </button>
+                  </div>
               </div>
             ))}
           </div>

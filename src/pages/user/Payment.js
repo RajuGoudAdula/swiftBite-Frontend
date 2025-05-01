@@ -5,6 +5,7 @@ import { fetchCartItems } from "../../store/slices/cartSlice";
 import userApi from "../../api/userApi";
 import ModalPopup from "../../components/common/ModalPopup"; // Import the modal component
 import styles from '../../styles/Payment.module.css';
+import { addToast } from "../../store/slices/toastSlice";
 
 function Payment() {
   const dispatch = useDispatch();
@@ -65,10 +66,20 @@ function Payment() {
     }
   };
 
+
   return (
     <>
       <div className={styles.buttonContainer}>
         <button className={styles.paymentButton} onClick={() => {
+            if(user?.canteen?.status === "inactive"){
+              dispatch(addToast({
+                id: Date.now(),
+                type: 'error',
+                message: 'Canteen closed. Payment unavailable. Try later.',
+                duration: 3000,
+              }));
+              return;
+            }
           setIsModalOpen(true)
           dispatch(fetchCartItems(userId));
           

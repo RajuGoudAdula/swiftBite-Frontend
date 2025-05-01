@@ -6,6 +6,7 @@ import ManageMenu from '../pages/canteen/ManageMenu';
 import Dashboard from '../pages/canteen/Dashboard';
 import Profile from '../pages/user/Profile';
 import ReviewList from '../pages/canteen/CanteenReviewPage';
+import NotificationPanel from '../components/common/NotificationPanel';
 
 
 const CanteenRoutes = () => {
@@ -18,6 +19,7 @@ const CanteenRoutes = () => {
       {/* <Route path="/revenue" element={<Revenue />} /> */}
       <Route path='analytics' element={<Analytics />} /> 
       <Route path='reviews' element={<ReviewList />} />
+      <Route path='/notifications' element={<NotificationPanel />} />
     </Routes>
   );
 };

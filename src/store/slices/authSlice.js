@@ -3,6 +3,7 @@ import axios from 'axios';
 import userApi from '../../api/userApi';
 import { fetchCartItems } from './cartSlice';
 import { addToast } from './toastSlice'; // ✅ Import addToast
+import { disconnectSocket, registerUserForNotifications } from '../../services/socket';
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
@@ -99,6 +100,7 @@ const authSlice = createSlice({
       state.error = null;
       localStorage.removeItem('user');
       localStorage.removeItem('token');
+      disconnectSocket();
     },
     loginSuccess: (state, action) => {
       state.user = action.payload.user;
@@ -107,6 +109,7 @@ const authSlice = createSlice({
       state.authChecked = true;
       localStorage.setItem('user', JSON.stringify(action.payload.user));
       localStorage.setItem('token', JSON.stringify(action.payload.token));
+      registerUserForNotifications(state?.user?.id,state?.user?.role);
     },
   },
   extraReducers: (builder) => {

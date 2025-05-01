@@ -43,7 +43,6 @@ const Home = () => {
 
 
 
-
   useEffect(() => {
     dispatch(fetchColleges());
   }, [dispatch]);
@@ -63,6 +62,16 @@ const Home = () => {
         duration: 3000,
       }));
       navigate('/login');
+      return;
+    }
+
+    if(user?.canteen?.status === "inactive"){
+      dispatch(addToast({
+        id: Date.now(),
+        type: 'error',
+        message: 'Canteen closed. Try later.',
+        duration: 3000,
+      }));
       return;
     }
 
@@ -127,38 +136,41 @@ const Home = () => {
           <Dropdown label="Canteen" options={canteens} value={selectedCanteen} onChange={e => setSelectedCanteen(e.target.value)} />
         )}
       </ModalPopup>
-      {favouriteItemsList?.length > 0 && (
+        {user?.canteen?.status === "inactive" && <span className={styles.canteenInfo}>Canteen Closed</span>}
       <>
-        <h5 className={styles.title}>Your Favourite Items</h5>
+        {favouriteItemsList?.length > 0 && (
+        <>
+          <h5 className={styles.title}>Your Favourite Items</h5>
+          <LoadingErrorHandler loading={loading} error={error} data={items}>
+            <div className={styles["favourites-container"]}>
+              {favouriteItemsList?.map(item => (
+                <MenuItem 
+                  key={item._id} 
+                  item={item} 
+                  onClick={() => navigate(`/item/${item._id}`)} 
+                  onAddToCart={() => handleAddToCart(item)}
+                  isFavourites={true}
+                />
+              ))}
+            </div>
+          </LoadingErrorHandler>
+        </>
+        )}
+        <h2 className={styles.title}>Canteen Menu</h2>
         <LoadingErrorHandler loading={loading} error={error} data={items}>
-          <div className={styles["favourites-container"]}>
-            {favouriteItemsList?.map(item => (
+          <div className={styles["menu-container"]}>
+            {items.map(item => (
               <MenuItem 
                 key={item._id} 
                 item={item} 
                 onClick={() => navigate(`/item/${item._id}`)} 
                 onAddToCart={() => handleAddToCart(item)}
-                isFavourites={true}
+                isFavourites={false}
               />
             ))}
           </div>
         </LoadingErrorHandler>
       </>
-      )}
-      <h2 className={styles.title}>Canteen Menu</h2>
-      <LoadingErrorHandler loading={loading} error={error} data={items}>
-        <div className={styles["menu-container"]}>
-          {items.map(item => (
-            <MenuItem 
-              key={item._id} 
-              item={item} 
-              onClick={() => navigate(`/item/${item._id}`)} 
-              onAddToCart={() => handleAddToCart(item)}
-              isFavourites={false}
-            />
-          ))}
-        </div>
-      </LoadingErrorHandler>
     </div>
   );
 };
