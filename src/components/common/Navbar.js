@@ -52,14 +52,11 @@ const Navbar = () => {
   }, []);
 
 
-  useEffect(()=>{
-    const newNotify = notifications.filter(e => e.isRead === false);
-    if(newNotify.length === 0){
-      setNewNotifications(notifications);
-    }else{
-      setNewNotifications(newNotify);
-    }
-  },[notifications]);
+  useEffect(() => {
+    const newNotify = notifications.filter(e => !e.isRead).reverse();
+    setNewNotifications(newNotify.length ? newNotify : notifications);
+  }, [notifications]);
+  
   // Fetch popular items
   useEffect(() => {
     const fetchPopularItems = async () => {
@@ -344,22 +341,25 @@ const Navbar = () => {
             {notificationsOpen && (
               <div className={styles.notificationDropdown}>
                 <div className={styles.dropdownHeader}>Notifications</div>
-                {newNotifications?.slice(0,3)?.map(notification => {
+                {newNotifications?.slice(0,3)?.map((notification) => {
                   return (
-                    <div className={styles.notificationItem} key={notification.id}>
+                    <div className={styles.notificationItem} key={notification._id}>
                       <div className={styles.notificationTitle}>{notification.title}</div>
                       <div className={styles.notificationTime}>{formatNotificationTime(notification.createdAt)}</div>
                     </div>
                   );
                 })}
 
-                <Link 
-                  to="/notifications" 
-                  className={styles.viewAll}
-                  onClick={() => setNotificationsOpen(false)}
-                >
-                  View All Notifications
-                </Link>
+                {user && (
+                  <Link 
+                    to={`/${user?.role === "user" ? "" : user?.role+"/"}notifications`} 
+                    className={styles.viewAll}
+                    onClick={() => setNotificationsOpen(false)}
+                  >
+                    View All Notifications
+                  </Link>
+                )}
+
               </div>
             )}
           </div>

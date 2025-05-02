@@ -19,7 +19,7 @@ const CanteenRoutes = () => {
       {/* <Route path="/revenue" element={<Revenue />} /> */}
       <Route path='analytics' element={<Analytics />} /> 
       <Route path='reviews' element={<ReviewList />} />
-      <Route path='/notifications' element={<NotificationPanel />} />
+      <Route path='notifications' element={<NotificationPanel />} />
     </Routes>
   );
 };

@@ -14,7 +14,6 @@ export const registerUserForNotifications = async (userId , role) => {
 // Listen for incoming notifications
 export const listenForNotifications = (callback) => {
   socket.on('new_notification', (notification) => {
-    console.log(notification);
     callback(notification);
   });
 };

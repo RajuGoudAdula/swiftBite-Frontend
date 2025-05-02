@@ -148,3 +148,39 @@
     gap: 2rem;
   }
   
+  /* Add this at the bottom of your NotificationPanel.module.css */
+.swipeable {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  touch-action: pan-y;
+  position: relative;
+}
+
+.swiping {
+  background-color: #ffecec;
+}
+
+.hidden {
+  display: none;
+}
+
+.listItem {
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+/* Optional: limit message lines and allow click-to-expand */
+.message {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  cursor: pointer;
+}
+
+.collapsed {
+  -webkit-line-clamp: 2; /* show 2 lines */
+}
+
+.expanded {
+  -webkit-line-clamp: unset;
+}

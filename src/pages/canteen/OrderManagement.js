@@ -66,7 +66,6 @@ const OrderManagement = () => {
   
       if (response.status === 200) {
         const updatedOrder = response.data.order;
-        console.log(updatedOrder);
 
         await setFilteredStatus(!filteredStatus);
         // Remove order from the previous array based on old status
