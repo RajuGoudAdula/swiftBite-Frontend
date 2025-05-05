@@ -42,6 +42,9 @@ const Home = () => {
     }
   }, [user, dispatch]);
 
+  useEffect(()=>{
+    dispatch(fetchCanteenStatus(user?.canteen?._id));
+  },[user?.canteen,dispatch]);
 
 
 

@@ -5,6 +5,7 @@ import styles from '../../styles/CanteenDashboard.module.css';
 import canteenApi from "../../api/canteenApi";
 import { addToast } from "../../store/slices/toastSlice";
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchCanteenStatus } from '../../store/slices/authSlice';
 
 const CanteenDashboard = () => {
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ const CanteenDashboard = () => {
         message: `Canteen has been ${newStatus === 'active' ? 'opened' : 'closed'}.`,
         duration: 3000,
       }));
+      dispatch(fetchCanteenStatus(user?.canteen?._id));
     } catch (error) {
       console.error("Failed to toggle canteen status:", error);
   

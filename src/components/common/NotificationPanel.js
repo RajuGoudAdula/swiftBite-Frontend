@@ -55,11 +55,12 @@ const NotificationPanel = () => {
     registerUserForNotifications(user.id, user.role);
 
     const handler = async (notification) => {
-       dispatch(addNotification(notification)).then(()=>{
-         if(notification?.refModel === "Canteen"){
+        await dispatch(addNotification(notification));
+
+        if(notification?.refModel === "Canteen"){
            dispatch(fetchCanteenStatus(user?.canteen?._id));
          }
-       })
+       
     };
 
     listenForNotifications(handler);

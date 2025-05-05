@@ -19,7 +19,6 @@ export const verifyUser = createAsyncThunk(
   'auth/verifyUser',
   async (_, { rejectWithValue, dispatch }) => {
     try {
-      console.log("In VerifyUser function");
       const token = localStorage.getItem('token');
       const res = await axios.get(`https://swiftbite-backend-production.up.railway.app/api/auth/verify-user`, {
         headers: {
