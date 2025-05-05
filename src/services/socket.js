@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 
 // Set up the socket connection
-const socket = io("https://swiftbite-backend-production.up.railway.app", {
+const socket = io("http://localhost:5000", {
   withCredentials: true,
   transports: ['websocket'],
 });

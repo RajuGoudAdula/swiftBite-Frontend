@@ -14,6 +14,7 @@ import socket, {
   registerUserForNotifications,
   listenForNotifications
 } from '../../services/socket';
+import { fetchCanteenStatus } from '../../store/slices/authSlice';
 
 const NotificationPanel = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,9 @@ const NotificationPanel = () => {
 
     const handler = (notification) => {
       dispatch(addNotification(notification));
+      if(notification?.refModel === "Canteen"){
+        dispatch(fetchCanteenStatus(user?.canteen?._id));
+      }
     };
 
     listenForNotifications(handler);
@@ -64,7 +68,7 @@ const NotificationPanel = () => {
     return () => {
       socket.off('new_notification', handler);
     };
-  }, [user?.id, socket, dispatch]);
+  }, [user, dispatch]);
 
   const handleSwipeStart = (e, id) => {
     const touch = e.touches[0];

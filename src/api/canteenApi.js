@@ -76,6 +76,12 @@ const canteenApi = {
   fetchReviewsData : async (canteenId) => {
     return axiosInstance.get(`/canteen/${canteenId}/analytics/reviews-data`);
   },
+  toggleCanteenStatus : async (canteenId) => {
+    return axiosInstance.put(`/canteen/${canteenId}/update-canteen`);
+  },
+  getCanteenStatus : async (canteenId) => {
+    return axiosInstance.get(`/canteen/${canteenId}/canteen-status`);
+  },
 };
 
 export default canteenApi;

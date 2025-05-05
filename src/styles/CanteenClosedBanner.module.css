@@ -1,0 +1,66 @@
+.banner {
+    text-align: center;
+    color: #fff;
+    padding: 2% 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    margin: 4%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: bounceIn 1s ease;
+  }
+  
+  @keyframes bounceIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    60% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  .banner h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    animation: glow 1.5s infinite alternate;
+  }
+  
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #fff; }
+    to { text-shadow: 0 0 20px #ff0, 0 0 30px #ff0080; }
+  }
+  
+  .banner p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .button {
+    background: #ff5e62;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .button:hover {
+    background: #ff9966;
+  }
+  
+  .icon {
+    margin-bottom: 10px;
+    animation: spin 6s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @media (max-width : 724px) {
+    .banner h1{
+        font-size: 1.5rem;
+    }
+    .banner p{
+        font-size: 1rem;
+    }
+  }

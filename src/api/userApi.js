@@ -162,6 +162,9 @@ const userApi = {
   },
   getFavouriteItems : (userId,canteenId) => {
     return axiosInstance.get(`/user/fetch-favourite-items/${userId}?canteenId=${canteenId}`);
+  },
+  fetchCanteenStatus : (canteenId) => {
+    return axiosInstance.get(`/user/fetch-canteen-status/${canteenId}`);
   }
 
 

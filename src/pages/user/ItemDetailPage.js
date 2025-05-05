@@ -20,7 +20,6 @@ const ItemDetailPage = () => {
     const fetchItemDetails = async () => {
       try {
         const response = await userApi.getItemDetails(itemId);
-        console.log(response.data)
         setItem(response.data);
       } catch (err) {
         setError("Failed to fetch item details");

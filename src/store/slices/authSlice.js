@@ -19,8 +19,9 @@ export const verifyUser = createAsyncThunk(
   'auth/verifyUser',
   async (_, { rejectWithValue, dispatch }) => {
     try {
+      console.log("In VerifyUser function");
       const token = localStorage.getItem('token');
-      const res = await axios.get(`https://swiftbite-backend-production.up.railway.app/api/auth/verify-user`, {
+      const res = await axios.get(`http://localhost:5000/api/auth/verify-user`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -55,6 +56,19 @@ export const verifyUser = createAsyncThunk(
     }
   }
 );
+
+export const fetchCanteenStatus = createAsyncThunk(
+  'auth/fetchCanteenStatus',
+  async (canteenId , {rejectWithValue}) => {
+    try{
+      const res = await userApi.fetchCanteenStatus(canteenId);
+      return res.data;
+    }catch(error){
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  }
+)
 
 // ✅ Thunk: Update user’s selected college/canteen
 export const addCollegeCanteen = createAsyncThunk(
@@ -128,6 +142,7 @@ const authSlice = createSlice({
         state.authChecked = true;
         localStorage.setItem('user', JSON.stringify(action.payload.user));
         localStorage.setItem('token', JSON.stringify(action.payload.token));
+        console.log("Successfully Updated");
       })
       .addCase(verifyUser.rejected, (state, action) => {
         state.loading = false;
@@ -156,7 +171,15 @@ const authSlice = createSlice({
       .addCase(addCollegeCanteen.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(fetchCanteenStatus.fulfilled, (state,action) => {
+        state.user.canteen.status = action.payload.status;
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user && user.canteen) {
+          user.canteen.status =action.payload.status; 
+          localStorage.setItem("user", JSON.stringify(user));
+        }
+      })
   },
 });
 

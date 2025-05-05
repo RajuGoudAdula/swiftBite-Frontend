@@ -3,12 +3,17 @@ import { FaUtensils, FaClipboardList, FaChartLine, FaCog } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom';
 import styles from '../../styles/CanteenDashboard.module.css';
 import canteenApi from "../../api/canteenApi";
+import { addToast } from "../../store/slices/toastSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 const CanteenDashboard = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [stats, setStats] = useState([]);
   const [recentActivity, setRecentActivity] = useState([]);
+  const [canteenStatus,setCanteenStatus] = useState("");
+  const { user } = useSelector((state) => state.auth || {});
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -49,6 +54,40 @@ const CanteenDashboard = () => {
   
     fetchDashboardData();
   }, []);
+
+  const handleCanteenStatus = async () => {
+    try {
+      const response = await canteenApi.toggleCanteenStatus(user?.canteen?._id);
+      const newStatus = response?.data?.status;
+  
+      setCanteenStatus(newStatus);
+  
+      dispatch(addToast({
+        id: Date.now(),
+        type: 'success',
+        message: `Canteen has been ${newStatus === 'active' ? 'opened' : 'closed'}.`,
+        duration: 3000,
+      }));
+    } catch (error) {
+      console.error("Failed to toggle canteen status:", error);
+  
+      dispatch(addToast({
+        id: Date.now(),
+        type: 'error',
+        message: 'Failed to change canteen status. Please try again.',
+        duration: 3000,
+      }));
+    }
+  };
+  
+
+  useEffect( ()=>{
+    const fetchStatus = async () => {
+      const currentStatus =await  canteenApi.getCanteenStatus(user?.canteen?._id);
+      setCanteenStatus(currentStatus?.data?.status);
+    }
+    fetchStatus();
+  },[]);
   
 
   const quickActions = [
@@ -81,8 +120,23 @@ const CanteenDashboard = () => {
   return (
     <div className={styles.dashboard}>
       <header className={styles.header}>
+       <div>
         <h1>Canteen Dashboard</h1>
         <p>Welcome back! Here's what's happening today.</p>
+       </div>
+       <div className={styles.toggleWrapper}>
+          <span className={styles.label}>
+            {canteenStatus === 'active' ? 'Open' : 'Closed'}
+          </span>
+          <div
+            className={`${styles.toggle} ${
+              canteenStatus === 'active' ? styles.active : ''
+            }`}
+            onClick={handleCanteenStatus}
+          >
+            <div className={styles.slider}></div>
+          </div>
+       </div>
       </header>
 
       <div className={styles.statsGrid}>

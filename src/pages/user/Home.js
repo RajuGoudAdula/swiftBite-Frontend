@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchMenuOfCanteen } from '../../store/slices/menuSlice';
 import { addToCart } from '../../store/slices/cartSlice';
 import { fetchColleges, fetchCanteens } from '../../store/slices/collegeSlice';
-import { addCollegeCanteen } from '../../store/slices/authSlice';
+import { addCollegeCanteen, fetchCanteenStatus } from '../../store/slices/authSlice';
 import { addToast } from '../../store/slices/toastSlice';
 
 import Dropdown from '../../components/common/Dropdown';
@@ -13,6 +13,7 @@ import MenuItem from '../../components/common/MenuItem';
 import LoadingErrorHandler from '../../components/common/LoadingErrorHandler';
 import styles from "../../styles/Home.module.css";
 import { fetchFavouriteItems } from '../../store/slices/favouriteItemsSlice';
+import CanteenClosedBanner from '../../components/user/CanteenClosedBanner';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,8 @@ const Home = () => {
       dispatch(fetchMenuOfCanteen(user.canteen._id));
       dispatch(fetchFavouriteItems({userId : user.id,canteenId : user.canteen._id}))
     }
-  }, [user, dispatch ,user?.college , user?.canteen]);
+  }, [user, dispatch]);
+
 
 
 
@@ -136,7 +138,9 @@ const Home = () => {
           <Dropdown label="Canteen" options={canteens} value={selectedCanteen} onChange={e => setSelectedCanteen(e.target.value)} />
         )}
       </ModalPopup>
-        {user?.canteen?.status === "inactive" && <span className={styles.canteenInfo}>Canteen Closed</span>}
+        {user?.canteen?.status === "inactive" && <span className={styles.canteenInfo}>
+          <CanteenClosedBanner />
+          </span>}
       <>
         {favouriteItemsList?.length > 0 && (
         <>

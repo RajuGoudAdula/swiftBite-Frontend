@@ -7,11 +7,11 @@
     height: 100vh;
 }
 .video{
-    width: 50%;
-    margin: 5%;
+    max-width: 50%;
+    margin: auto;
     border-radius: 7%;
     max-height: 75%;
-    height: fit-content;
+    height:fit-content;
 }
 
 @media (max-width: 768px) {
@@ -19,9 +19,7 @@
     height: 90vh;
    }
    .video{
-    width: 80%;
-    margin: 5%;
+    margin: auto;
     border-radius: 7%;
-    height: 50%;
 }
   }

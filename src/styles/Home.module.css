@@ -5,7 +5,7 @@
   }
 
 .home{
-    margin-top: 10%;
+    margin-top:0;
 }
   
   /* 📱 Mobile: 2 items per row */
@@ -58,14 +58,5 @@
 }
   
 .canteenInfo{
-  position: absolute;
-  top: 11.5%;
-  right: 5%;
-  color: white;
-    background: orangered;
-    padding: 2%;
-    border: solid 1px red;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 1rem;
+ padding: 4%;
 }

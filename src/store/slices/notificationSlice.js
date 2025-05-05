@@ -46,7 +46,12 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     addNotification: (state, action) => {
-      state.notifications = [...state.notifications, action.payload];
+      const exists = state.notifications.some(
+        (notif) => notif._id === action.payload._id
+      );
+      if (!exists) {
+        state.notifications = [...state.notifications, action.payload];
+      }
     },    
     setNotifications: (state, action) => {
       state.notifications = action.payload;
@@ -65,6 +70,7 @@ const notificationSlice = createSlice({
         state.notifications = [];
       })
       .addCase(userAllNotifications.fulfilled,(state,action) => {
+        state.notifications = [];
         state.notifications = action.payload;
         
       })
