@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 // ✅ Base URL for your server
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://swiftbite-backend-production.up.railway.app/api";
 
 // ✅ Automatically Get Token From Local Storage
 const getToken = () => localStorage.getItem('token');
