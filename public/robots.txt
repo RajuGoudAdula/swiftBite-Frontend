@@ -1,3 +1,4 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /unauthorized
+Allow: /
+Sitemap: https://swiftbiteapp.netlify.app/sitemap.xml
