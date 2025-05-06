@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://swiftbiteapp.netlify.app/</loc>
+    <lastmod>2025-05-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Student Routes -->
+  <url>
+    <loc>https://swiftbiteapp.netlify.app/cart</loc>
+    <lastmod>2025-05-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://swiftbiteapp.netlify.app/orders</loc>
+    <lastmod>2025-05-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://swiftbiteapp.netlify.app/item/1</loc>
+    <lastmod>2025-05-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Canteen Routes -->
+  <url>
+    <loc>https://swiftbiteapp.netlify.app/canteen/dashboard</loc>
+    <lastmod>2025-05-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://swiftbiteapp.netlify.app/canteen/menu</loc>
+    <lastmod>2025-05-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://swiftbiteapp.netlify.app/canteen/orders</loc>
+    <lastmod>2025-05-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://swiftbiteapp.netlify.app/canteen/analytics</loc>
+    <lastmod>2025-05-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://swiftbiteapp.netlify.app/canteen/reviews</loc>
+    <lastmod>2025-05-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Admin Routes (EXCLUDE these from sitemap) -->
+  <!-- Do not include any admin pages like /admin/dashboard, /admin/products, etc., in your sitemap. -->
+
+</urlset>
