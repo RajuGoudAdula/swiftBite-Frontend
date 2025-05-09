@@ -16,6 +16,7 @@
   justify-content: center;
   z-index: 1000;
   transition: all 0.3s ease;
+  height: 50px;
 }
 
 .floatingButton:hover {
@@ -37,8 +38,8 @@
 
 .itemCount {
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: 7px;
+  right: -11px;
   background-color: #ff4757;
   color: white;
   border-radius: 50%;

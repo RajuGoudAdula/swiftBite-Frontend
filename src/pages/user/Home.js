@@ -14,6 +14,7 @@ import LoadingErrorHandler from '../../components/common/LoadingErrorHandler';
 import styles from "../../styles/Home.module.css";
 import { fetchFavouriteItems } from '../../store/slices/favouriteItemsSlice';
 import CanteenClosedBanner from '../../components/user/CanteenClosedBanner';
+import HeroSection from '../../components/user/HeroSection';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -88,6 +89,7 @@ const Home = () => {
       }
     }));
 
+
     dispatch(addToast({
       id: Date.now(),
       type: 'success',
@@ -145,6 +147,7 @@ const Home = () => {
           <CanteenClosedBanner />
           </span>}
       <>
+        <HeroSection />
         {favouriteItemsList?.length > 0 && (
         <>
           <h5 className={styles.title}>Your Favourite Items</h5>

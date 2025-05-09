@@ -6,6 +6,7 @@
 
 .home{
     margin-top:0;
+    background-color: #f5f5f7;
 }
   
   /* 📱 Mobile: 2 items per row */
@@ -59,4 +60,11 @@
   
 .canteenInfo{
  padding: 4%;
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .menu-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5%;
+  }
 }

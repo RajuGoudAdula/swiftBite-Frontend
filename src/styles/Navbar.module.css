@@ -9,10 +9,9 @@
   align-items: center;
   padding: 0 2rem;
   height: 60px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: #f5f5f7;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
@@ -52,13 +51,19 @@
   border-radius: 10px;
   padding: 0.5rem 1rem;
   transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  /* border: 1px solid rgba(0, 0, 0, 0.05); */
+  height: 1rem;
 }
 
 .searchWrapper:focus-within {
   background-color: rgba(235, 235, 245, 0.8);
   box-shadow: 0 0 0 4px rgba(0, 125, 250, 0.1);
 }
+input:focus {
+  outline: none;
+  border: none;
+}
+
 
 .searchInput {
   flex: 1;
@@ -301,7 +306,7 @@
 
 .cartBadge {
   position: absolute;
-  top: -10px;
+  top: 7px;
   right: -10px;
   background-color: #FF453A;
   color: white;

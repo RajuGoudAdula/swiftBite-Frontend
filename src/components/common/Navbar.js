@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { 
-  FaShoppingCart, 
+import {  
   FaBell, 
   FaUserCircle, 
   FaSearch, 
@@ -223,7 +222,7 @@ const Navbar = () => {
                 className={styles.searchButton}
                 aria-label="Search"
               >
-                <FaSearch />
+                <svg height="48" viewBox="0 0 17 48" width="17" xmlns="http://www.w3.org/2000/svg"><path d="m16.2294 29.9556-4.1755-4.0821a6.4711 6.4711 0 1 0 -1.2839 1.2625l4.2005 4.1066a.9.9 0 1 0 1.2588-1.287zm-14.5294-8.0017a5.2455 5.2455 0 1 1 5.2455 5.2527 5.2549 5.2549 0 0 1 -5.2455-5.2527z"></path></svg>
               </button>
             </div>
             
@@ -319,13 +318,8 @@ const Navbar = () => {
 
         <div className={styles.navIcons}>
           {/* Mobile Search Toggle */}
-          <div className={styles.mobileSearchIcon}>
-            <FaSearch 
-              size={20} 
-              onClick={() => setSearchOpen(!searchOpen)} 
-              className={styles.icon}
-              aria-label="Search"
-            />
+          <div className={styles.mobileSearchIcon} onClick={() => setSearchOpen(!searchOpen)} >
+          <svg height="48" viewBox="0 0 17 48" width="17" xmlns="http://www.w3.org/2000/svg"><path d="m16.2294 29.9556-4.1755-4.0821a6.4711 6.4711 0 1 0 -1.2839 1.2625l4.2005 4.1066a.9.9 0 1 0 1.2588-1.287zm-14.5294-8.0017a5.2455 5.2455 0 1 1 5.2455 5.2527 5.2549 5.2549 0 0 1 -5.2455-5.2527z"></path></svg>
           </div>
           
           {/* Notifications */}
@@ -429,7 +423,8 @@ const Navbar = () => {
           {/* Cart */}
           {user?.role === "user" && (
             <Link to="/cart" className={styles.cartIcon}>
-              <FaShoppingCart size={20} />
+              <svg height="48" viewBox="0 0 17 48" width="17" xmlns="http://www.w3.org/2000/svg">
+              <path d="m13.4575 16.9268h-1.1353a3.8394 3.8394 0 0 0 -7.6444 0h-1.1353a2.6032 2.6032 0 0 0 -2.6 2.6v8.9232a2.6032 2.6032 0 0 0 2.6 2.6h9.915a2.6032 2.6032 0 0 0 2.6-2.6v-8.9231a2.6032 2.6032 0 0 0 -2.6-2.6001zm-4.9575-2.2768a2.658 2.658 0 0 1 2.6221 2.2764h-5.2442a2.658 2.658 0 0 1 2.6221-2.2764zm6.3574 13.8a1.4014 1.4014 0 0 1 -1.4 1.4h-9.9149a1.4014 1.4014 0 0 1 -1.4-1.4v-8.9231a1.4014 1.4014 0 0 1 1.4-1.4h9.915a1.4014 1.4014 0 0 1 1.4 1.4z"></path></svg>
               {cartItems.length>0 &&(
                 <span className={styles.cartBadge}>{cartItems.length}</span>
               )}

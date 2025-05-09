@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
   const navigate = useNavigate();
-  const [isMobile, setIsMobile] = useState(false);
   const { user } = useSelector(state => state.auth || {});
   
   const CustomPlus = () => (
@@ -24,15 +23,7 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
     </svg>
   );
   
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
+
 
   const discountedPrice = item.offers.length > 0 
     ? Math.round(item.price - (item.offers[0].discount * item.price) / 100)
@@ -40,7 +31,7 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
 
   const OfferBadge = () => (
     item.offers.length > 0 && (
-      <div className={isMobile ? styles.mobileOfferBadge : styles.desktopOfferBadge}>
+      <div className={styles.desktopOfferBadge}>
         <span className={styles.offerText}>
           {item.offers[0].offerType} 
         </span>
@@ -48,61 +39,6 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
     )
   );
 
-
-  if (isMobile) {
-    return (
-      <div className={isFavourites ? styles.mobileFavouritesContainer : styles.mobileContainer }>
-        <div className={styles.mobileTopSection}>
-          <div className={styles.mobileDetails} onClick={() => navigate(`/item/${item._id}`)}>
-            <h3 className={styles.productName}>{item.name}</h3>
-            <span className={styles.unitWeight}>
-             1 {item.productId.unit} • {item.productId.netWeight}
-            </span>
-            {item.offers.length > 0 && (
-                <span className={styles.discountText}>{item.offers[0].discount}% OFF</span>
-              )}
-           
-            <div className={styles.pricing}>
-              <span className={styles.currentPrice}>₹{discountedPrice}</span>
-              {item.offers.length > 0 && (
-                <span className={styles.originalPrice}>₹{item.price}</span>
-              )}
-            </div>
-          </div>
-          
-            {item.isAvailable ? (
-              <>
-                <div className={styles.mobileActionSection}>
-                      <button 
-                        className={styles.mobileAddButton}
-                        onClick={() => onAddToCart(item)}
-                      >
-                        <CustomPlus className={styles.plusIcon} />
-                      </button>
-                      {item.stock < 10 && (
-                        <span className={styles.lowStock}>Only {item.stock} left</span>
-                      )}
-                </div>
-              </>
-            ) : (
-              <span className={styles.outOfStock}>Out of stock</span>
-            )}
-        </div>
-        
-        <div className={isFavourites ? styles.mobileFavouriteImageWrapper : styles.mobileImageWrapper} onClick={() => navigate(`/item/${item._id}`)}>
-          <img
-            src={item.productId.image}
-            alt={item.name}
-            className={styles.mobileProductImage}
-            loading="lazy"
-          />
-        <FavouriteButton userId={user.id} canteenId={user.canteen._id} itemId={item._id}/>
-        </div>
-      </div>
-    );
-  }
-
-  // Desktop layout
   return (
     <div className={styles.desktopContainer}>
       <div className={styles.desktopImageWrapper} onClick={() => navigate(`/item/${item._id}`)}>
@@ -113,7 +49,7 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
           loading="lazy"
         />
         <OfferBadge />
-        <FavouriteButton userId={user.id} canteenId={user.canteen._id} itemId={item._id}/>
+        
       </div>
       
       <div className={styles.desktopBottomSection}>
@@ -122,9 +58,7 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
           <span className={styles.unitWeight}>
             1 {item.productId.unit} • {item.productId.netWeight}
           </span>
-          {item.offers.length > 0 && (
-              <span className={styles.discountText}>{item.offers[0].discount}% OFF</span>
-            )}
+         
           <div className={styles.pricing}>
             <span className={styles.currentPrice}>₹{discountedPrice}</span>
             {item.offers.length > 0 && (
@@ -135,21 +69,28 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
         </div>
         
           {item.isAvailable ? (
-            <>
+          
               <div className={styles.desktopActionSection}>
+                <div className={styles.favouriteButton}>
+                    <FavouriteButton userId={user.id} canteenId={user.canteen._id} itemId={item._id}/>
+                </div>
+                <div className={styles.onAddToCartButton}>
                     <button 
                       className={styles.desktopAddButton}
                       onClick={() => onAddToCart(item)}
                     >
-                      ADD
+                      Add to Bag
                     </button>
+                </div>
                     {item.stock < 10 && (
                       <span className={styles.lowStock}>Only {item.stock} left</span>
                     )}
               </div>
-            </>
+            
           ) : (
-            <span className={styles.outOfStock}>Out of stock</span>
+            <div className={styles.outOfStockDiv}>
+              <span className={styles.outOfStock}>Out of stock</span>
+            </div>
           )}
       </div>
     </div>

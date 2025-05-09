@@ -1,7 +1,5 @@
 /* Base Styles */
-.desktopContainer,
-.mobileContainer,
-.mobileFavouritesContainer {
+.desktopContainer {
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 2px 8px rgba(28, 28, 28, 0.08);
@@ -11,16 +9,15 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.desktopContainer:hover,
-.mobileContainer:hover {
+.desktopContainer:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(28, 28, 28, 0.12);
 }
 
 /* Common Styles */
 .productName {
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 800;
   color: #282c3f;
   margin: 0 0 4px 0;
   line-height: 1.2;
@@ -29,6 +26,10 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   max-width: 90%;
+  color: #1d1d1f;
+  font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+  letter-spacing: .007em;
+  line-height: 1.1428571429;
 }
 
 .unitWeight {
@@ -72,7 +73,7 @@
 
 .currentPrice {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
   color: #282c3f;
 }
 
@@ -96,13 +97,19 @@
 }
 
 .outOfStock {
-  font-size: 0.7rem;
+  font-size: 14px;
   color: #ff6b6b;
   font-weight: 600;
   background-color: rgb(252 27 27 / 24%);
-    height: fit-content;
-    padding: 2%;
-    border-radius: 5px;
+  transition: all 0.2s ease;
+  padding: 2%;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 }
 
 /* Desktop Specific Styles */
@@ -134,64 +141,47 @@
 }
 
 .desktopBottomSection {
-  padding: 12px 5px;
+  padding:5%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-}
-
-.desktopActionSection {
-  margin-top: 12px;
-  display: flex;
   flex-direction: column;
 }
 
+.desktopActionSection {
+  margin-top: 2%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5%;
+}
+
 .desktopAddButton {
-  width: 100%;
-  background: linear-gradient(135deg, #ff3e6c, #ff6b3e);
-  color: white;
   border: none;
-  border-radius: 4px;
-  padding: 8px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  background-color: black;
+  color: white;
 }
 
-.desktopAddButton:hover {
-  background: linear-gradient(135deg, #ef1b4e, #f5501e);
-}
 
 /* Offer Badge Styles */
 .desktopOfferBadge {
   position: absolute;
-  top: 0px;
-  left: 0px;
-  background: linear-gradient(135deg, #ff3e6c, #ff6b3e);
+  top: 5%;
+  left: 5%;
+  background: black;
   color: white;
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: 5px;
   font-size: 12px;
   font-weight: 600;
   z-index: 1;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%;
-
 }
 
-.mobileOfferBadge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: #ff3e6c;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  z-index: 1;
-}
+
 
 .offerText {
   display: flex;
@@ -199,89 +189,25 @@
   white-space: nowrap;
 }
 
-/* Mobile Specific Styles */
-.mobileContainer {
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  overflow: visible;
+
+.favouriteButton , .onAddToCartButton{
+  padding: 2%;
+  border: solid 1px #8080804d;
+  border-radius: 5px;
 }
 
-.mobileTopSection {
-  display: flex;
-  position: relative;
-}
-
-.mobileDetails {
-  flex: 1;
-  padding-right: 12px;
-}
-
-.mobileActionSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: -30%;
-  right: -20%;
-}
-
-.mobileImageWrapper {
-  width: 70%;
-  height: 50%;
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  justify-self: center;
-align-self:flex-end;
-}
-
-.mobileProductImage {
+.onAddToCartButton{
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.mobileAddButton {
-  width: 45px;
-  height: 45px;
-  background-color: rgb(252 27 27 / 24%);
-  color: orangered;
-  border: none;
-  border-radius: 50%;
+  background-color: black;
   display: flex;
-  align-items: center;
   justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+}
+.outOfStockDiv{
+  border: 1px solid rgb(252 27 27 / 24%);
+  border-radius: 5px;
+  margin-top: 3%;
 }
 
-.mobileAddButton:hover {
-  transform: scale(1.05);
-}
-
-.mobileFavouritesContainer {
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  justify-content: space-between;
-  
-}
-
-.mobileFavouriteImageWrapper{
-  width: 70%;
-  height: 40%;
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  justify-self: center;
-  align-self: flex-end;
-}

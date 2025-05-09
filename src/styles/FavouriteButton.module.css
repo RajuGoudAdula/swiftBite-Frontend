@@ -1,9 +1,9 @@
 .favouriteButton{
     background:none;
     border: none;
-    position: absolute;
-    bottom: 0;
-    right: 0;
     font-size: 1.2rem;
-    color: #fff;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
