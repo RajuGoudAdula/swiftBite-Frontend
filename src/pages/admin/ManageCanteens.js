@@ -4,6 +4,7 @@ import { fetchColleges } from '../../store/slices/collegeSlice';
 import { fetchCanteensByCollege, addCanteen, updateCanteen, deleteCanteen } from '../../store/slices/canteenSlice';
 import ModalPopup from '../../components/common/ModalPopup';
 import styles from '../../styles/ManageCanteens.module.css';
+import { fetchCanteenStatus } from '../../store/slices/authSlice';
 
 const ManageCanteens = () => {
   const dispatch = useDispatch();
@@ -78,6 +79,7 @@ const ManageCanteens = () => {
         canteenId: formData._id, 
         canteenData: formData 
       }));
+      dispatch(fetchCanteenStatus(formData?._id));
     } else {
       dispatch(addCanteen({ 
         collegeId: selectedCollege, 

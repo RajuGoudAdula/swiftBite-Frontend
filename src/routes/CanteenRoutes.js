@@ -7,20 +7,24 @@ import Dashboard from '../pages/canteen/Dashboard';
 import Profile from '../pages/user/Profile';
 import ReviewList from '../pages/canteen/CanteenReviewPage';
 import NotificationPanel from '../components/common/NotificationPanel';
+import Footer from '../components/common/Footer';
 
 
 const CanteenRoutes = () => {
   return (
-    <Routes>
-      <Route path="dashboard" element={<Dashboard />} />
-      <Route path="menu" element={<ManageMenu />} />
-      <Route path="orders" element={<ManageOrders />} />
-      <Route path="profile" element={<Profile />} />
-      {/* <Route path="/revenue" element={<Revenue />} /> */}
-      <Route path='analytics' element={<Analytics />} /> 
-      <Route path='reviews' element={<ReviewList />} />
-      <Route path='notifications' element={<NotificationPanel />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="menu" element={<ManageMenu />} />
+        <Route path="orders" element={<ManageOrders />} />
+        <Route path="profile" element={<Profile />} />
+        {/* <Route path="/revenue" element={<Revenue />} /> */}
+        <Route path='analytics' element={<Analytics />} /> 
+        <Route path='reviews' element={<ReviewList />} />
+        <Route path='notifications' element={<NotificationPanel />} />
+      </Routes>
+      <Footer userType="canteen"/>
+    </>
   );
 };
 

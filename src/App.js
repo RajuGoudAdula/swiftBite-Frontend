@@ -11,6 +11,7 @@ import AuthPage from './pages/auth/AuthPage';
 import VideoSplashScreen from './components/common/VideoSplashScreen';
 import { useDispatch, useSelector } from 'react-redux';
 import { userAllNotifications } from './store/slices/notificationSlice';
+import "./App.css";
 
 function App() {
     const [showSplash, setShowSplash] = useState(true);

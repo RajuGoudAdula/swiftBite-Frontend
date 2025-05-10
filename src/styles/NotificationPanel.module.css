@@ -1,5 +1,5 @@
 .panel {
-   
+   min-height: 90vh;
   }
   
   .header {
@@ -103,6 +103,7 @@
     padding: 1rem;
     text-align: center;
     color: #6b7280;
+    min-height: 90vh;
   }
   
   .title{

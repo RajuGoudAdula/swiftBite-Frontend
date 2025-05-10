@@ -6,18 +6,22 @@ import ManageColleges from '../pages/admin/ManageColleges';
 import ManageCanteens from '../pages/admin/ManageCanteens';
 import Profile from '../pages/user/Profile';
 import NotificationPanel from '../components/common/NotificationPanel';
+import Footer from '../components/common/Footer';
 
 
 const AdminRoutes = () => {
   return (
-    <Routes>
-      <Route path="dashboard" element={<AdminDashboard />} />
-      <Route path="products" element={<ManageProducts />} />
-      <Route path="colleges" element={<ManageColleges />} />
-      <Route path="canteens" element={<ManageCanteens />} />
-      <Route path="profile" element={<Profile />} />
-      <Route path='/notifications' element={<NotificationPanel />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="products" element={<ManageProducts />} />
+        <Route path="colleges" element={<ManageColleges />} />
+        <Route path="canteens" element={<ManageCanteens />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path='notifications' element={<NotificationPanel />} />
+      </Routes>
+      <Footer userType="admin"/>
+    </>
   );
 };
 

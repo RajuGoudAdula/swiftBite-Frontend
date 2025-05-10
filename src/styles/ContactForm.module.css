@@ -1,0 +1,98 @@
+.container {
+    margin: 0 auto;
+    padding: 4%;
+    color: #1d1d1f;
+    line-height: 1.6;
+    background-color: #f2f2f7;
+    max-width: 1200px;
+  }
+  .insideContainer{
+    padding: 3%;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(28, 28, 28, 0.08);
+    border: 1px solid #e8e8e8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    color: #000;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 2rem;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .form input,
+  .form textarea {
+    font-size: 1rem;
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+  }
+  
+  .form input:focus,
+  .form textarea:focus {
+    border-color: #0071e3;
+    outline: none;
+  }
+  
+  .submitButton {
+    background-color: #0071e3;
+    color: white;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submitButton:hover {
+    background-color: #005bb5;
+  }
+  
+  .successMessage {
+    background-color: #e6ffed;
+    color: #2e7d32;
+    border: 1px solid #c1e1c1;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  .errorMessage {
+    background-color: #ffe6e6;
+    color: #c62828;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

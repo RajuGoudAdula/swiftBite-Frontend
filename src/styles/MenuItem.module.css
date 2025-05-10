@@ -211,3 +211,22 @@
   margin-top: 3%;
 }
 
+@media only screen and (max-width: 767px) {
+  .desktopContainer{
+    max-width: 165px;
+  }
+}
+
+.stockDiv{
+  position: absolute;
+    top: 5%;
+    right: 5%;
+    background: rgb(252 27 27 / 24%);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

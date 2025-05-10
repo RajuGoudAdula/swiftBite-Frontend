@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../styles/MenuItem.module.css';
 import FavouriteButton from '../../pages/user/FavouriteButton';
@@ -8,23 +8,6 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
   const navigate = useNavigate();
   const { user } = useSelector(state => state.auth || {});
   
-  const CustomPlus = () => (
-    <svg
-      width="45"
-      height="45"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="#FF4500"
-      strokeWidth="2"  
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 5v14M5 12h14" />
-    </svg>
-  );
-  
-
-
   const discountedPrice = item.offers.length > 0 
     ? Math.round(item.price - (item.offers[0].discount * item.price) / 100)
     : item.price;
@@ -49,7 +32,12 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
           loading="lazy"
         />
         <OfferBadge />
-        
+        {item.stock < 10 && (
+                   <div className={styles.stockDiv}>
+                     <span className={styles.lowStock}>Only {item.stock} left</span>
+                   </div>
+                    )}
+         
       </div>
       
       <div className={styles.desktopBottomSection}>
@@ -82,9 +70,7 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
                       Add to Bag
                     </button>
                 </div>
-                    {item.stock < 10 && (
-                      <span className={styles.lowStock}>Only {item.stock} left</span>
-                    )}
+                    
               </div>
             
           ) : (

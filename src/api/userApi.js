@@ -165,6 +165,11 @@ const userApi = {
   },
   fetchCanteenStatus : (canteenId) => {
     return axiosInstance.get(`/user/fetch-canteen-status/${canteenId}`);
+  },
+  sendContactMessage : (data) => {
+    const {userId , userName , userRole , subject ,message,userEmail} = data;
+    console.log(userId , userName , userRole , subject ,message,userEmail);
+    return axiosInstance.post(`/user/${userId}/contact-message`,{userName,userRole,subject,message,userEmail});
   }
 
 
