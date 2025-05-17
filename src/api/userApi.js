@@ -96,6 +96,10 @@ const userApi = {
     return axiosInstance.get(`/user/payment/status/${orderId}`);
   },
 
+  checkStock : async (userId) => {
+    return axiosInstance.get(`/user/cart/check-stock/${userId}`);
+  },
+
 
   //Profile
   updateProfileField : async (field , value,userId) => {

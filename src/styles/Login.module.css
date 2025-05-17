@@ -1,4 +1,4 @@
-.loginContainer {
+.loginContent {
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
@@ -7,6 +7,9 @@
   border-radius: 1rem;
   transition: all 0.4s ease-in-out;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .title {
@@ -21,7 +24,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  animation: fadeIn 0.5s ease forwards;
+  
 }
 
 .input {
@@ -87,14 +90,36 @@
   color: #005fce;
 }
 
-/* Smooth entry animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+
+
+.loginButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Image section */
+.imageContainer {
+  flex: 1;
+  position: relative;
+  transition: all 0.6s ease-in-out;
+  overflow: hidden;
+  background: white;
+}
+
+.loginContainer{
+  display: flex;
+}
+
+.loginFooter{
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.registerButton{
+  font-size: 1rem;
+  padding: 2%;
+  color: rgb(0, 34, 255);
+  background-color: white;
+  border: none;
+  cursor: pointer;
 }

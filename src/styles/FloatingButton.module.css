@@ -1,14 +1,13 @@
 .floatingButton {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: rgba(255, 87, 34, 0.1); /* Light orange background */
-  color: #FF5722; /* Deep orange text */
+  bottom: 15px;
+  right: 15px;
+  background-color: white; 
   border: none;
-  border-radius: 30px;
+  border-radius: 12px;
   padding: 12px 20px;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 800;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   display: flex;
@@ -53,4 +52,11 @@
 
 .buttonText {
   margin-left: 4px;
+}
+
+@media (min-width: 724px) {
+ .floatingButton{
+  bottom: 3%;
+  right: 4%;
+ }
 }

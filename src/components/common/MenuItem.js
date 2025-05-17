@@ -4,7 +4,7 @@ import styles from '../../styles/MenuItem.module.css';
 import FavouriteButton from '../../pages/user/FavouriteButton';
 import { useSelector } from 'react-redux';
 
-const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
+const MenuItem = ({ item, onAddToCart }) => {
   const navigate = useNavigate();
   const { user } = useSelector(state => state.auth || {});
   
@@ -32,7 +32,7 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
           loading="lazy"
         />
         <OfferBadge />
-        {item.stock < 10 && (
+        {item.stock < 10 && item.stock!==0 && (
                    <div className={styles.stockDiv}>
                      <span className={styles.lowStock}>Only {item.stock} left</span>
                    </div>
@@ -56,7 +56,7 @@ const MenuItem = ({ item, onAddToCart ,isFavourites}) => {
           </div>
         </div>
         
-          {item.isAvailable ? (
+          {item.isAvailable && item.stock!== 0 ? (
           
               <div className={styles.desktopActionSection}>
                 <div className={styles.favouriteButton}>

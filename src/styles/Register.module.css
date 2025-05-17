@@ -1,10 +1,13 @@
-.registerContainer {
+.registerContent {
   max-width: 420px;
   margin: 0 auto;
   padding: 2rem 1.5rem;
   background-color: #ffffff;
   border-radius: 1rem;
   transition: all 0.4s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .title {
@@ -105,4 +108,32 @@
   transform: translateY(-50%);
   cursor: pointer;
   color: gray;
+}
+
+/* Image section */
+.imageContainer {
+  flex: 1;
+  position: relative;
+  transition: all 0.6s ease-in-out;
+  overflow: hidden;
+  background: white;
+}
+
+
+.registerContainer{
+  display: flex;
+}
+
+.registerFooter{
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.loginButton{
+  font-size: 1rem;
+  padding: 2%;
+  color: rgb(0, 34, 255);
+  background-color: white;
+  border: none;
+  cursor: pointer;
 }

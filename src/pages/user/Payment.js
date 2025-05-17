@@ -14,6 +14,7 @@ function Payment() {
   const userId = user?.id || null;
   const [cashfree, setCashfree] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
+  const [isStockAvailable,setIsStockAvailable] = useState(false);
 
   let sessionId;
 
@@ -31,7 +32,52 @@ function Payment() {
     initializeSDK();
   }, []);
 
+  const checkStockAvailability = async () => {
+    try {
+      const response = await userApi.checkStock(userId);
+  
+      if (response?.data?.messages?.length > 0) {
+        setIsStockAvailable(false);
+        
+        response.data.messages.forEach((message , index) => {
+          setTimeout(() => {
+            dispatch(addToast({
+              id: Date.now() + Math.random(),
+              type: 'warning',
+              message,
+              duration: 3000,
+            }));
+          }, index * 500);
+        });
+  
+      } else if(response?.data?.message){
+        dispatch(addToast({
+          id: Date.now() + Math.random(), 
+          type: 'success',
+          message : response?.data?.message,
+          duration: 3000,
+        }));
+        setIsStockAvailable(true);
+      }
+  
+    } catch (error) {
+      console.error("Error checking stock:", error);
+      dispatch(addToast({
+        id: Date.now(),
+        type: 'error',
+        message: 'Failed to check stock. Please try again.',
+        duration: 3000,
+      }));
+      setIsStockAvailable(false); // Optional fallback
+    }
+  };
+
   const doPayment = async () => {
+    if(!isStockAvailable){
+      checkStockAvailability();
+      return;
+    }
+
     await getSessionId();
 
     if (!sessionId) {
@@ -100,7 +146,7 @@ function Payment() {
       >
         <p>You are ordering from <strong>{user?.college?.name}</strong> , <strong>{user?.canteen?.name}</strong> canteen.</p>
         <div className={styles.modalButtonContainer}>
-          <button onClick={doPayment} className={styles.paymentButton}>Proceed to Pay</button>
+          <button onClick={doPayment} className={styles.paymentButton} >Proceed to Pay</button>
         </div>
       </ModalPopup>
     </>
