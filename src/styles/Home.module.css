@@ -14,7 +14,7 @@
   @media (max-width: 768px) {
     .menu-container {
       grid-template-columns: repeat(2, 1fr);
-      gap: 5%;
+      gap: 1.5%;
     }
     .favourites-container{
       height: 13rem;

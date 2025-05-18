@@ -84,6 +84,22 @@ deleteProduct : async (productId) => {
   return axiosInstance.delete(`/admin/products/${productId}`);
 },
 
+getAllBanners : async () => {
+  return axiosInstance.get(`/admin/banners`);
+},
+updateBanner : async (bannerId,banner) => {
+  return axiosInstance.put(`/admin/update-banner/${bannerId}`,banner);
+},
+postBanner : async (banner) => {
+  return axiosInstance.post(`/admin/post-banner`,banner);
+},
+fetchCanteens : async () => {
+  return axiosInstance.get(`/admin/fetchCanteens`);
+},
+deleteBanner : async (bannerId) => {
+  return axiosInstance.delete(`/admin/delete-banner/${bannerId}`);
+},
+
 };
 
 export default adminApi;

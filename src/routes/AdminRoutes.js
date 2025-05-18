@@ -7,6 +7,7 @@ import ManageCanteens from '../pages/admin/ManageCanteens';
 import Profile from '../pages/user/Profile';
 import NotificationPanel from '../components/common/NotificationPanel';
 import Footer from '../components/common/Footer';
+import ManageHeroSection from '../pages/admin/ManageHeroSection';
 
 
 const AdminRoutes = () => {
@@ -19,6 +20,7 @@ const AdminRoutes = () => {
         <Route path="canteens" element={<ManageCanteens />} />
         <Route path="profile" element={<Profile />} />
         <Route path='notifications' element={<NotificationPanel />} />
+        <Route path='offers' element={<ManageHeroSection />} />
       </Routes>
       <Footer userType="admin"/>
     </>

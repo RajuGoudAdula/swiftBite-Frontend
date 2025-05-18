@@ -172,9 +172,11 @@ const userApi = {
   },
   sendContactMessage : (data) => {
     const {userId , userName , userRole , subject ,message,userEmail} = data;
-    console.log(userId , userName , userRole , subject ,message,userEmail);
     return axiosInstance.post(`/user/${userId}/contact-message`,{userName,userRole,subject,message,userEmail});
-  }
+  },
+  getHeroBanners : (userId,canteenId) => {
+    return axiosInstance.get(`/user/get-herobanners/${userId}/${canteenId}`);
+  },
 
 
  
