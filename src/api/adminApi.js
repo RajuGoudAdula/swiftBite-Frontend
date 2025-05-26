@@ -99,6 +99,15 @@ fetchCanteens : async () => {
 deleteBanner : async (bannerId) => {
   return axiosInstance.delete(`/admin/delete-banner/${bannerId}`);
 },
+getAdminStats : async (userId) => {
+  return axiosInstance.get(`/admin/get-stats/${userId}`);
+},
+getRecentActivity : async (userId) => {
+  return axiosInstance.get(`/admin/get-activity/${userId}`);
+},
+getTodaysOrders : async () => {
+  return axiosInstance.get(`/admin/get-todays-orders`);
+}
 
 };
 

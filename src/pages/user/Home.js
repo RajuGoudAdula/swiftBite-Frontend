@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchMenuOfCanteen } from '../../store/slices/menuSlice';
-import { addToCart, fetchCartItems } from '../../store/slices/cartSlice';
+import { addToCart } from '../../store/slices/cartSlice';
 import { fetchColleges, fetchCanteens } from '../../store/slices/collegeSlice';
 import { addCollegeCanteen, fetchCanteenStatus } from '../../store/slices/authSlice';
 import { addToast } from '../../store/slices/toastSlice';
@@ -142,9 +142,6 @@ const Home = () => {
           <Dropdown label="Canteen" options={canteens} value={selectedCanteen} onChange={e => setSelectedCanteen(e.target.value)} />
         )}
       </ModalPopup>
-        {user?.canteen?.status === "inactive" && <span className={styles.canteenInfo}>
-          <CanteenClosedBanner />
-          </span>}
       <>
         <HeroSection />
         {favouriteItemsList?.length > 0 && (

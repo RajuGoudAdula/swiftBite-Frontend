@@ -10,6 +10,7 @@ import animationData from '../../animations/cartIsEmpty.json';
 import { addToast } from "../../store/slices/toastSlice";
 import styles from "../../styles/Cart.module.css";
 import Payment from "../user/Payment";
+import SwiftBiteLoader from "../../components/common/SwiftBiteLoader";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const Cart = () => {
       <h2 className={styles.title}>Your Cart</h2>
 
       {loading ? (
-        <p className={styles.loading}>Loading...</p>
+        <SwiftBiteLoader info="Loading Your Cart..." />
       ) : error ? (
         <p className={styles.error}>{error}</p>
       ) : cartItems?.length === 0 ? (

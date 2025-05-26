@@ -4,6 +4,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import ModalPopup from "../../components/common/ModalPopup";
 import styles from "../../styles/OrderManagement.module.css";
 import canteenApi from "../../api/canteenApi";
+import SwiftBiteLoader from "../../components/common/SwiftBiteLoader";
 
 const OrderManagement = () => {
   const [pendingOrders, setPendingOrders] = useState([]);
@@ -218,19 +219,19 @@ const OrderManagement = () => {
         ))}
       </div>
 
-      <div className={styles.orderList}>
+      
         {loading ? (
-            <div className={styles.loadingMessage}>Loading orders...</div> 
+          <SwiftBiteLoader  info="Loding Orders..."/>
+            // <div className={styles.loadingMessage}>Loading orders...</div> 
           ) : (
-            <>
+            <div className={styles.orderList}>
               {selectedStatus === "Pending" && renderOrders(pendingOrders,"Pending")}
               {selectedStatus === "Preparing" && renderOrders(preparingOrders,"Preparing")}
               {selectedStatus === "Ready For Pickup" && renderOrders(readyOrders,"Ready For Pickup")}
               {selectedStatus === "Completed" && renderOrders(completedOrders,"Completed")}
               {selectedStatus === "Cancelled" && renderOrders(cancelledOrders,"Cancelled")}
-            </>
+            </div>
           )}
-      </div>
 
             {/* Modal for Scanned Order */}
             <ModalPopup 

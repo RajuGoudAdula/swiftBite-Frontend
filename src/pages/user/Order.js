@@ -275,7 +275,7 @@ function Order() {
                                 className={styles.itemImage}
                               />
                               <div className={styles.itemDetails}>
-                                <h5 className={styles.itemName}>{item?.productId?.name}</h5>
+                                <h5 className={styles.itemName}>{item?.productId?.name} - {item?.quantity}</h5>
                                 <span className={styles.itemUnits}>
                                   {item.productId?.netWeight}. 1{item?.productId?.unit}
                                 </span>
@@ -284,12 +284,8 @@ function Order() {
                                 <div className={styles.itemPriceRow}>
                                   {item.offers?.length > 0 ? (
                                     <div>
-                                      <span>
-                                        ₹
-                                        {(
-                                          item.totalPrice -
-                                          ((item.price - (item.price * item.offers[0].discount) / 100) * item.quantity)
-                                        ).toFixed(2)}
+                                      <span className={styles.originalPrice}>
+                                        ₹{item?.price*item?.quantity}
                                       </span>
                                       <span className={styles.itemTotal}>₹{item.totalPrice}</span>
                                     </div>

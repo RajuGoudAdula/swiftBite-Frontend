@@ -10,6 +10,7 @@ import { fetchProducts } from "../../store/slices/productSlice";
 import ModalPopup from "../../components/common/ModalPopup";
 import styles from "../../styles/ManageMenu.module.css";
 import { addToast } from "../../store/slices/toastSlice";
+import SwiftBiteLoader from "../../components/common/SwiftBiteLoader";
 
 const ManageMenu = () => {
   const dispatch = useDispatch();
@@ -142,7 +143,7 @@ const ManageMenu = () => {
     <div className={styles.container}>
       <h1 className={styles.heading}>Manage Menu</h1>
       {productLoading ? (
-        <p>Loading products...</p>
+        <SwiftBiteLoader  info="Loading products..."/>
       ) : (
         <div className={styles.addItem}>
           <select
@@ -164,7 +165,7 @@ const ManageMenu = () => {
       )}
 
       {menuLoading ? (
-        <p>Loading menu...</p>
+        <SwiftBiteLoader info="Loading Menu..." />
       ) : menuError ? (
         <p>{menuError}</p>
       ) : (
@@ -271,15 +272,17 @@ const ManageMenu = () => {
 
             <div className={styles.inputGroup}>
               <label>Is Available</label>
-              <input
-                type="boolean"
+              <select
                 value={updatedFields.isAvailable}
                 onChange={(e) =>
-                  setUpdatedFields({ ...updatedFields, isAvailable: e.target.value })
+                  setUpdatedFields({ ...updatedFields, isAvailable: e.target.value === 'true' })
                 }
-              />
+                style={{width: "-webkit-fill-available"}}
+              >
+                <option value="true">True</option>
+                <option value="false">False</option>
+              </select>
             </div>
-
             <div className={styles.inputGroup}>
               <label>Preparation Time (mins)</label>
               <input

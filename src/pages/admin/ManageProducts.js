@@ -53,9 +53,7 @@ const ManageProducts = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  useEffect(()=>{
-    console.log(products);
-  },[products]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;

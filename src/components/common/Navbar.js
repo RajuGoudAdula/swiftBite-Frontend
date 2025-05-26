@@ -110,11 +110,11 @@ const Navbar = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/search?q=${searchQuery}`);
-      setSearchOpen(false);
-      setSearchQuery("");
-    }
+    // if (searchQuery.trim()) {
+    //   navigate(`/search?q=${searchQuery}`);
+    //   setSearchOpen(false);
+    //   setSearchQuery("");
+    // }
   };
 
   const handleItemClick = (item) => {

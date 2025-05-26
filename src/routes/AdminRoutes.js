@@ -8,6 +8,7 @@ import Profile from '../pages/user/Profile';
 import NotificationPanel from '../components/common/NotificationPanel';
 import Footer from '../components/common/Footer';
 import ManageHeroSection from '../pages/admin/ManageHeroSection';
+import TodaysOrders from '../pages/admin/TodaysOrders';
 
 
 const AdminRoutes = () => {
@@ -21,6 +22,7 @@ const AdminRoutes = () => {
         <Route path="profile" element={<Profile />} />
         <Route path='notifications' element={<NotificationPanel />} />
         <Route path='offers' element={<ManageHeroSection />} />
+        <Route path='orders' element={<TodaysOrders />} />
       </Routes>
       <Footer userType="admin"/>
     </>

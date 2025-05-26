@@ -200,7 +200,7 @@ const ItemDetailPage = () => {
           </div>
           
           <div className={styles.productMeta}>
-            <div>
+            <div className={styles.productDetails}>
               <div className={`${styles.availabilityTag} ${item.item.isAvailable ? styles.inStock : styles.outOfStock}`}>
                 {item.item.isAvailable ? 'In Stock' : 'Out of Stock'}
               </div>
@@ -244,17 +244,16 @@ const ItemDetailPage = () => {
               </button>
               </div>
             </div>
-            <div>
-            <div className={styles.mobileAddToCartSection}>
-              <button 
-                className={styles.addToCart}
-                onClick={handleAddToCart}
-                disabled={!item.item.isAvailable}
-              >
-                Add to Cart
-              </button>
+              <div className={styles.mobileAddToCartSection}>
+                  <button 
+                    className={styles.addToCart}
+                    onClick={handleAddToCart}
+                    disabled={!item.item.isAvailable}
+                  >
+                    Add to Cart
+                  </button>
               </div>
-            </div>
+            
           </div>
         {/* </div> */}
       </div>

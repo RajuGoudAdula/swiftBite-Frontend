@@ -209,6 +209,13 @@
   background-color: rgba(255, 59, 48, 0.2);
 }
 
+.originalPrice {
+  font-size: 12px;
+  color: #7e808c;
+  text-decoration: line-through;
+  margin-right: 3px;
+}
+
 /* Order Details */
 .desktopOrderDetails {
   flex: 1;
