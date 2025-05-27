@@ -177,6 +177,9 @@ const userApi = {
   getHeroBanners : (userId,canteenId) => {
     return axiosInstance.get(`/user/get-herobanners/${userId}/${canteenId}`);
   },
+  sendCanteenFeedback : (userId,canteenId,formData) => {
+    return axiosInstance.post(`/user/${userId}/feedback/${canteenId}`,formData);
+  },
 
 
  

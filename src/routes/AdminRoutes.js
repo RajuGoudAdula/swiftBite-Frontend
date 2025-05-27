@@ -10,6 +10,7 @@ import Footer from '../components/common/Footer';
 import ManageHeroSection from '../pages/admin/ManageHeroSection';
 import TodaysOrders from '../pages/admin/TodaysOrders';
 import AdminUserManagement from '../pages/admin/AdminUserManagement';
+import AdminFeedbackManager from '../pages/admin/AdminFeedbackManager';
 
 
 const AdminRoutes = () => {
@@ -25,6 +26,7 @@ const AdminRoutes = () => {
         <Route path='offers' element={<ManageHeroSection />} />
         <Route path='orders' element={<TodaysOrders />} />
         <Route path='user-management' element={<AdminUserManagement />} />
+        <Route path='feedbacks' element={<AdminFeedbackManager />} />
       </Routes>
       <Footer userType="admin"/>
     </>

@@ -16,6 +16,23 @@ const ItemDetailPage = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
 
+  const [currentSlide, setCurrentSlide] = useState(0);
+  let touchStartX = 0;
+
+  const handleTouchStart = (e) => {
+    touchStartX = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    if (touchEndX < touchStartX - 50 && currentSlide < item.reviews.length - 1) {
+      setCurrentSlide(currentSlide + 1);
+    } else if (touchEndX > touchStartX + 50 && currentSlide > 0) {
+      setCurrentSlide(currentSlide - 1);
+    }
+  };
+
+
   useEffect(() => {
     const fetchItemDetails = async () => {
       try {
@@ -97,28 +114,29 @@ const ItemDetailPage = () => {
         type: 'warning',
         message: `Please login to add items to your cart`,
         duration: 3000,
-      })).then(()=>{
-        navigate("/login");
-      });
+      })).then(() => navigate("/login"));
       return;
     }
-
+  
     try {
       const response = await userApi.likeReview(productId, reviewId, user.id);
-
+  
       setItem((prevItem) => ({
         ...prevItem,
-        reviews: prevItem.reviews.map((review) =>
-          review._id === reviewId
-            ? {
-                ...review,
-                likes: response.data.likes,
-                dislikes: response.data.userDisliked ? review.dislikes - 1 : review.dislikes,
-                userLiked: true,
-                userDisliked: false,
-              }
-            : review
-        ),
+        reviews: prevItem.reviews.map((review) => {
+          if (review._id === reviewId) {
+            const isTogglingOff = review.userLiked; // already liked
+  
+            return {
+              ...review,
+              likes: isTogglingOff ? review.likes - 1 : review.likes + 1,
+              dislikes: review.userDisliked ? review.dislikes - 1 : review.dislikes,
+              userLiked: !review.userLiked,
+              userDisliked: false,
+            };
+          }
+          return review;
+        }),
       }));
     } catch (err) {
       dispatch(addToast({
@@ -126,9 +144,10 @@ const ItemDetailPage = () => {
         type: 'error',
         message: `Failed to like the review.`,
         duration: 3000,
-      }))
+      }));
     }
   };
+  
 
   const handleDislike = async (productId, reviewId) => {
     if (!isAuthenticated) {
@@ -137,28 +156,29 @@ const ItemDetailPage = () => {
         type: 'warning',
         message: 'Please login to add items to your cart',
         duration: 3000,
-      })).then(()=>{
-        navigate("/login");
-      });
+      })).then(() => navigate("/login"));
       return;
     }
-
+  
     try {
       const response = await userApi.disLikeReview(productId, reviewId, user.id);
-
+  
       setItem((prevItem) => ({
         ...prevItem,
-        reviews: prevItem.reviews.map((review) =>
-          review._id === reviewId
-            ? {
-                ...review,
-                dislikes: response.data.dislikes,
-                likes: response.data.userLiked ? review.likes - 1 : review.likes,
-                userLiked: false,
-                userDisliked: true,
-              }
-            : review
-        ),
+        reviews: prevItem.reviews.map((review) => {
+          if (review._id === reviewId) {
+            const isTogglingOff = review.userDisliked;
+  
+            return {
+              ...review,
+              dislikes: isTogglingOff ? review.dislikes - 1 : review.dislikes + 1,
+              likes: review.userLiked ? review.likes - 1 : review.likes,
+              userDisliked: !review.userDisliked,
+              userLiked: false,
+            };
+          }
+          return review;
+        }),
       }));
     } catch (err) {
       dispatch(addToast({
@@ -169,6 +189,7 @@ const ItemDetailPage = () => {
       }));
     }
   };
+  
 
   function formatDate(isoDateString) {
     const date = new Date(isoDateString);
@@ -208,10 +229,13 @@ const ItemDetailPage = () => {
               <h1 className={styles.productTitle}>{item.product.name}</h1>
               <p className={styles.netWeight}>1 {item.product.unit} . {item.product.netWeight}</p>
               <div className={styles.priceContainer}>
-                <span className={styles.currentPrice}>₹{item.item.price}</span>
+                <span className={styles.originalPrice}>₹{item.item.price}</span>
                 {item.item.offers.length > 0 && (
-                  <span className={styles.originalPrice}>₹{item.item.price + item.item.offers[0].discount}</span>
+                  <span className={styles.currentPrice}>
+                    ₹{Math.round(item.item.price - (item.item.offers[0].discount / 100) * item.item.price)}
+                  </span>
                 )}
+
               </div>
               
               {item.item.offers.length > 0 && (
@@ -334,63 +358,87 @@ const ItemDetailPage = () => {
             <div className={styles.ratingSummary}>
               {renderRating(
                 Math.round(
-                  item.reviews.reduce((acc, review) => acc + review.rating, 0) / 
-                  item.reviews.length
+                  item.reviews.reduce((acc, review) => acc + review.rating, 0) / item.reviews.length
                 )
               )}
               <span>({item.reviews.length} reviews)</span>
             </div>
           )}
         </div>
-        
-        {item.reviews.length > 0 ? (
-          <div className={styles.reviewsGrid}>
-            {item.reviews.map((review) => (
-              <div key={review._id} className={styles.reviewCard}>
-                <div className={styles.reviewHeader}>
-                  <span className={styles.reviewer}><FaUserCircle size={45} color="#007AFF" /></span>
-                  <div className={styles.reviewDetails}>
-                    <span className={styles.reviewerName}>{review.user.name}</span>
-                    <span className={styles.reviewRating}>
-                      {renderRating(review.rating)}
-                    </span>
-                  </div>
-                </div>
 
-                <div className={styles.reviewSection}>
-                  <span className={styles.reviewText}>{review.review}</span>
-                  <span className={styles.reviewDate}>{formatDate(review.createdAt)}</span>
-                </div>
-                
-                
-                {review.canteenResponse.text && (
-                  <div className={styles.canteenResponse}>
-                    <div className={styles.responseLabel}>Canteen Response:</div>
-                    <span className={styles.canteenResponseText}>{review.canteenResponse.text}</span>
-                    <span className={styles.reviewDate}>{formatDate(review?.canteenResponse?.respondedAt)}</span>
+        {item.reviews.length > 0 ? (
+          <div style={{position:"relative"}}>
+            <div
+              className={styles.sliderContainer}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
+              <div className={styles.sliderWrapper} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+                {item.reviews.map((review) => (
+                  <div key={review._id} className={styles.reviewSlide}>
+                    {/* Keep your existing review card JSX */}
+                    <div className={styles.reviewCard}>
+                      <div className={styles.reviewHeader}>
+                        <span className={styles.reviewer}>
+                          <FaUserCircle size={45} color="#007AFF" />
+                        </span>
+                        <div className={styles.reviewDetails}>
+                          <span className={styles.reviewerName}>{review.user.name}</span>
+                          <span className={styles.reviewRating}>
+                            {renderRating(review.rating)}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className={styles.reviewSection}>
+                        <span className={styles.reviewText}>{review.review}</span>
+                        <span className={styles.reviewDate}>{formatDate(review.createdAt)}</span>
+                      </div>
+
+                      {review.canteenResponse.text && (
+                        <div className={styles.canteenResponse}>
+                          <div className={styles.responseLabel}>Canteen Response:</div>
+                          <span className={styles.canteenResponseText}>{review.canteenResponse.text}</span>
+                          <span className={styles.reviewDate}>{formatDate(review?.canteenResponse?.respondedAt)}</span>
+                        </div>
+                      )}
+
+                      <div className={styles.reviewActions}>
+                        <button
+                          className={`${styles.actionButton} ${review.userLiked ? styles.active : ''}`}
+                          onClick={() => handleLike(item.product._id, review._id)}
+                        >
+                          <span>👍</span> {review.likes}
+                        </button>
+                        <button
+                          className={`${styles.actionButton} ${review.userDisliked ? styles.active : ''}`}
+                          onClick={() => handleDislike(item.product._id, review._id)}
+                        >
+                          <span>👎</span> {review.dislikes}
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                )}
-                 <div className={styles.reviewActions}>
-                    <button 
-                      className={`${styles.actionButton} ${review.userLiked ? styles.active : ''}`}
-                      onClick={() => handleLike(item.product._id, review._id)}
-                    >
-                      <span>👍</span> {review.likes}
-                    </button>
-                    <button 
-                      className={`${styles.actionButton} ${review.userDisliked ? styles.active : ''}`}
-                      onClick={() => handleDislike(item.product._id, review._id)}
-                    >
-                      <span>👎</span> {review.dislikes}
-                    </button>
-                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Dots */}
+            <div className={styles.dotsContainer}>
+              {item.reviews.map((_, index) => (
+                <span
+                  key={index}
+                  className={`${styles.dot} ${index === currentSlide ? styles.activeDot : ''}`}
+                  onClick={() => setCurrentSlide(index)}
+                />
+              ))}
+            </div>
           </div>
         ) : (
           <p className={styles.noReviews}>No reviews yet. Be the first to review!</p>
         )}
       </div>
+
     </div>
   );
 };

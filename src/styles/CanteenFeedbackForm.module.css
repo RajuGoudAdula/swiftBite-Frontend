@@ -1,0 +1,143 @@
+.container {
+    margin: 4%;
+    padding: 4%;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    border: 1px solid #eaeaea;
+  }
+  
+  .heading {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #1c1c1e;
+    text-align: center;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .inputGroup label {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.4rem;
+  }
+  
+  .inputGroup input {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    transition: border 0.3s;
+  }
+  
+  .inputGroup input:focus {
+    border-color: #007aff;
+    outline: none;
+  }
+  
+  .textareaGroup {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .textareaGroup label {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.4rem;
+  }
+  
+  .textareaGroup textarea {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    resize: none;
+    transition: border 0.3s;
+  }
+  
+  .textareaGroup textarea:focus {
+    border-color: #007aff;
+    outline: none;
+  }
+  
+  .submitButton {
+    align-self: flex-start;
+    padding: 0.8rem 2rem;
+    background-color: #000;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .submitButton:hover {
+    background-color: #333;
+  }
+  
+  /* 📱 Responsive */
+  @media (max-width: 768px) {
+    .row {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* CanteenFeedbackForm.module.css */
+
+.errorMsg {
+    color: #ff3b30; /* Apple red */
+    background-color: #fdecea;
+    border: 1px solid #ff3b30;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .successMsg {
+    color: #34c759; /* Apple green */
+    background-color: #e6f4ea;
+    border: 1px solid #34c759;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Optional: smooth fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+  
+  .errorMsg, .successMsg {
+    animation: fadeIn 0.3s ease forwards;
+  }
+  

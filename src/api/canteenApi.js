@@ -82,6 +82,9 @@ const canteenApi = {
   getCanteenStatus : async (canteenId) => {
     return axiosInstance.get(`/canteen/${canteenId}/canteen-status`);
   },
+  getCanteenFeedbacks : async (canteenId) => {
+    return axiosInstance.get(`/canteen/${canteenId}`);
+  },
 };
 
 export default canteenApi;

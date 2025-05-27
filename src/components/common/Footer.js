@@ -61,6 +61,7 @@ const Footer = ({ userType }) => {
         <li className={styles.li}><Link to="/admin/dashboard" className={styles.link}>Dashboard</Link></li>
         <li className={styles.li}><Link to="/admin/user-management" className={styles.link}>User Management</Link></li>
         <li className={styles.li}><Link to="/admin/canteens" className={styles.link}>Canteen Management</Link></li>
+        <li className={styles.li}><Link to="/admin/feedbacks" className={styles.link}>Feedback Management</Link></li>
         </ul>
       </div>
       <div className={styles.column}>

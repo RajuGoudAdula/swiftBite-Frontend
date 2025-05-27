@@ -8,6 +8,7 @@ import Profile from '../pages/user/Profile';
 import ReviewList from '../pages/canteen/CanteenReviewPage';
 import NotificationPanel from '../components/common/NotificationPanel';
 import Footer from '../components/common/Footer';
+import CanteenFeedbackViewer from '../pages/canteen/CanteenFeedbackViewer';
 
 
 const CanteenRoutes = () => {
@@ -22,6 +23,7 @@ const CanteenRoutes = () => {
         <Route path='analytics' element={<Analytics />} /> 
         <Route path='reviews' element={<ReviewList />} />
         <Route path='notifications' element={<NotificationPanel />} />
+        <Route path='feedback' element={<CanteenFeedbackViewer />} />
       </Routes>
       <Footer userType="canteen"/>
     </>

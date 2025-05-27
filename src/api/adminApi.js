@@ -114,6 +114,12 @@ getUsersForAdmin : async () => {
 deleteUserByAdmin : async (userId) => {
   return axiosInstance.delete(`/admin/delete/user/${userId}`);
 },
+getAllFeedbacks : async () => {
+  return axiosInstance.get(`/admin/get-feedbacks`);
+},
+sendFeedbackResponse : async (feedbackId, type, message) => {
+  return axiosInstance.put(`/admin/send-feedback/${feedbackId}`,{type,message});
+},
 
 };
 

@@ -15,6 +15,7 @@ import AboutUs from '../components/common/AboutUs';
 import PrivacyPolicy from '../components/common/PrivacyPolicy';
 import TermsConditions from '../components/common/TermsConditions';
 import StudentContactForm from '../components/user/StudentContactForm';
+import CanteenFeedbackForm from '../pages/user/CanteenFeedbackForm';
 
 const StudentRoutes = () => {
 
@@ -34,6 +35,7 @@ const StudentRoutes = () => {
             <Route path='/privacy' element={<PrivacyPolicy />} />
             <Route path='/terms' element={<TermsConditions />} />
             <Route path='/contact-us' element={<StudentContactForm />} />
+            <Route path='/feedback' element={<CanteenFeedbackForm />} />
           </Routes>
           <Footer userType="student"/>
           <FloatingCartButton />

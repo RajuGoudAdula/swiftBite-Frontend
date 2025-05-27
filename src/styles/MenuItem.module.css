@@ -213,7 +213,7 @@
 
 @media only screen and (max-width: 767px) {
   .desktopContainer{
-    max-width: 165px;
+    width: 100%;
   }
 }
 
