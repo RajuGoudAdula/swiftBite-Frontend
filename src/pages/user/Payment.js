@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { load } from '@cashfreepayments/cashfree-js';
+import { load } from "@cashfreepayments/cashfree-js";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCartItems } from "../../store/slices/cartSlice";
 import userApi from "../../api/userApi";
-import ModalPopup from "../../components/common/ModalPopup"; // Import the modal component
-import styles from '../../styles/Payment.module.css';
+import ModalPopup from "../../components/common/ModalPopup";
+import styles from "../../styles/Payment.module.css";
 import { addToast } from "../../store/slices/toastSlice";
 
 function Payment() {
@@ -12,11 +12,11 @@ function Payment() {
   const { cartItems = [], totalAmount = 0 } = useSelector((state) => state.cart || {});
   const { user } = useSelector((state) => state.auth || {});
   const userId = user?.id || null;
-  const [cashfree, setCashfree] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
-  const [isStockAvailable,setIsStockAvailable] = useState(false);
 
-  let sessionId;
+  const [cashfree, setCashfree] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [checkingStock, setCheckingStock] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
     if (userId) {
@@ -35,106 +35,138 @@ function Payment() {
   const checkStockAvailability = async () => {
     try {
       const response = await userApi.checkStock(userId);
-  
       if (response?.data?.messages?.length > 0) {
-        setIsStockAvailable(false);
-        
-        response.data.messages.forEach((message , index) => {
+        response.data.messages.forEach((msg, index) => {
           setTimeout(() => {
-            dispatch(addToast({
-              id: Date.now() + Math.random(),
-              type: 'warning',
-              message,
-              duration: 3000,
-            }));
-          }, index * 500);
+            dispatch(
+              addToast({
+                id: Date.now() + index,
+                type: "warning",
+                message: msg,
+                duration: 3000,
+              })
+            );
+          }, index * 300);
         });
-  
-      } else if(response?.data?.message){
-        dispatch(addToast({
-          id: Date.now() + Math.random(), 
-          type: 'success',
-          message : response?.data?.message,
-          duration: 3000,
-        }));
-        setIsStockAvailable(true);
+        return false;
+      } else {
+        dispatch(
+          addToast({
+            id: Date.now(),
+            type: "success",
+            message: response?.data?.message,
+            duration: 3000,
+          })
+        );
+        return true;
       }
-  
     } catch (error) {
-      console.error("Error checking stock:", error);
-      dispatch(addToast({
-        id: Date.now(),
-        type: 'error',
-        message: 'Failed to check stock. Please try again.',
-        duration: 3000,
-      }));
-      setIsStockAvailable(false); // Optional fallback
+      console.error("Stock check error:", error);
+      dispatch(
+        addToast({
+          id: Date.now(),
+          type: "error",
+          message: "Failed to check stock. Try again.",
+          duration: 3000,
+        })
+      );
+      return false;
     }
   };
 
-  const doPayment = async () => {
-    if(!isStockAvailable){
-      checkStockAvailability();
+  const handlePayNowClick = async () => {
+    if (user?.canteen?.status === "inactive") {
+      dispatch(
+        addToast({
+          id: Date.now(),
+          type: "error",
+          message: "Canteen closed. Payment unavailable. Try later.",
+          duration: 3000,
+        })
+      );
       return;
     }
 
-    await getSessionId();
+    setCheckingStock(true);
+    const stockAvailable = await checkStockAvailability();
+    setCheckingStock(false);
 
-    if (!sessionId) {
-      console.error("Session ID is not available");
-      return;
+    if (stockAvailable) {
+      setIsModalOpen(true);
+      dispatch(fetchCartItems(userId));
     }
-
-    if (!cashfree) {
-      console.error("Cashfree SDK is not initialized");
-      return;
-    }
-
-    let checkoutOptions = {
-      paymentSessionId: sessionId,
-      redirectTarget: "_self",
-    };
-    cashfree.checkout(checkoutOptions);
   };
 
   const getSessionId = async () => {
     try {
-      const response = await userApi.getSessionId({
+      const res = await userApi.getSessionId({
         totalAmount,
         userId: user.id,
         cartItems,
         canteenId: user.canteen._id,
-        collegeId: user.college._id
+        collegeId: user.college._id,
       });
-      sessionId = response.data.sessionId;
-    } catch (error) {
-      console.log(error);
+      return res.data.sessionId;
+    } catch (err) {
+      console.error("Session error:", err);
+      return null;
     }
   };
 
+  const doPayment = async () => {
+    setProcessing(true);
+    const sessionId = await getSessionId();
+
+    if (!sessionId) {
+      dispatch(
+        addToast({
+          id: Date.now(),
+          type: "error",
+          message: "Unable to initiate payment. Try again.",
+          duration: 3000,
+        })
+      );
+      setProcessing(false);
+      return;
+    }
+
+    if (!cashfree) {
+      dispatch(
+        addToast({
+          id: Date.now(),
+          type: "error",
+          message: "Payment SDK not ready. Refresh the page.",
+          duration: 3000,
+        })
+      );
+      setProcessing(false);
+      return;
+    }
+
+    cashfree.checkout({
+      paymentSessionId: sessionId,
+      redirectTarget: "_self",
+    });
+
+    // No need to reset processing, since user will be redirected
+  };
 
   return (
     <>
       <div className={styles.buttonContainer}>
-        <button className={styles.paymentButton} onClick={() => {
-            if(user?.canteen?.status === "inactive"){
-              dispatch(addToast({
-                id: Date.now(),
-                type: 'error',
-                message: 'Canteen closed. Payment unavailable. Try later.',
-                duration: 3000,
-              }));
-              return;
-            }
-          setIsModalOpen(true)
-          dispatch(fetchCartItems(userId));
-          
-          }}>
-          <span className={styles.buttonText}>Pay Now Rs.{totalAmount}</span>
+        <button
+          className={styles.paymentButton}
+          onClick={handlePayNowClick}
+          disabled={checkingStock || processing}
+        >
+          {checkingStock
+            ? "Checking stock..."
+            : processing
+            ? "Processing..."
+            : `Pay Now Rs.${totalAmount}`}
         </button>
       </div>
 
-      {/* Modal for Confirmation */}
       <ModalPopup
         isOpen={isModalOpen}
         title="Confirm Your Order"
@@ -144,9 +176,18 @@ function Payment() {
           doPayment();
         }}
       >
-        <p>You are ordering from <strong>{user?.college?.name}</strong> , <strong>{user?.canteen?.name}</strong> canteen.</p>
+        <p>
+          You are ordering from <strong>{user?.college?.name}</strong>,{" "}
+          <strong>{user?.canteen?.name}</strong> canteen.
+        </p>
         <div className={styles.modalButtonContainer}>
-          <button onClick={doPayment} className={styles.paymentButton} >Proceed to Pay</button>
+          <button
+            onClick={doPayment}
+            className={styles.paymentButton}
+            disabled={processing}
+          >
+            {processing ? "Processing..." : "Proceed to Pay"}
+          </button>
         </div>
       </ModalPopup>
     </>
