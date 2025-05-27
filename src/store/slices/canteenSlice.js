@@ -9,6 +9,7 @@ export const fetchCanteensByCollege = createAsyncThunk(
       const response = await adminApi.fetchCanteens(collegeId);
       return { collegeId, canteens: response.data };
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response.data.message);
     }
   }

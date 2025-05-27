@@ -64,6 +64,18 @@
   outline: none;
   border: none;
 }
+.iconContainer {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.svg {
+  width: 35px;
+  height: 35px;
+}
 
 
 .searchInput {
@@ -183,7 +195,7 @@
   color: rgba(0, 0, 0, 0.7);
   cursor: pointer;
   position: relative;
-  padding: 0.5rem;
+  padding:0 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -196,8 +208,8 @@
 
 .notificationBadge {
   position: absolute;
-  top: -3px;
-  right: -3px;
+  top: -1px;
+  right: 1px;
   background-color: #FF453A;
   color: white;
   border-radius: 50%;
@@ -222,7 +234,7 @@
   border: none;
   cursor: pointer;
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding:0 0.5rem;
   border-radius: 50px;
   transition: background-color 0.2s;
 }

@@ -30,7 +30,6 @@ const HeroSection = () => {
     const fetchSlides = async () => {
       try {
         const response = await userApi.getHeroBanners(user?.id, user?.college?._id);
-        console.log(response);
         const banners = response.data;
         setSlides(banners);
         if (banners.length > 0) {

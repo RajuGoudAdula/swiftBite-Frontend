@@ -329,7 +329,22 @@ const Navbar = () => {
               onClick={toggleNotifications}
               aria-label="Notifications"
             >
-              <FaBell size={20} />
+             
+                <svg
+                  className={styles.svg}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="black"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="48"
+                  width="17"
+                  style={{width:"25px"}}
+                >
+                  <path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+                  <path d="M13.73 21a2 2 0 01-3.46 0" />
+                </svg>
               {NoOfNotifications()>0 && <span className={styles.notificationBadge}>{NoOfNotifications()}</span>}
             </button>
             {notificationsOpen && (
@@ -365,7 +380,29 @@ const Navbar = () => {
               onClick={toggleDropdown}
               aria-label="Profile menu"
             >
-              <FaUserCircle size={24} />
+               
+                <svg
+                  className={styles.svg}
+                  viewBox="0 0 64 64"
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="48"
+                  width="17"
+                >
+                  <circle
+                    cx="32"
+                    cy="22"
+                    r="10"
+                    stroke="black"
+                    strokeWidth="2"
+                    fill="none"
+                  />
+                  <path
+                    d="M16 48C16 40.27 22.27 34 30 34H34C41.73 34 48 40.27 48 48"
+                    stroke="black"
+                    strokeWidth="2"
+                    fill="none"
+                  />
+                </svg>
               <span className={styles.profileName}>
                 {user?.username || 'Profile'}
               </span>

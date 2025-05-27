@@ -17,7 +17,7 @@ const AdminDashboard = () => {
       try {
         const statsResponse = await adminApi.getAdminStats();
         const activityResponse = await adminApi.getRecentActivity();
-        console.log(statsResponse,activityResponse)
+       
 
         setStats(statsResponse.data.stats || []);
 

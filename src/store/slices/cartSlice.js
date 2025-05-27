@@ -14,7 +14,6 @@ export const fetchCartItems = createAsyncThunk(
   'cart/fetchCartItems',
   async (userId, { rejectWithValue }) => {
     try {
-      console.log("Fetching user cart details....");
       const response = await userApi.fetchCartItems(userId);
       return response.data;
     } catch (error) {
@@ -29,8 +28,6 @@ export const addToCart = createAsyncThunk(
   async ({ userId, data }, { rejectWithValue }) => {
     try {
       const response = await userApi.addToCart(userId, data);
-      console.log("Adding item into cart");
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to add item to cart');
@@ -88,7 +85,6 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCartItems.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         state.cartItems = action.payload.cart.items;
         state.totalAmount = action.payload.cart.totalAmount;
       })

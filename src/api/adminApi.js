@@ -93,21 +93,27 @@ updateBanner : async (bannerId,banner) => {
 postBanner : async (banner) => {
   return axiosInstance.post(`/admin/post-banner`,banner);
 },
-fetchCanteens : async () => {
+fetchCanteensForBanner : async () => {
   return axiosInstance.get(`/admin/fetchCanteens`);
 },
 deleteBanner : async (bannerId) => {
   return axiosInstance.delete(`/admin/delete-banner/${bannerId}`);
 },
-getAdminStats : async (userId) => {
-  return axiosInstance.get(`/admin/get-stats/${userId}`);
+getAdminStats : async () => {
+  return axiosInstance.get(`/admin/get-stats`);
 },
-getRecentActivity : async (userId) => {
-  return axiosInstance.get(`/admin/get-activity/${userId}`);
+getRecentActivity : async () => {
+  return axiosInstance.get(`/admin/get-activity`);
 },
 getTodaysOrders : async () => {
   return axiosInstance.get(`/admin/get-todays-orders`);
-}
+},
+getUsersForAdmin : async () => {
+  return axiosInstance.get(`/admin/get-all-users`);
+},
+deleteUserByAdmin : async (userId) => {
+  return axiosInstance.delete(`/admin/delete/user/${userId}`);
+},
 
 };
 

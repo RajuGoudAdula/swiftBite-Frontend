@@ -60,7 +60,7 @@ const ManageHeroSection = () => {
 
   const fetchCanteens = async () => {
     try{
-        const res = await adminApi.fetchCanteens();
+        const res = await adminApi.fetchCanteensForBanner();
         await setCanteens(res.data.canteens);
     }catch(error){
         console.log("Failed to fetch canteens : ",error);
