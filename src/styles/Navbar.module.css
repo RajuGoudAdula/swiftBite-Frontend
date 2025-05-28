@@ -550,3 +550,55 @@
   padding: 12px;
   color: rgba(0, 0, 0, 0.5);
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.logoText {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+/* Logo image adjusts based on screen size */
+.logoImage {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .logo {
+    padding: 0.5rem;
+  }
+
+  .logoText {
+    font-size: 1.3rem;
+  }
+
+  .logoImage {
+    height: 35px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .logo {
+    padding: 0.3rem;
+  }
+
+  .logoText {
+    font-size: 1.1rem;
+  }
+
+  .logoImage {
+    height: 30px;
+  }
+}

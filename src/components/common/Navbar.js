@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {  
-  FaBell, 
-  FaUserCircle, 
-  FaSearch, 
   FaTimes,
   FaChevronDown,
   FaChevronUp
@@ -12,6 +9,7 @@ import { useSelector } from "react-redux";
 import userApi from "../../api/userApi";
 import debounce from 'lodash.debounce';
 import styles from "../../styles/Navbar.module.css";
+import logo from "../../logo.png";
 
 const Navbar = () => {
   const { cartItems = [] } = useSelector((state) => state.cart || {});
@@ -190,7 +188,11 @@ const Navbar = () => {
             }
             className={styles.logoText}
           >
-            SwiftBite
+             {logo ? (
+                <img src={logo} alt="SwiftBite Logo" className={styles.logoImage} />
+              ) : (
+                <>SwiftBite</>
+              )}
           </Link>
         </div>
 
