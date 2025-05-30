@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import userApi from '../../api/userApi';
@@ -10,8 +10,9 @@ import Lottie from 'lottie-react';
 
 const Register = () => {
   const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
+  const [timer, setTimer] = useState(300); 
+  const [resendCooldown, setResendCooldown] = useState(60); 
   const [otpVerified, setOtpVerified] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -19,6 +20,8 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [otpDigits, setOtpDigits] = useState(new Array(6).fill(''));
+  const otpRefs = useRef([]);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -26,14 +29,18 @@ const Register = () => {
   const handleSendOtp = async (e) => {
     e.preventDefault();
     if (!email.trim()) return;
-
+  
     try {
       setLoading(true);
+      setOtpDigits(new Array(6).fill(''));
       const response = await userApi.sendOtp({ email: email.trim() });
       setLoading(false);
-
+  
       if (response.data.success) {
         setOtpSent(true);
+        setTimer(300); 
+        setResendCooldown(60);
+  
         dispatch(addToast({
           id: Date.now(),
           type: 'success',
@@ -54,15 +61,19 @@ const Register = () => {
       dispatch(addToast({
         id: Date.now(),
         type: 'error',
-        message: error.response.data.message || "Something went wrong.Please try later.",
+        message: error.response?.data?.message || "Something went wrong. Please try later.",
         duration: 3000,
       }));
     }
   };
+  
 
   const handleOtpSubmit = async (e) => {
-    e.preventDefault();
-    if (!email.trim() || !otp.trim()) {
+    if (e && e.preventDefault) e.preventDefault();
+
+    const enteredOtp = otpDigits.join("");
+
+    if (!email.trim() || !enteredOtp.trim()) {
       dispatch(addToast({
         id: Date.now(),
         type: 'warning',
@@ -74,7 +85,8 @@ const Register = () => {
 
     try {
       setLoading(true);
-      const response = await userApi.verifyOtp({ email: email.trim(), otp: otp.trim() });
+      console.log({ email: email.trim(), otp : enteredOtp.trim() })
+      const response = await userApi.verifyOtp({ email: email.trim(), otp: enteredOtp.trim() });
       setLoading(false);
 
       if (response.data.success) {
@@ -156,6 +168,57 @@ const Register = () => {
     }
   };
 
+  useEffect(() => {
+    let countdown;
+    if (otpSent && timer > 0) {
+      countdown = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    }
+  
+    return () => clearInterval(countdown);
+  }, [otpSent, timer]);
+  
+  useEffect(() => {
+    let resendCooldownTimer;
+    if (resendCooldown > 0) {
+      resendCooldownTimer = setInterval(() => {
+        setResendCooldown((prev) => prev - 1);
+      }, 1000);
+    }
+  
+    return () => clearInterval(resendCooldownTimer);
+  }, [resendCooldown]);
+
+  useEffect(() => {
+    const isComplete = otpDigits.every((digit) => digit !== '');
+    if (isComplete) {
+      handleOtpSubmit();
+    }
+  }, [otpDigits]);
+
+
+  const handleOtpChange = (e, index) => {
+    const value = e.target.value;
+    if (!/^[0-9]?$/.test(value)) return;
+  
+    const newOtp = [...otpDigits];
+    newOtp[index] = value;
+    setOtpDigits(newOtp);
+  
+    // Move focus
+    if (value && index < 5) {
+      otpRefs.current[index + 1].focus();
+    }
+  };
+  
+  const handleOtpKeyDown = (e, index) => {
+    if (e.key === "Backspace" && !otpDigits[index] && index > 0) {
+      otpRefs.current[index - 1].focus();
+    }
+  };
+  
+
   return (
     <div className={styles.registerContainer}>
       <div className={styles.imageContainer}>
@@ -184,16 +247,43 @@ const Register = () => {
                 disabled={otpSent}
                 className={styles.input}
               />
-              {otpSent && (
-                <input
-                  type="text"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  required
-                  className={styles.input}
-                />
+             {otpSent && (
+                <div className={styles.otpContainer}>
+                  {otpDigits.map((digit, index) => (
+                    <input
+                      key={index}
+                      type="text"
+                      maxLength="1"
+                      value={digit}
+                      onChange={(e) => handleOtpChange(e, index)}
+                      onKeyDown={(e) => handleOtpKeyDown(e, index)}
+                      ref={(el) => (otpRefs.current[index] = el)}
+                      className={styles.otpInput}
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                    />
+                  ))}
+                </div>
               )}
+
+                {otpSent && (
+                  <div className={styles.otpContainer}>
+                    <p className={styles.otpTimerText}>
+                      OTP sent! It will expire in: {Math.floor(timer / 60)}:{("0" + (timer % 60)).slice(-2)}
+                    </p>
+
+                    <button
+                      className={styles.resendButton}
+                      onClick={handleSendOtp}
+                      disabled={resendCooldown > 0}
+                    >
+                     { resendCooldown > 0
+                        ? `Wait ${resendCooldown}s`
+                        : "Resend"}
+                    </button>
+                  </div>
+                )}
+
               <button
                 type="submit"
                 className={styles.registerButton}

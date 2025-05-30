@@ -13,7 +13,6 @@ import MenuItem from '../../components/common/MenuItem';
 import LoadingErrorHandler from '../../components/common/LoadingErrorHandler';
 import styles from "../../styles/Home.module.css";
 import { fetchFavouriteItems } from '../../store/slices/favouriteItemsSlice';
-import CanteenClosedBanner from '../../components/user/CanteenClosedBanner';
 import HeroSection from '../../components/user/HeroSection';
 
 const Home = () => {

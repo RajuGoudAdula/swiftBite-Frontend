@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { fetchCartItems, removeItem } from "../../store/slices/cartSlice";
@@ -7,6 +7,7 @@ import styles from "../../styles/FloatingButton.module.css";
 function FloatingCartButton() {
   const { totalAmount, cartItems = [] } = useSelector((state) => state.cart || {});
   const { user } = useSelector((state) => state.auth || {});
+  const [previousAmount, setPreviousAmount] = useState(0);
   const userId = user?.id || null;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,11 +17,29 @@ function FloatingCartButton() {
   // Queue system for item removal
   const [removalQueue, setRemovalQueue] = useState([]);
 
+  const formattedTotal = useMemo(() => {
+    const displayAmount =
+      typeof totalAmount === "number" && totalAmount > 0 ? totalAmount : previousAmount;
+  
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }).format(displayAmount);
+  }, [totalAmount, previousAmount]);
+
   useEffect(() => {
     if (userId) {
       dispatch(fetchCartItems(userId));
     }
   }, [dispatch, userId,totalAmount]);
+
+  useEffect(() => {
+    if (typeof totalAmount === "number" && !isNaN(totalAmount) && totalAmount > 0) {
+      setPreviousAmount(totalAmount);
+    }
+  }, [totalAmount]);
 
   // Process removal queue
   useEffect(() => {
@@ -51,13 +70,9 @@ function FloatingCartButton() {
     navigate("/cart");
   };
 
-  // Format total amount with proper currency formatting
-  const formattedTotal = new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2
-  }).format(totalAmount || 0);
+
+
+
 
 
 

@@ -63,11 +63,15 @@
     border-radius: 8px;
     object-fit: cover;
   }
+
+ 
   
   .itemDetails {
    display: grid;
    grid-template-columns: 115px 1.2fr 0.8fr;
    gap: 1%;
+   justify-content: space-between;
+   align-items: center;
   }
   
   .itemTitle {
@@ -130,6 +134,13 @@
     border: none;
     cursor: pointer;
     padding: 4px;
+  }
+
+  .deleteButton :hover{
+    background-color: rgba(255, 87, 34, 0.1);
+    border-radius: 20px;
+    width: 22px;
+    height: 22px;
   }
   
   .deleteIcon {
@@ -271,8 +282,7 @@
   .pricing {
     display: flex;
     align-items: center;
-    gap: 1%;
-   justify-content: space-between;
+    gap: 6%;
   }
   
   .currentPrice {

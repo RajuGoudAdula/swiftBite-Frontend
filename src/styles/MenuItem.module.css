@@ -196,6 +196,10 @@
   border-radius: 5px;
 }
 
+.favouriteButton:hover {
+  background-color: rgba(224, 36, 94, 0.1); 
+}
+
 .onAddToCartButton{
   width: 100%;
   background-color: black;
@@ -229,4 +233,77 @@
     font-weight: 600;
     z-index: 1;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.checkIcon {
+  margin-left: 6px;
+  animation: popTick 0.4s ease-in-out;
+  background: #00c853;
+  border-radius: 50%;
+  padding: 2px;
+  box-shadow: 0 0 8px rgba(0, 255, 128, 0.6);
+  width: 15px;
+  height: 15px;
+}
+.animatedAdded{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes popTick {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.sparkle-container {
+  position: absolute;
+  right: 25%;
+  bottom: 9%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media screen and (min-width: 1024px) {
+  .sparkle-container{
+    right: 27%;
+  }
+}
+
+
+.sparkle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: gold;
+  transform: translate(0, 0);
+  opacity: 0;
+  animation: sparkleBurst 700ms ease-out forwards;
+}
+
+@keyframes sparkleBurst {
+  0% {
+    transform: translate(0px, 0px) scale(0.5);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(1);
+    opacity: 0;
+  }
 }
