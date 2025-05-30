@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 
 // Set up the socket connection
-const socket = io("http://localhost:5000", {
+const socket = io("https://swiftbite-backend-1.onrender.com", {
   withCredentials: true,
   transports: ['websocket'],
 });

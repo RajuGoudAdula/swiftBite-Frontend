@@ -20,7 +20,7 @@ export const verifyUser = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5000/api/auth/verify-user`, {
+      const res = await axios.get(`https://swiftbite-backend-1.onrender.com/api/auth/verify-user`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
