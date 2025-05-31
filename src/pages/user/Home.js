@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchMenuOfCanteen } from '../../store/slices/menuSlice';
-import { addToCart } from '../../store/slices/cartSlice';
+import { addToCart, fetchCartItems } from '../../store/slices/cartSlice';
 import { fetchColleges, fetchCanteens } from '../../store/slices/collegeSlice';
 import { addCollegeCanteen, fetchCanteenStatus } from '../../store/slices/authSlice';
 import { addToast } from '../../store/slices/toastSlice';
@@ -38,7 +38,8 @@ const Home = () => {
       setModalOpen(true);
     } else {
       dispatch(fetchMenuOfCanteen(user.canteen._id));
-      dispatch(fetchFavouriteItems({userId : user.id,canteenId : user.canteen._id}))
+      dispatch(fetchFavouriteItems({userId : user.id,canteenId : user.canteen._id}));
+      dispatch(fetchCartItems(user?.id));
     }
   }, [user, dispatch]);
 

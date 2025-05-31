@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useCallback, useMemo, forwardRef } from "react";
 import styles from "../../styles/Cart.module.css";
 import { useDispatch } from "react-redux";
 import { updateQuantity, removeItem } from "../../store/slices/cartSlice";
 import { addToast } from "../../store/slices/toastSlice";
+import { motion } from "framer-motion";
 
-const CartItem = React.memo(({ item, userId }) => {
+const CartItem = forwardRef(({ item, userId  }, ref) => {
   const dispatch = useDispatch();
   const [localQuantity, setLocalQuantity] = useState(item.quantity);
 
@@ -18,18 +19,15 @@ const CartItem = React.memo(({ item, userId }) => {
     return { itemId, productName, offer, price, discountedPrice };
   }, [item]);
 
-  // ✅ Debounce logic to prevent rapid dispatching
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (localQuantity !== item.quantity) {
         dispatch(updateQuantity({ userId, itemId, quantity: localQuantity }));
       }
-    }, 500); // 500ms debounce delay (adjustable)
-
+    }, 500);
     return () => clearTimeout(timeout);
   }, [localQuantity, dispatch, userId, item.quantity, itemId]);
 
-  // ✅ Increase and decrease with local state only
   const increase = useCallback(() => {
     setLocalQuantity((prev) => prev + 1);
   }, []);
@@ -38,7 +36,6 @@ const CartItem = React.memo(({ item, userId }) => {
     setLocalQuantity((prev) => (prev > 1 ? prev - 1 : prev));
   }, []);
 
-  // ✅ Remove item with toast feedback
   const handleRemove = useCallback(() => {
     dispatch(removeItem({ userId, itemId }))
       .unwrap()
@@ -62,10 +59,24 @@ const CartItem = React.memo(({ item, userId }) => {
           })
         );
       });
+
   }, [dispatch, userId, itemId, productName]);
 
   return (
-    <div className={styles.item}>
+    <motion.div
+      ref={ref} // <-- Forward the ref here
+      layout
+      initial={false} // don't animate on mount
+      animate={{ scale: 1 }}
+      exit={{
+        opacity: 0,
+        y: -30,
+        scale: 0.95,
+        filter: "blur(6px)",
+        transition: { duration: 0.3, ease: "easeInOut" },
+      }}
+      className={styles.item}
+    >
       <img src={item.productId.image} alt={productName} className={styles.itemImage} />
 
       <div className={styles.itemDetails}>
@@ -111,8 +122,8 @@ const CartItem = React.memo(({ item, userId }) => {
           </svg>
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 });
 
-export default CartItem;
+export default React.memo(CartItem);

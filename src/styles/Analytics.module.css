@@ -521,3 +521,34 @@
   white-space: normal; /* Allow text to wrap */
   width: 100%;
 }
+
+.respondButton {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.deleteButton {
+  background-color: #c62828;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reviewInput {
+  width: 100%;
+  min-height: 100px;
+  padding: 8px;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.actionDiv{
+  display: flex;
+}

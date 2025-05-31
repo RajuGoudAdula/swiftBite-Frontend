@@ -47,6 +47,10 @@ const canteenApi = {
   submitReviewResponse : async (canteenId,reviewId,response,orderId) => {
     return axiosInstance.post(`/canteen/${canteenId}/add-response`,{reviewId,response,orderId})
   },
+  deleteReviewResponse : async (canteenId,reviewId,userId,productId , orderId) => {
+    return axiosInstance.delete(`/canteen/${canteenId}/delete-review/${reviewId}/${userId}/${productId}/${orderId}`);
+  },
+
   //Canteen dashboard
   todayOrders : async () => {
     return axiosInstance.get('/canteen/orders/today');

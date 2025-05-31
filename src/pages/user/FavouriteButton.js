@@ -16,15 +16,16 @@ const FavouriteButton = ({ userId, canteenId, itemId }) => {
 
   const toggleFavourite = async () => {
     try {
+      setIsFavourite(!isFavourite);
       if (isFavourite) {
         await dispatch(removeFavouriteItem({ userId, canteenId, itemId }));
       } else {
-        await dispatch(addFavouriteItem({ userId, canteenId, itemId }));
         setShowSparkles(true);
         setTimeout(() => setShowSparkles(false), 1300);
+        await dispatch(addFavouriteItem({ userId, canteenId, itemId }));
       }
-      setIsFavourite(!isFavourite);
     } catch (err) {
+      setIsFavourite(!isFavourite);
       console.error('Error updating favourite:', err);
     }
   };

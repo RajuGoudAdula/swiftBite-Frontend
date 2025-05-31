@@ -93,17 +93,26 @@ const cartSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        state.cartItems = action.payload.items;
-        state.totalAmount = action.payload.totalAmount;
+        state.cartItems = action.payload.cart.items;
+        state.totalAmount = action.payload.cart.totalAmount;
       })
       .addCase(updateQuantity.fulfilled, (state, action) => {
-        state.cartItems = action.payload.items;
-        state.totalAmount = action.payload.totalAmount;
+        const { cart } = action.payload;
+        const serverItemIds = cart.items.map((item) => item._id);
+        state.cartItems = state.cartItems.filter((item) =>
+          serverItemIds.includes(item._id)
+        );
+        state.totalAmount = cart.totalAmount;
       })
       .addCase(removeItem.fulfilled, (state, action) => {
-        state.cartItems = action.payload.items;
-        state.totalAmount = action.payload.totalAmount;
+        const { cart } = action.payload;
+        const serverItemIds = cart.items.map((item) => item._id);
+        state.cartItems = state.cartItems.filter((item) =>
+          serverItemIds.includes(item._id)
+        );
+        state.totalAmount = cart.totalAmount;
       });
+      
   },
 });
 

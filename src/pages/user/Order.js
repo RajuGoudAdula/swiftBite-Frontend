@@ -30,6 +30,9 @@ function Order() {
   const [newRating, setNewRating] = useState(1);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isAnonymous,setIsAnonymous] = useState(false);
+  const [submittingReviewFor, setSubmittingReviewFor] = useState(null); // productId being submitted
+  const [submittedReviewFor, setSubmittedReviewFor] = useState(null);   // recently submitted
+
   
  useEffect(()=>{
   console.log(orders);
@@ -98,7 +101,7 @@ function Order() {
     }));
   };
 
-  const handleSubmitReview = (productId) => {
+  const handleSubmitReview = async (productId) => {
     const reviewData = {
       productId,
       userId: user.id,
@@ -109,9 +112,25 @@ function Order() {
       review: reviews[productId]?.review || "",
       isAnonymous: reviews[productId]?.isAnonymous || false,
     };
-    dispatch(updateReview(reviewData));
-    setEditMode(null);
-    setIsAnonymous(false);
+  
+    try {
+      setSubmittingReviewFor(productId);
+  
+      await dispatch(updateReview(reviewData)).unwrap();
+  
+      setSubmittedReviewFor(productId); // show "Added"
+      setEditMode(null);
+      setIsAnonymous(false);
+  
+      setTimeout(() => {
+        setSubmittedReviewFor(null); // reset after 3s
+      }, 3000);
+    } catch (error) {
+      console.error("Failed to submit review", error);
+      // Optionally show error toast here
+    } finally {
+      setSubmittingReviewFor(null);
+    }
   };
 
   const handleDeleteReview = (productId) => {
@@ -305,10 +324,14 @@ function Order() {
                                         <button
                                           className={styles.submitButton}
                                           onClick={() => setEditMode(item.productId._id)}
+                                          disabled={submittingReviewFor === item.productId._id}
                                         >
-                                          Add Review
+                                          {submittingReviewFor === item.productId._id
+                                            ? "Adding..."
+                                            : submittedReviewFor === item.productId._id
+                                            ? "Added"
+                                            : "Add Review"}
                                         </button>
-
                                         <ModalPopup
                                           isOpen={editMode === item.productId._id}
                                           title="Add Review"
@@ -425,13 +448,10 @@ function Order() {
                                   </div>
                                 </div>
                                 {reviews[item.productId._id]?.canteenResponse?.text && (
-                                    <div>
-                                      <h5>Canteen Response</h5>
-                                      <p>Reply: {reviews[item.productId._id]?.canteenResponse?.text}</p>
-                                      <p>
-                                        respondedAt:{" "}
-                                        {reviews[item.productId._id]?.canteenResponse?.respondedAt}
-                                      </p>
+                                    <div className={styles.canteenResponse}>
+                                      <div className={styles.responseLabel}>Canteen Response:</div>
+                                      <span className={styles.canteenResponseText}>{reviews[item.productId._id]?.canteenResponse?.text}</span>
+                                      <span className={styles.reviewDate}>{formatDate(reviews[item.productId._id]?.canteenResponse?.respondedAt)}</span>
                                     </div>
                                   )}
 
@@ -633,8 +653,13 @@ function Order() {
                                         <button
                                           className={styles.submitButton}
                                           onClick={() => setEditMode(item.productId._id)}
+                                          disabled={submittingReviewFor === item.productId._id}
                                         >
-                                          Add Review
+                                          {submittingReviewFor === item.productId._id
+                                            ? "Adding..."
+                                            : submittedReviewFor === item.productId._id
+                                            ? "Added"
+                                            : "Add Review"}
                                         </button>
 
                                         <ModalPopup
@@ -753,13 +778,10 @@ function Order() {
                                   </div>
                                 </div>
                                 {reviews[item.productId._id]?.canteenResponse?.text && (
-                                    <div>
-                                      <h5>Canteen Response</h5>
-                                      <p>Reply: {reviews[item.productId._id]?.canteenResponse?.text}</p>
-                                      <p>
-                                        respondedAt:{" "}
-                                        {reviews[item.productId._id]?.canteenResponse?.respondedAt}
-                                      </p>
+                                    <div className={styles.canteenResponse}>
+                                      <div className={styles.responseLabel}>Canteen Response:</div>
+                                      <span className={styles.canteenResponseText}>{reviews[item.productId._id]?.canteenResponse?.text}</span>
+                                      <span className={styles.reviewDate}>{formatDate(reviews[item.productId._id]?.canteenResponse?.respondedAt)}</span>
                                     </div>
                                   )}
 
