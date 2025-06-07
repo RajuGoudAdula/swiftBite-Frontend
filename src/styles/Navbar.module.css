@@ -492,12 +492,9 @@
     display: none;
   }
 
-  .profileDropdown{
-    right: -50px;
-
-  }
+ 
   .notificationDropdown{
-    right: -127px;
+    right: -90px;
   }
 }
 

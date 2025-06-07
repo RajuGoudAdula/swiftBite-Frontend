@@ -26,8 +26,8 @@ const Login = () => {
 
       if (response?.data?.success) {
         dispatch(loginSuccess({
-          user: response.data.user,
-          token: response.data.token,
+          user: response.data?.user,
+          token: response.data?.token,
         }));
 
         dispatch(addToast({
@@ -37,9 +37,9 @@ const Login = () => {
           duration: 3000,
         }));
 
-        dispatch(userAllNotifications(response.data.user.id));
+        dispatch(userAllNotifications(response.data?.user?.id));
 
-        const role = response.data.user.role;
+        const role = response.data?.user?.role;
         if (role === 'admin') navigate('/admin/dashboard');
         else if (role === 'canteen') navigate('/canteen/dashboard');
         else navigate('/');

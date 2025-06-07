@@ -65,9 +65,9 @@ const MenuItem = ({ item, onAddToCart }) => {
           <div className={styles.desktopActionSection}>
             <div className={styles.favouriteButton}>
               <FavouriteButton
-                userId={user.id}
-                canteenId={user.canteen._id}
-                itemId={item._id}
+                userId={user?.id}
+                canteenId={user?.canteen?._id}
+                itemId={item?._id}
               />
             </div>
             <div className={styles.onAddToCartButton}>

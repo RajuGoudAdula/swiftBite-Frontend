@@ -180,6 +180,9 @@ const userApi = {
   sendCanteenFeedback : (userId,canteenId,formData) => {
     return axiosInstance.post(`/user/${userId}/feedback/${canteenId}`,formData);
   },
+  userSubscribe : (userId , subscription) => {
+    return axiosInstance.post(`/push/subscribe`,{userId , subscription});
+  },
 
 
  
