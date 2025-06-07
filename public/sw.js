@@ -9,8 +9,8 @@ self.addEventListener('push', function (event) {
 
     const options = {
       body: data.options?.body || '',
-      icon: data.options?.icon || '/favicon/apple-icon-180x180.png',
-      badge: data.options?.badge || '/favicon/ms-icon-70x70.png',
+      icon: new URL(data.options?.icon || '/favicon/apple-icon-180x180.png', self.location.origin).href,
+      badge: new URL(data.options?.badge || '/favicon/ms-icon-70x70.png', self.location.origin).href,
       vibrate: data.options?.vibrate || [200, 100, 200],
       data: {
         url: new URL(data.options?.data?.url || '/', self.location.origin).href,
@@ -22,6 +22,7 @@ self.addEventListener('push', function (event) {
       ],
       requireInteraction: true,
     };
+    
 
     event.waitUntil(
       self.registration.showNotification(title, options)
