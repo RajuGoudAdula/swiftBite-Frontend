@@ -1,5 +1,4 @@
 .container {
-  min-height: 100vh;
   background-color: #f5f5f7;
   }
   
@@ -8,306 +7,230 @@
   .notFound {
     text-align: center;
     padding: 48px;
-    font-size: 18px;
+    font-size: 1.2rem;
     color: #86868b;
   }
   
-  /* Hero Section */
   .hero {
-    background: white;
-    padding: 40px 20px;
-    margin-bottom: 20px;
-    border-radius: 3%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .heroContent {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: white;
+    background-color: #f8f8f8;
+    padding: 4%;
+    gap: 16px;
+  }
+  
+  /* Desktop Layout */
+  @media (min-width: 768px) {
+    .hero {
+      flex-direction: row;
+      overflow: hidden;
+    }
   }
   
   .imageWrapper {
+    position: relative;
     width: 100%;
-    max-width: 400px;
-    aspect-ratio: 1/1;
-    border-radius: 18px;
+    border-radius: 16px 16px 0 0;
     overflow: hidden;
-    
+    background-color: #fff;
+    max-height: 270px;
+  }
+  
+  @media (min-width: 768px) {
+    .imageWrapper {
+      flex: 1;
+      border-radius: 16px;
+      max-height: 450px;
+    }
   }
   
   .productImage {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 12px;
   }
   
-  .productMeta {
-    width: 100%;
-    max-width: 500px;
+  .productInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
   
-  .availabilityTag {
-    display: inline-block;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 16px;
-  }
-  
-  .inStock {
-    background-color: #34C759;
-    color: white;
-  }
-  
-  .outOfStock {
-    background-color: #FF3B30;
-    color: white;
+  @media (min-width: 768px) {
+    .productInfo {
+      overflow-y: auto;
+      padding-left: 24px;
+      padding-right: 16px;
+      max-height: 450px;
+    }
   }
   
   .productTitle {
-    font-size: 32px;
-    font-weight: 600;
-    margin: 0 0 12px 0;
-    line-height: 1.2;
-    color: #1d1d1f;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000;
+    padding: 0 3%;
+    margin: 0;
+  }
+  
+  .rating {
+    font-size: 1.2rem;
+    color: #ffcc00;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 3%;
   }
   
   .priceContainer {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  
-  .currentPrice {
-    font-size: 28px;
-    font-weight: 600;
+    gap: 4px;
+    padding: 0 3%;
+    align-items: baseline;
   }
   
   .originalPrice {
-    font-size: 1rem;
+    font-size: 1.1rem;
+    color: #999;
     text-decoration: line-through;
-    color: #86868b;
   }
   
-  .offerTag {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: #FFD700;
-    color: #1d1d1f;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 500;
-    margin-bottom: 20px;
-    width: fit-content;
+  .currentPrice {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #000;
+    padding: 0 3%;
   }
   
-  .offerIcon {
-    color: #FF3B30;
+  .netWeight {
+    font-size: 1rem;
+    color: #555;
   }
   
   .deliveryInfo {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #86868b;
-    font-size: 16px;
+    font-size: 1rem;
+    color: #333;
+    padding: 0 3%;
   }
   
   .deliveryIcon {
-    color: #0071E3;
+    font-size: 1rem;
+    color: #000;
   }
   
-  .addToCart {
-    width: 100%;
-    padding: 10px;
-    background:linear-gradient(135deg, #ff3e6c, #ff6b3e);
-    color: white;
-    border: none;
+  
+  .addToCart,.Unavailable {
+    padding: 7px 10px;
+    background-color: #000;
+    color: #fff;
     border-radius: 12px;
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
-    
-  }
-  
-  .addToCart:hover {
-    background-color: #0077ED;
+    text-align: center;
   }
   
   .addToCart:disabled {
-    background-color: #A7A7A7;
+    background-color: #ccc;
     cursor: not-allowed;
   }
+ .Unavailable{
+  cursor: not-allowed;
+ }
   
-  .spiceIndicator {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #FF3B30;
-    font-weight: 500;
-  }
-  
-  .spiceIcons {
-    display: flex;
-    gap: 4px;
-  }
-  
-  .spiceIcon {
-    color: #FF3B30;
-  }
-  
-  /* Details Sections */
   .detailsSection {
-    padding: 0 4%;
+    background-color: #fff;
+    padding: 3%;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   }
   
   .sectionTitle {
-    font-size: 24px;
+    font-size: 1.2rem;
     font-weight: 600;
-    position: relative;
-    color: #1d1d1f;
-  }
-  
-
-  
-  .sectionHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
+    color: #000;
+    margin: 5px 0;
+    padding: 0 0 2% 0;
   }
   
   .productDescription {
-    font-size: 17px;
-    line-height: 1.6;
-    color: #515154;
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.5;
+    margin: 0;
   }
   
-  /* Tags */
-  .tagsContainer {
+  .ingredientsGrid {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .tag {
-    background-color: #f5f5f7;
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 14px;
-    color: #1d1d1f;
-  }
-  
-  .allergenTag {
-    background-color: #FFEBEE;
-    color: #D32F2F;
-  }
-  
-  /* Nutrition Grid */
-  .nutritionGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 16px;
-    margin-top: 20px;
-  }
-  
-  .nutritionItem {
-    background: white;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    text-align: center;
-    transition: transform 0.2s ease;
-  }
-  
-  .nutritionItem:hover {
-    transform: translateY(-4px);
-  }
-  
-  .nutritionValue {
-    font-size: 24px;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 4px;
-    color: #0071E3;
-  }
-  
-  .nutritionLabel {
-    font-size: 14px;
-    color: #86868b;
-  }
-  
-  /* Ingredients */
-  .ingredientsGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 16px;
-    margin-top: 16px;
+    gap: 12px;
   }
   
   .ingredientItem {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    gap: 6px;
+    background-color: #f0f0f0;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 1rem;
   }
   
   .ingredientIcon {
-    color: #34C759;
-    font-size: 18px;
+    font-size: 1rem;
+    color: #555;
   }
   
-  /* Preparation Info */
-  .prepInfo {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-top: 16px;
-  }
-  
-  .prepItem {
+  .nutritionGrid {
     display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  .nutritionItem {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 16px;
-    padding: 16px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 8px;
   }
   
-  .prepIcon {
-    color: #0071E3;
-    font-size: 24px;
-  }
-  
-  .prepLabel {
-    display: block;
-    font-size: 14px;
-    color: #86868b;
-    margin-bottom: 4px;
-  }
-  
-  .prepValue {
-    font-size: 18px;
+  .nutritionValue {
+    font-size: 1rem;
     font-weight: 600;
-    color: #1d1d1f;
+    color: #000;
+  }
+  
+  .nutritionLabel {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .tagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .tag {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: #eee;
+  }
+  
+  .allergenTag {
+    background-color: #ffeaea;
+    color: #d32f2f;
+    font-weight: 500;
   }
   
   /* Reviews */
@@ -435,93 +358,13 @@
     display: none;
   }
   
-  /* Responsive Design */
-  @media (min-width: 768px) {
-    .heroContent {
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .imageWrapper {
-      width: 50%;
-    }
-    
-    .productMeta {
-      width: 50%;
-      padding-left: 40px;
-    }
-    
-    .detailsSection {
-      padding: 0 40px;
-    }
-    
-    .reviewsGrid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .prepInfo {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  
-  }
-  
-  @media (max-width : 768px) {
-    .hero{
-      display: flex;
-      flex-direction: column;
-      padding: 4%;
-    }
-    .imageWrapper{
-      width: 100%;
-      aspect-ratio: 0/0;
-    }
-    .container{
-      padding: 4%;
-    }
-    .inStock,.outOfStock{
-      margin-bottom: 0;
-      position: absolute;
-      top: 13.6%;
-      right: 8%;
-      border-radius: 10px;
-    }
-    .productTitle{
-      font-size: 1.5rem;
-
-    }
-    .currentPrice{
-      font-size: 1.5rem;
-    }
-    .priceContainer{
-      margin-bottom: 4%;
-    }
-    .desktopAddToCartSection{
-      display: none;
-    }
-    .mobileAddToCartSection{
-      display: flex;
-    }
-    .productMeta{
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-  }
-
-
-  @media (min-width: 1024px) {
-    .reviewsGrid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
 
   .netWeight{
-    margin: 5% 0;
+    margin:0;
     color: #808080c4;
     font-size: 0.8rem;
     font-weight: bold;
+    padding: 0 3%;
   }
 
   .reviewSection{
@@ -554,24 +397,6 @@
     font-size: 0.95rem;
   }
 
-  .detailsSection {
-    margin-top: 2rem;
-  }
-  
-  /* Header */
-  .sectionHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-  
-  .sectionTitle {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: start;
-  }
   
   .ratingSummary {
     display: flex;
@@ -631,3 +456,82 @@
     font-size: 1rem;
   }
   
+
+  .ingredientsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  
+  .ingredientItem {
+    background-color: #f6f6f6;
+    border: 1px solid #e2e2e2;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    transition: background-color 0.3s ease;
+  }
+  
+  .ingredientItem:hover {
+    background-color: #ebebeb;
+  }
+  
+  .ingredientText {
+    color: #000;
+  }
+  
+  .nutritionGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+  }
+  
+  .nutritionItem {
+    background-color: #f6f6f6;
+    border-radius: 12px;
+    padding: 5% 15%;
+    text-align: center;
+    color: #333;
+    border: 1px solid #e2e2e2;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nutritionValue {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+  }
+  
+  .nutritionLabel {
+    font-size: 1rem;
+    color: #777;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* Offer Badge Styles */
+.desktopOfferBadge {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  background: black;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.offerText {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}

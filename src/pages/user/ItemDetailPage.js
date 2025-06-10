@@ -32,7 +32,6 @@ const ItemDetailPage = () => {
     }
   };
 
-
   useEffect(() => {
     const fetchItemDetails = async () => {
       try {
@@ -189,6 +188,16 @@ const ItemDetailPage = () => {
       }));
     }
   };
+
+  const OfferBadge = () => (
+      item.item.offers.length > 0 && (
+        <div className={styles.desktopOfferBadge}>
+          <span className={styles.offerText}>
+            {item.item.offers[0].offerType} 
+          </span>
+        </div>
+      )
+    );
   
 
   function formatDate(isoDateString) {
@@ -211,22 +220,27 @@ const ItemDetailPage = () => {
     <div className={styles.container}>
       {/* Hero Section */}
       <div className={styles.hero}>
-        {/* <div className={styles.heroContent}> */}
           <div className={styles.imageWrapper}>
             <img 
               src={item.product.image} 
               alt={item.product.name} 
               className={styles.productImage} 
             />
+            <OfferBadge />
           </div>
-          
-          <div className={styles.productMeta}>
-            <div className={styles.productDetails}>
-              <div className={`${styles.availabilityTag} ${item.item.isAvailable ? styles.inStock : styles.outOfStock}`}>
-                {item.item.isAvailable ? 'In Stock' : 'Out of Stock'}
-              </div>
-              
+          <div className={styles.productInfo}>
+             
+
+        
               <h1 className={styles.productTitle}>{item.product.name}</h1>
+
+              <div className={styles.rating}>
+                {renderRating(
+                      Math.round(
+                        item.reviews.reduce((acc, review) => acc + review.rating, 0) / item.reviews.length
+                      )
+                    )}
+              </div>
               <p className={styles.netWeight}>1 {item.product.unit} . {item.product.netWeight}</p>
               <div className={styles.priceContainer}>
                 <span className={styles.originalPrice}>₹{item.item.price}</span>
@@ -235,135 +249,83 @@ const ItemDetailPage = () => {
                     ₹{Math.round(item.item.price - (item.item.offers[0].discount / 100) * item.item.price)}
                   </span>
                 )}
-
               </div>
-              
-              {item.item.offers.length > 0 && (
-                <div className={styles.offerTag}>
-                  <FaFire className={styles.offerIcon} />
-                  <span>Save ₹{item.item.offers[0].discount} ({item.item.offers[0].offerType})</span>
-                </div>
-              )}
               
               <div className={styles.deliveryInfo}>
-                <FaClock className={styles.deliveryIcon} />
-                <span>Prepared in {item.item.preparationTime} mins</span>
+                    <FaClock className={styles.deliveryIcon} />
+                    <span>Prepared in {item.item.preparationTime} mins</span>
               </div>
-              
-              {item.product.tags.includes("Spicy") && (
-                <div className={styles.spiceIndicator}>
-                  <div className={styles.spiceIcons}>
-                    {getSpiceIcons("Hot")}
+
+              <div className={styles.addToCart}>
+                   {item?.item?.isAvailable ? (
+                      <button 
+                        className={styles.addToCart}
+                        onClick={handleAddToCart}
+                        disabled={!item.item.isAvailable}
+                      >
+                        Add to Cart
+                      </button>
+                   ):(
+                    <span className={styles.Unavailable}>Currently Unavailable</span>
+                   )}
                   </div>
-                  <span>Spicy</span>
-                </div>
-              )}
-              <div className={styles.desktopAddToCartSection}>
-              <button 
-                className={styles.addToCart}
-                onClick={handleAddToCart}
-                disabled={!item.item.isAvailable}
-              >
-                Add to Bag
-              </button>
+
+
+              <div className={styles.detailsSection}>
+              <h2 className={styles.sectionTitle}>About This Dish</h2>
+                <p className={styles.productDescription}>{item.product.description}</p>
               </div>
-            </div>
-              <div className={styles.mobileAddToCartSection}>
-                  <button 
-                    className={styles.addToCart}
-                    onClick={handleAddToCart}
-                    disabled={!item.item.isAvailable}
-                  >
-                    Add to Cart
-                  </button>
-              </div>
-            
-          </div>
-        {/* </div> */}
-      </div>
 
-      {/* Product Details */}
-      <div className={styles.detailsSection}>
-        <h2 className={styles.sectionTitle}>About This Dish</h2>
-        <p className={styles.productDescription}>{item.product.description}</p>
-      </div>
+             {/* Ingredients */}
+                    {item.product.ingredients.length > 0 && (
+                      <div className={styles.detailsSection}>
+                        <h2 className={styles.sectionTitle}>Ingredients</h2>
+                        <div className={styles.ingredientsGrid}>
+                          {item.product.ingredients.map((ingredient, index) => (
+                            <div key={index} className={styles.ingredientItem}>
+                              <span className={styles.ingredientText}>{ingredient}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
-      {/* Tags
-      <div className={styles.detailsSection}>
-        <h2 className={styles.sectionTitle}>Tags</h2>
-        <div className={styles.tagsContainer}>
-          {item.product.tags.map((tag, index) => (
-            <span key={index} className={styles.tag}>
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div> */}
-
-      {/* Nutrition */}
-      {item.product.nutritionalInfo && (
-        <div className={styles.detailsSection}>
-          <h2 className={styles.sectionTitle}>Nutritional Information</h2>
-          <div className={styles.nutritionGrid}>
-            {Object.entries(item.product.nutritionalInfo).map(([key, value]) => (
-              <div key={key} className={styles.nutritionItem}>
-                <span className={styles.nutritionValue}>{value}g</span>
-                <span className={styles.nutritionLabel}>{key}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Ingredients */}
-      {item.product.ingredients.length > 0 && (
-        <div className={styles.detailsSection}>
-          <h2 className={styles.sectionTitle}>Ingredients</h2>
-          <div className={styles.ingredientsGrid}>
-            {item.product.ingredients.map((ingredient, index) => (
-              <div key={index} className={styles.ingredientItem}>
-                {ingredient === 'Rice' && <FaLeaf className={styles.ingredientIcon} />}
-                {ingredient === 'Chicken' && <FaDrumstickBite className={styles.ingredientIcon} />}
-                {ingredient === 'Onions' && <FaCarrot className={styles.ingredientIcon} />}
-                {ingredient === 'Ghee' && <FaSeedling  className={styles.ingredientIcon} />}
-                {!['Rice', 'Chicken', 'Onions', 'Ghee'].includes(ingredient) && 
-                  <FaLeaf className={styles.ingredientIcon} />}
-                <span>{ingredient}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Allergens */}
-      {item.product.allergens.length > 0 && item.product.allergens[0] !== '' && (
-        <div className={styles.detailsSection}>
-          <h2 className={styles.sectionTitle}>Allergens</h2>
-          <div className={styles.tagsContainer}>
-            {item.product.allergens.map((allergen, index) => (
-              <span key={index} className={`${styles.tag} ${styles.allergenTag}`}>
-                {allergen}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
+                    {/* Nutritional Information */}
+                    {item.product.nutritionalInfo && (
+                      <div className={styles.detailsSection}>
+                        <h2 className={styles.sectionTitle}>Nutritional Information (per 100g)</h2>
+                        <div className={styles.nutritionGrid}>
+                          {Object.entries(item.product.nutritionalInfo).map(([key, value]) => (
+                            <div key={key} className={styles.nutritionItem}>
+                              <span className={styles.nutritionValue}>{value}g</span>
+                              <span className={styles.nutritionLabel}>
+                                {key.charAt(0).toUpperCase() + key.slice(1)}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
 
-      {/* Reviews */}
+                 {/* Allergens */}
+                {item.product.allergens.length > 0 && item.product.allergens[0] !== '' && (
+                  <div className={styles.detailsSection}>
+                    <h2 className={styles.sectionTitle}>Allergens</h2>
+                    <div className={styles.tagsContainer}>
+                      {item.product.allergens.map((allergen, index) => (
+                        <span key={index} className={`${styles.tag} ${styles.allergenTag}`}>
+                          {allergen}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                 {/* Reviews */}
       <div className={styles.detailsSection}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Customer Reviews</h2>
-          {item.reviews.length > 0 && (
-            <div className={styles.ratingSummary}>
-              {renderRating(
-                Math.round(
-                  item.reviews.reduce((acc, review) => acc + review.rating, 0) / item.reviews.length
-                )
-              )}
-              <span>({item.reviews.length} reviews)</span>
-            </div>
-          )}
         </div>
 
         {item.reviews.length > 0 ? (
@@ -438,7 +400,9 @@ const ItemDetailPage = () => {
           <p className={styles.noReviews}>No reviews yet. Be the first to review!</p>
         )}
       </div>
-
+                            
+          </div>
+      </div>
     </div>
   );
 };

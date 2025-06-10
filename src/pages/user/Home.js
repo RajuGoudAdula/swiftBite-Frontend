@@ -38,8 +38,10 @@ const Home = () => {
       setModalOpen(true);
     } else {
       dispatch(fetchMenuOfCanteen(user.canteen._id));
-      dispatch(fetchFavouriteItems({userId : user.id,canteenId : user.canteen._id}));
-      dispatch(fetchCartItems(user?.id));
+      if(user?.id){
+        dispatch(fetchFavouriteItems({userId : user.id,canteenId : user.canteen._id}));
+        dispatch(fetchCartItems(user?.id));
+      }
     }
   }, [user, dispatch]);
 
