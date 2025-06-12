@@ -39,9 +39,9 @@ export const sendEmailOtp = createAsyncThunk(
 
   export const verifyEmailOtp = createAsyncThunk(
     "profile/verifyEmailOtp",
-    async ({ email ,otp}, { rejectWithValue }) => {
+    async ({ oldEmail , newEmail ,otp}, { rejectWithValue }) => {
       try {
-        const response = await  userApi.verifyEmailOtp(email,otp);
+        const response = await  userApi.verifyEmailOtp(oldEmail,newEmail,otp);
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response.data);

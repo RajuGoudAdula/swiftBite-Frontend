@@ -100,9 +100,11 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 0.75rem;
     padding: 1rem;
-    text-align: center;
     color: #6b7280;
     min-height: 90vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
   }
   
   .title{

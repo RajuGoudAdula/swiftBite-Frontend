@@ -17,6 +17,7 @@ import socket, {
 import { fetchCanteenStatus } from '../../store/slices/authSlice';
 
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import NotificationToggle from './NotificationToggle';
 
 const NotificationItem = ({ notification, onRemove, onMarkRead }) => {
   const x = useMotionValue(0);
@@ -104,8 +105,17 @@ const NotificationPanel = () => {
   };
 
   if (notifications.length === 0) {
-    return <div className={styles.empty}>No notifications</div>;
+    return(
+      <>
+        <div className={styles.empty}>
+          <p>No notifications</p>
+          <NotificationToggle userId={user?.id} />
+        </div>;
+      </>
+    ) 
   }
+
+
 
   return (
     <div className={styles.panel}>
@@ -114,6 +124,7 @@ const NotificationPanel = () => {
         <button onClick={() => dispatch(clearNotifications(user?.id))} className={styles.clearBtn}>
           Clear All
         </button>
+        <NotificationToggle userId={user?.id} />
       </div>
       <ul className={styles.allItems}>
         {notifications.map((notification) => (

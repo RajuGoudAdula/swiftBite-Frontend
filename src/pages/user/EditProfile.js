@@ -14,6 +14,12 @@ import {
   verifyPassword, 
   updatePassword 
 } from "../../store/slices/profileSlice";
+import Dropdown from "../../components/common/Dropdown";
+import OTPInput from "../../components/auth/OTPInput";
+import { addToast } from "../../store/slices/toastSlice";
+import { FiEdit, FiPlus } from 'react-icons/fi';
+import { FaUniversity, FaUtensils } from 'react-icons/fa';
+
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -70,30 +76,74 @@ const EditProfile = () => {
   // Email OTP handling
   const handleSendOtp = (email) => {
     dispatch(sendEmailOtp({ email, userId: user.id }))
-      .then(() => {
+      .then((response) => {
+        
         if (email === userProfile?.user?.email) {
-          // setOtpVerified(true);
-          console.log("Email otp ....",emailOtpSent);
+
         } else {
           setEmailOtpSentForNewEmail(true);
         }
+        dispatch(
+          addToast({
+            id: Date.now(),
+            type: response?.payload?.success ? "success" : "error",
+            message: response?.payload?.message,
+            duration: 3000,
+          })
+        );
       })
       .catch((err) => setError(err.message));
   };
 
-  const handleVerifyOtp = (email) => {
-    dispatch(verifyEmailOtp({ email, otp, userId: user.id }))
+  const handleVerifyOtp = (otp = otp ) => {
+
+    let oldEmail = userProfile?.user?.email;
+
+    if(otpVerified && emailOtpSentForNewEmail){
+      
+      dispatch(verifyEmailOtp({ oldEmail,newEmail , otp, userId: user.id }))
       .then((response) => {
         if (response.payload?.success) {
-          if (email === userProfile?.user?.email) {
+          if (newEmail === userProfile?.user?.email) {
             setOtpVerified(true);
           } else {
             setOtpVerifiedForNewEmail(true);
           }
         }
+        dispatch(
+          addToast({
+            id: Date.now(),
+            type: response?.payload?.success ? "success" : "error",
+            message: response?.payload?.message,
+            duration: 3000,
+          })
+        );
       })
       .catch((err) => setError(err.message))
       .finally(setOtp(""));
+    }else{
+     
+      dispatch(verifyEmailOtp({ oldEmail, otp, userId: user.id }))
+        .then((response) => {
+          if (response.payload?.success) {
+            if (oldEmail === userProfile?.user?.email) {
+              setOtpVerified(true);
+            } else {
+              setOtpVerifiedForNewEmail(true);
+            }
+          }
+          dispatch(
+            addToast({
+              id: Date.now(),
+              type: response?.payload?.success ? "success" : "error",
+              message: response?.payload?.message,
+              duration: 3000,
+            })
+          );
+        })
+        .catch((err) => setError(err.message))
+        .finally(setOtp(""));
+    }
   };
 
   // Password handling
@@ -108,9 +158,15 @@ const EditProfile = () => {
         if (response.payload?.success) {
           setPasswordVerified(true);
           setError("");
-        } else {
-          setError("Incorrect password. Please try again.");
-        }
+        } 
+        dispatch(
+          addToast({
+            id: Date.now(),
+            type: response?.payload?.success ? "success" : "error",
+            message: response?.payload?.message,
+            duration: 3000,
+          })
+        );
       })
       .catch((err) => setError(err.message));
   };
@@ -126,8 +182,15 @@ const EditProfile = () => {
       newPassword, 
       oldPassword: currentPassword 
     }))
-      .then(() => {
-        alert("Password updated successfully!");
+      .then((response) => {
+        dispatch(
+          addToast({
+            id: Date.now(),
+            type: response?.payload?.success ? "success" : "error",
+            message: response?.payload?.message,
+            duration: 3000,
+          })
+        );
         closeModal();
         navigate('/profile');
       })
@@ -135,15 +198,6 @@ const EditProfile = () => {
   };
 
   // College/Canteen handling
-  const handleCollegeChange = (e) => {
-    setSelectedCollege(e.target.value);
-    setSelectedCanteen("");
-  };
-
-  const handleCanteenChange = (e) => {
-    setSelectedCanteen(e.target.value);
-  };
-
   const handleSaveCollegeCanteen = async () => {
     if (!selectedCollege || !selectedCanteen) {
       setError("Please select both college and canteen");
@@ -276,7 +330,7 @@ const EditProfile = () => {
       return emailOtpSent ? [
         {
           label: 'Verify OTP',
-          onClick: () => handleVerifyOtp(userProfile?.user?.email),
+          onClick: () => handleVerifyOtp(),
           variant: 'primary',
           disabled: !otp
         }
@@ -300,7 +354,7 @@ const EditProfile = () => {
       return [
         {
           label: 'Verify New OTP',
-          onClick: () => handleVerifyOtp(newEmail),
+          onClick: () => handleVerifyOtp(),
           variant: 'primary',
           disabled: !otp
         }
@@ -311,11 +365,6 @@ const EditProfile = () => {
           label: 'Save Email',
           onClick: handleSaveEmail,
           variant: 'primary'
-        },
-        {
-          label: 'Cancel',
-          onClick: closeModal,
-          variant: 'secondary'
         }
       ];
     }
@@ -327,12 +376,12 @@ const EditProfile = () => {
         <>
           <p>Verify your current email first</p>
           {emailOtpSent && (
-            <input
-              type="text"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              placeholder="Enter OTP"
-              className={styles.input}
+            <OTPInput
+              onSubmit={async (email, enteredOtp) => {
+                await setOtp(enteredOtp); // optional if you still use otp state
+                handleVerifyOtp(enteredOtp);
+              }}
+              email={userProfile?.user?.email}
             />
           )}
         </>
@@ -349,21 +398,24 @@ const EditProfile = () => {
       );
     } else if (!otpVerifiedForNewEmail) {
       return (
-        <input
-          type="text"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          placeholder="Enter new email OTP"
-          className={styles.input}
-        />
+        <>
+          <p>Verify OTP for New Email</p>
+          <OTPInput
+            onSubmit={ async (newEmail, enteredOtp) => {
+              await setOtp(enteredOtp);
+              await setNewEmail(newEmail);
+              handleVerifyOtp(enteredOtp);
+            }}
+            email={newEmail}
+          />
+        </>
       );
-    }else if(otpVerifiedForNewEmail){
-      return(
-        <p>OTP verified successfully.Click on save to update email.</p>
-      )
+    } else if (otpVerifiedForNewEmail) {
+      return <p>OTP verified successfully.And updated email.</p>;
     }
     return null;
   };
+  
 
   const renderPhoneModal = () => (
     <ModalPopup
@@ -456,39 +508,10 @@ const EditProfile = () => {
         }
       ]}
     >
-      <div className={styles.formGroup}>
-        <label>College:</label>
-        <select
-          value={selectedCollege}
-          onChange={handleCollegeChange}
-          className={styles.select}
-        >
-          <option value="">Select College</option>
-          {colleges.map(college => (
-            <option key={college._id} value={college._id}>
-              {college.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {selectedCollege && (
-        <div className={styles.formGroup}>
-          <label>Canteen:</label>
-          <select
-            value={selectedCanteen}
-            onChange={handleCanteenChange}
-            className={styles.select}
-          >
-            <option value="">Select Canteen</option>
-            {canteens.map(canteen => (
-              <option key={canteen._id} value={canteen._id}>
-                {canteen.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+      <Dropdown label="College" options={colleges} value={selectedCollege} onChange={e => setSelectedCollege(e.target.value)} />
+        {selectedCollege && (
+          <Dropdown label="Canteen" options={canteens} value={selectedCanteen} onChange={e => setSelectedCanteen(e.target.value)} />
+        )}
     </ModalPopup>
   );
 
@@ -516,7 +539,7 @@ const EditProfile = () => {
               className={styles.editButton} 
               onClick={() => setActiveModal("username")}
             >
-              Edit
+              <FiEdit style={{ marginRight: '6px', verticalAlign: 'middle' }} />
             </button>
           </div>
         </div>
@@ -534,7 +557,7 @@ const EditProfile = () => {
               className={styles.editButton} 
               onClick={() => setActiveModal("email")}
             >
-              Edit
+              <FiEdit style={{ marginRight: '6px', verticalAlign: 'middle' }} />
             </button>
           </div>
         </div>
@@ -552,7 +575,7 @@ const EditProfile = () => {
               className={styles.editButton} 
               onClick={() => setActiveModal("phone")}
             >
-              {userProfile?.user?.phone ? "Edit" : "Add"}
+              {userProfile?.user?.phone ? <FiEdit style={{ marginRight: '6px', verticalAlign: 'middle' }} /> : <FiPlus />}
             </button>
           </div>
         </div>
@@ -566,14 +589,14 @@ const EditProfile = () => {
           </div>
           <div className={styles.fieldValue}>
             <div className={styles.locationInfo}>
-              <p><strong>College:</strong> {userProfile?.user?.college?.name || "Not selected"}</p>
-              <p><strong>Canteen:</strong> {userProfile?.user?.canteen?.name || "Not selected"}</p>
+              <p><strong><FaUniversity style={{ marginRight: "8px" }} />:</strong> {userProfile?.user?.college?.name || "Not selected"}</p>
+              <p><strong><FaUtensils style={{ marginRight: "8px" }} />:</strong> {userProfile?.user?.canteen?.name || "Not selected"}</p>
             </div>
             <button 
               className={styles.editButton} 
               onClick={() => setActiveModal("college-canteen")}
             >
-              Edit
+              <FiEdit style={{ marginRight: '6px', verticalAlign: 'middle' }} />
             </button>
           </div>
         </div>
@@ -593,12 +616,12 @@ const EditProfile = () => {
             <span>Password</span>
           </div>
           <div className={styles.fieldValue}>
-            <span>********</span>
+            <span style={{alignSelf : "end"}}>********</span>
             <button 
               className={styles.editButton} 
               onClick={() => setActiveModal("password")}
             >
-              Change
+              <FiEdit style={{ marginRight: '6px', verticalAlign: 'middle' }} />
             </button>
           </div>
         </div>

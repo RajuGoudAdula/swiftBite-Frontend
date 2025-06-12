@@ -115,8 +115,8 @@ const userApi = {
   sendEmailOtp : ({email,userId}) => {
     return axiosInstance.post(`/user/profile/send-email-otp/${userId}`,{email});
   },
-  verifyEmailOtp : (email,otp) => {
-    return axiosInstance.post('/user/profile/verify-email-otp',{email,otp});
+  verifyEmailOtp : (oldEmail, newEmail ,otp) => {
+    return axiosInstance.post('/user/profile/verify-email-otp',{oldEmail, newEmail ,otp});
   },
   verifyPassword : (userId , password) => {
     return axiosInstance.post(`/user/profile/verify-password/${userId}`, {password});
@@ -182,6 +182,9 @@ const userApi = {
   },
   userSubscribe : (userId , subscription) => {
     return axiosInstance.post(`/push/subscribe`,{userId , subscription});
+  },
+  userUnsubscribe : (userId) => {
+    return axiosInstance.post(`/push/unsubscribe`,{userId});
   },
 
 

@@ -1,43 +1,110 @@
-// src/hooks/usePushNotifications.js
-import { useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { urlBase64ToUint8Array } from '../utils/vapidConverter';
 import userApi from '../api/userApi';
+import { addToast } from '../store/slices/toastSlice';
+
 
 const PUBLIC_VAPID_KEY = 'BAn4DkLbIMSZ718DTaJvhRFetLG0tRBZ1kh1zmhLhti0GMMlSWrRJgGGyZHqlES0tBdYB-d77cOawDS_mvYlO1o';
 
 const usePushNotifications = (userId) => {
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    const registerPush = async () => {
+    const checkSubscription = async () => {
       if (!userId || !('serviceWorker' in navigator)) return;
-
       try {
-        // 1. Register Service Worker
-        const registration = await navigator.serviceWorker.register('/sw.js');
-
-        // 2. Check existing subscription
-        const existingSubscription = await registration.pushManager.getSubscription();
-
-        if (existingSubscription) {
-          // Optional: You could compare keys here if you want, but just unsubscribe for now
-          await existingSubscription.unsubscribe();
-        }
-
-        // 3. Subscribe to Push Manager with VAPID key
-        const subscription = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY),
-        });
-
-        // 4. Save subscription to backend
-        await userApi.userSubscribe(userId, subscription);
-
-      } catch (error) {
-        console.error('Push subscription error:', error.message);
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.getSubscription();
+        setIsSubscribed(!!subscription);
+      } catch (err) {
+        console.error('Checking push subscription failed:', err);
       }
     };
-
-    registerPush();
+    checkSubscription();
   }, [userId]);
+
+  const subscribe = useCallback(async () => {
+    if (!userId || !('serviceWorker' in navigator)) return;
+
+    try {
+      const registration = await navigator.serviceWorker.register('/sw.js');
+      const existing = await registration.pushManager.getSubscription();
+
+      if (existing) {
+        await existing.unsubscribe();
+      }
+
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY),
+      });
+
+      await userApi.userSubscribe(userId, subscription);
+      setIsSubscribed(true);
+
+      dispatch(
+        addToast({
+          id: Date.now(),
+          type: 'success',
+          message: 'Browser notifications have been enabled',
+          duration: 3000,
+        })
+      );
+    } catch (err) {
+      console.error('Push subscribe failed:', err);
+      dispatch(
+        addToast({
+          id: Date.now(),
+          type: 'error',
+          message: 'Failed to enable browser notifications',
+          duration: 3000,
+        })
+      );
+    }
+  }, [userId, dispatch]);
+
+  const unsubscribe = useCallback(async () => {
+    if (!('serviceWorker' in navigator)) return;
+
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.getSubscription();
+
+      if (subscription) {
+        await subscription.unsubscribe();
+        await userApi.userUnsubscribe(userId);
+      }
+
+      setIsSubscribed(false);
+
+      dispatch(
+        addToast({
+          id: Date.now(),
+          type: 'info',
+          message: 'Browser notifications have been disabled',
+          duration: 3000,
+        })
+      );
+    } catch (err) {
+      console.error('Push unsubscribe failed:', err);
+      dispatch(
+        addToast({
+          id: Date.now(),
+          type: 'error',
+          message: 'Failed to disable browser notifications',
+          duration: 3000,
+        })
+      );
+    }
+  }, [userId, dispatch]);
+
+  const toggleSubscription = useCallback(() => {
+    isSubscribed ? unsubscribe() : subscribe();
+  }, [isSubscribed, subscribe, unsubscribe]);
+
+  return { isSubscribed, subscribe, unsubscribe, toggleSubscription };
 };
 
 export default usePushNotifications;

@@ -29,13 +29,11 @@ const HeroSection = () => {
   useEffect(() => {
     const fetchSlides = async () => {
       try {
-        if(user?.id){
-          const response = await userApi.getHeroBanners(user?.id, user?.college?._id);
-          const banners = response.data;
-          setSlides(banners);
-          if (banners.length > 0) {
-            setSlideWithDelay(0);
-          }
+        const response = await userApi.getHeroBanners(user?.id, user?.college?._id);
+        const banners = response.data;
+        setSlides(banners);
+        if (banners.length > 0) {
+          setSlideWithDelay(0);
         }
       } catch (error) {
         console.error("Failed to fetch hero banners:", error);

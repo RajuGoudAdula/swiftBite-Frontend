@@ -80,12 +80,11 @@ const ReviewsTable = ({ data, loading, onRefresh }) => {
     try {
       const canteenId = user?.canteen?._id;
       const userId = user?.id;
-      console.log(selectedReview);
       const productId = selectedReview?.productId;
       const orderId = selectedReview?.orderId?._id;
       const response = await canteenApi.deleteReviewResponse(canteenId, selectedReview._id,userId,productId,orderId);
 
-      showToast('success', response?.message || 'Response deleted successfully');
+      showToast('success', response?.message || 'Review deleted successfully');
 
       // Update the review in local state - remove the canteenResponse from the deleted review
       setReviews((prev) =>
@@ -98,7 +97,7 @@ const ReviewsTable = ({ data, loading, onRefresh }) => {
 
       closeModal();
     } catch (err) {
-      showToast('error', err?.response?.data?.message || 'Failed to delete response');
+      showToast('error', err?.response?.data?.message || 'Failed to delete review');
       console.error('Error deleting response:', err);
     }
   };
