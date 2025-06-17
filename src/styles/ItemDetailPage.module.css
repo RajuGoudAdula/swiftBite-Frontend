@@ -14,7 +14,6 @@
   .hero {
     display: flex;
     flex-direction: column;
-    background-color: #f8f8f8;
     padding: 4%;
     gap: 16px;
   }
@@ -30,7 +29,7 @@
   .imageWrapper {
     position: relative;
     width: 100%;
-    border-radius: 16px 16px 0 0;
+    border-radius: 16px;
     overflow: hidden;
     background-color: #fff;
     max-height: 270px;
@@ -164,6 +163,18 @@
     color: #444;
     line-height: 1.5;
     margin: 0;
+  }
+
+  .productMeta{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 16px;
+    background-color: #fff;
+    padding: 3%;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   }
   
   .ingredientsGrid {
@@ -475,7 +486,7 @@
     transition: background-color 0.3s ease;
   }
   
-  .ingredientItem:hover {
+  .ingredientItem:hover , .nutritionItem:hover {
     background-color: #ebebeb;
   }
   

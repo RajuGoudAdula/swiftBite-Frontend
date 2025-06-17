@@ -65,7 +65,11 @@ const ManageColleges = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.heading}>Manage Colleges</h2>
+      <div className={styles.top}>
+        <h2 className={styles.heading}>Manage Colleges </h2>
+        <button  onClick={() => handleOpenModal()}  className={styles.fab}
+          aria-label="Add new college">Add College</button>
+      </div>
       
       <div className={styles.collegeList}>
         {colleges.map(college => (
@@ -97,19 +101,6 @@ const ManageColleges = () => {
         ))}
       </div>
 
-      {/* Floating Action Button */}
-      <button 
-        onClick={() => handleOpenModal()} 
-        className={styles.fab}
-        aria-label="Add new college"
-      >
-        <div >
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 100 100" fill="none">
-                <rect x="20" y="48" width="60" height="4" rx="2" fill="#7BD3EA" />
-                <rect x="48" y="20" width="4" height="60" rx="2" fill="#7BD3EA" />
-          </svg>
-        </div>
-      </button>
 
       {/* Modal Form */}
       <ModalPopup
@@ -197,7 +188,7 @@ const ManageColleges = () => {
                 className={styles.editButton}
                 aria-label="Edit college"
               >
-                Add
+               {editMode ? "Update" : "Add"}
               </button>
       </ModalPopup>
     </div>

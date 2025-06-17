@@ -1,0 +1,52 @@
+.floatingButton {
+    position: fixed;
+    bottom: 15px;
+    background-color: white; 
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    height: 50px;
+  }
+
+  .user{
+    left: 15px;
+  }
+
+  .canteen , .admin {
+    right: 33px;
+  }
+  
+  .floatingButton:hover {
+    background-color: #f5f5f7;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .buttonContent {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  
+  
+  @media (min-width: 724px) {
+   .user{
+    bottom: 3%;
+    left: 4%;
+   }
+   .canteen ,.admin {
+    bottom: 3%;
+    right: 5.5%;
+   }
+  }
+  

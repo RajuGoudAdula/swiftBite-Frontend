@@ -9,6 +9,7 @@ import ReviewList from '../pages/canteen/CanteenReviewPage';
 import NotificationPanel from '../components/common/NotificationPanel';
 import Footer from '../components/common/Footer';
 import CanteenFeedbackViewer from '../pages/canteen/CanteenFeedbackViewer';
+import FloatingHomeButton from '../components/common/FloatingHomeButton';
 
 
 const CanteenRoutes = () => {
@@ -26,6 +27,7 @@ const CanteenRoutes = () => {
         <Route path='feedback' element={<CanteenFeedbackViewer />} />
       </Routes>
       <Footer userType="canteen"/>
+      <FloatingHomeButton />
     </>
   );
 };

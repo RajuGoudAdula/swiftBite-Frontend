@@ -80,7 +80,8 @@ const Navbar = () => {
       try {
         setLoading(true);
         setSearchError(null);
-        const response = await userApi.debouncedSearch(query);
+        const canteenId = user?.canteen?._id;
+        const response = await userApi.debouncedSearch(canteenId,query);
         const results = response.data.data || response.data;
         if (!Array.isArray(results)) {
           throw new Error("Invalid data format received from server");

@@ -45,13 +45,15 @@ const HeroSection = () => {
   }, [user?.id, user?.college?._id]);
 
   useEffect(() => {
-    if (slides.length > 0) {
-      timerRef.current = setTimeout(() => {
-        setCurrentSlide((prev) => (prev + 1) % slides.length);
-      }, 5000);
-    }
-    return () => clearTimeout(timerRef.current);
-  }, [currentSlide, slides]);
+    if (slides.length === 0) return;
+  
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
+    }, 4000); 
+  
+    return () => clearInterval(interval); 
+  }, [slides]);
+  
 
   const handleCTA = () => {
     const link = slides[currentSlide]?.cta?.link;

@@ -8,13 +8,12 @@ const canteenApi = {
   },
 
   // ✅ Get Menu
-  getMenu: async () => {
-    return axiosInstance.get("/canteen/menu");
+  getMenu: async (canteenId) => {
+    return axiosInstance.get(`/canteen/menu/${canteenId}`);
   },
 
   // ✅ Add Menu Item
   addMenuItem: async (menu) => {
-    console.log(menu);
     return axiosInstance.post(`/canteen/menu/${menu.canteenId}`, {productId : menu.productId,name : menu.name});
   },
 
@@ -52,20 +51,20 @@ const canteenApi = {
   },
 
   //Canteen dashboard
-  todayOrders : async () => {
-    return axiosInstance.get('/canteen/orders/today');
+  todayOrders : async (canteenId) => {
+    return axiosInstance.get(`/canteen/orders/${canteenId}/today`);
   },
-  pendingOrders : async () => {
-    return axiosInstance.get('/canteen/orders/pending');
+  pendingOrders : async (canteenId) => {
+    return axiosInstance.get(`/canteen/orders/${canteenId}/pending`);
   },
-  revenue : async () => {
-    return axiosInstance.get('/canteen/revenue/today');
+  revenue : async (canteenId) => {
+    return axiosInstance.get(`/canteen/revenue/${canteenId}/today`);
   },
-  popularItem : async () => {
-    return axiosInstance.get('/canteen/menu/popular');
+  popularItem : async (canteenId) => {
+    return axiosInstance.get(`/canteen/menu/popular`);
   },
-  activity : async () => {
-    return axiosInstance.get('/canteen/orders/recent');
+  activity : async (canteenId) => {
+    return axiosInstance.get(`/canteen/orders/${canteenId}/recent`);
   },
   //Canteen Analytics
   fetchSalesData : async (startDate,endDate,canteenId) => {

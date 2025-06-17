@@ -34,6 +34,7 @@ const NotificationToggle = ({ userId }) => {
           display: inline-block;
           width: 52px;
           height: 28px;
+          cursor: pointer;
         }
 
         .switch input {

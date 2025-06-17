@@ -25,10 +25,14 @@ const ManageMenu = () => {
 
   useEffect(() => {
     dispatch(fetchProducts());
-    dispatch(fetchMenuItems());
-  }, [dispatch]);
+    if(user?.canteen){
+      const canteenId = user?.canteen?._id;
+      dispatch(fetchMenuItems(canteenId));
+    }
+  }, [dispatch,user?.canteen]);
 
  
+
 
   const handleAddItem = () => {
     if (selectedProduct === "") {
@@ -40,7 +44,10 @@ const ManageMenu = () => {
       }));
       return;
     }
-    const item= menu.find((i)=>i.productId._id === selectedProduct );
+    const item = Array.isArray(menu)
+                    ? menu.find((i) => i?.productId?._id === selectedProduct)
+                    : null;
+
     if(item){
        dispatch(addToast({
               id: Date.now(),
@@ -50,7 +57,7 @@ const ManageMenu = () => {
             }));
       return;
     }
-    const product = products.find((p) => p._id === selectedProduct);
+    const product = products?.find((p) => p?._id === selectedProduct);
 
     if (product) {
       dispatch(
@@ -170,7 +177,7 @@ const ManageMenu = () => {
         <p>{menuError}</p>
       ) : (
         <div className={styles.menuList}>
-          {menu.length > 0 ? (
+          {menu?.length > 0 ? (
             menu.map((item) => {
               const product = products.find((p) => p._id === item.productId._id) || {};
               return (

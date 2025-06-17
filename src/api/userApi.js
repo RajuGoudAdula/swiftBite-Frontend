@@ -154,8 +154,8 @@ const userApi = {
   fetchPopularItems : () => {
     return axiosInstance.get('/user/menu/popular');
   },
-  debouncedSearch : (query) => {
-    return axiosInstance.get(`/user/menu/search?q=${query}`);
+  debouncedSearch : (canteenId,query) => {
+    return axiosInstance.get(`/user/menu/${canteenId}/search?q=${query}`);
   },
   //Favourite items
   addFavouriteItem : (userId, canteenId, itemId) => {

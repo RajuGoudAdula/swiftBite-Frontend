@@ -291,9 +291,8 @@ const ManageCanteens = () => {
           </>
         )}
 
-        <ModalPopup isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+        <ModalPopup isOpen={modalOpen} onClose={() => setModalOpen(false)} title={editMode ? 'Edit Canteen' : 'Add Canteen'}>
           <div className={styles.modalContent}>
-            <h3 className={styles.modalTitle}>{editMode ? 'Edit Canteen' : 'Add Canteen'}</h3>
             <div className={styles.formGroup}>
               <label>Canteen Name</label>
               <input 

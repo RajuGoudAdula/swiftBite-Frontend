@@ -146,6 +146,8 @@ const ItemDetailPage = () => {
       }));
     }
   };
+
+  
   
 
   const handleDislike = async (productId, reviewId) => {
@@ -229,9 +231,9 @@ const ItemDetailPage = () => {
             <OfferBadge />
           </div>
           <div className={styles.productInfo}>
-             
+            <div className={styles.productMeta}>
 
-        
+          
               <h1 className={styles.productTitle}>{item.product.name}</h1>
 
               <div className={styles.rating}>
@@ -243,7 +245,11 @@ const ItemDetailPage = () => {
               </div>
               <p className={styles.netWeight}>1 {item.product.unit} . {item.product.netWeight}</p>
               <div className={styles.priceContainer}>
-                <span className={styles.originalPrice}>₹{item.item.price}</span>
+                {item.item.offers.length > 0 ? (
+                  <span className={styles.originalPrice}>₹{item.item.price}</span>
+                ) : (
+                  <span className={styles.currentPrice}>₹{item.item.price}</span>
+                )}
                 {item.item.offers.length > 0 && (
                   <span className={styles.currentPrice}>
                     ₹{Math.round(item.item.price - (item.item.offers[0].discount / 100) * item.item.price)}
@@ -268,7 +274,8 @@ const ItemDetailPage = () => {
                    ):(
                     <span className={styles.Unavailable}>Currently Unavailable</span>
                    )}
-                  </div>
+              </div>
+              </div>    
 
 
               <div className={styles.detailsSection}>

@@ -18,11 +18,12 @@ const CanteenDashboard = () => {
 
   useEffect(() => {
     const fetchDashboardData = async () => {
+      const canteenId = user?.canteen?._id;
       try {
-        const todayOrdersRes = await canteenApi.todayOrders();
-        const pendingOrdersRes = await canteenApi.pendingOrders();
-        const revenueRes = await canteenApi.revenue();
-        const activityRes = await canteenApi.activity();
+        const todayOrdersRes = await canteenApi.todayOrders(canteenId);
+        const pendingOrdersRes = await canteenApi.pendingOrders(canteenId);
+        const revenueRes = await canteenApi.revenue(canteenId);
+        const activityRes = await canteenApi.activity(canteenId);
        
   
         setStats([

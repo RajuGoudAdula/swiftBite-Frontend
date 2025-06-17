@@ -5,9 +5,9 @@ import userApi from "../../api/userApi";
 // ✅ Fetch All Menu Items
 export const fetchMenuItems = createAsyncThunk(
   "menu/fetchMenuItems",
-  async (_, { rejectWithValue }) => {
+  async (canteenId, { rejectWithValue }) => {
     try {
-      const response = await canteenApi.getMenu();
+      const response = await canteenApi.getMenu(canteenId);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Failed to fetch menu items");
@@ -20,7 +20,7 @@ export const fetchMenuOfCanteen = createAsyncThunk(
   "menu/fetchMenuOfCanteen",
   async (canteenId, { rejectWithValue }) => {
     try {
-      const response = await userApi.getMenuByCanteen(canteenId); // Ensure this function exists in canteenApi
+      const response = await userApi.getMenuByCanteen(canteenId); 
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Failed to fetch canteen menu");
@@ -109,7 +109,11 @@ const menuSlice = createSlice({
 
       // ✅ Add Menu Item
       .addCase(addMenuItem.fulfilled, (state, action) => {
-        state.items.push(action.payload.newMenuItem);
+        if (Array.isArray(state.items)) {
+          state.items.push(action.payload.newMenuItem);
+        } else {
+          state.items = [action.payload.newMenuItem]; 
+        }
       })
 
       // ✅ Update Menu Item

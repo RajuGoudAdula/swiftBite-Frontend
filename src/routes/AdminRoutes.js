@@ -11,6 +11,7 @@ import ManageHeroSection from '../pages/admin/ManageHeroSection';
 import TodaysOrders from '../pages/admin/TodaysOrders';
 import AdminUserManagement from '../pages/admin/AdminUserManagement';
 import AdminFeedbackManager from '../pages/admin/AdminFeedbackManager';
+import FloatingHomeButton from '../components/common/FloatingHomeButton';
 
 
 const AdminRoutes = () => {
@@ -29,6 +30,7 @@ const AdminRoutes = () => {
         <Route path='feedbacks' element={<AdminFeedbackManager />} />
       </Routes>
       <Footer userType="admin"/>
+      <FloatingHomeButton />
     </>
   );
 };
