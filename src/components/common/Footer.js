@@ -20,9 +20,9 @@ const Footer = ({ userType }) => {
        <h4 className={styles.heading}>SwiftBite</h4>
         <div className={styles.socialIcons}>
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaFacebook /></a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaInstagram /></a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaTwitter /></a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaLinkedin /></a>
+          <a href="https://www.instagram.com/the_devil_1437/" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaInstagram /></a>
+          <a href="https://x.com/adula_raju" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaTwitter /></a>
+          <a href="https://www.linkedin.com/in/rajugoudadula/" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaLinkedin /></a>
         </div>
         <p className={styles.rights}>&copy; {new Date().getFullYear()} SwiftBite. All rights reserved.</p>
       </div>
@@ -44,9 +44,9 @@ const Footer = ({ userType }) => {
       <h4 className={styles.heading}>SwiftBite</h4>
         <div className={styles.socialIcons}>
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaFacebook /></a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaInstagram /></a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaTwitter /></a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaLinkedin /></a>
+          <a href="https://www.instagram.com/the_devil_1437/" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaInstagram /></a>
+          <a href="https://x.com/adula_raju" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaTwitter /></a>
+          <a href="https://www.linkedin.com/in/rajugoudadula/" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaLinkedin /></a>
         </div>
         <p className={styles.rights}>&copy; {new Date().getFullYear()} SwiftBite. All rights reserved.</p>
       </div>
@@ -68,9 +68,9 @@ const Footer = ({ userType }) => {
       <h4 className={styles.heading}>SwiftBite</h4>
         <div className={styles.socialIcons}>
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaFacebook /></a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaInstagram /></a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaTwitter /></a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaLinkedin /></a>
+          <a href="https://www.instagram.com/the_devil_1437/" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaInstagram /></a>
+          <a href="https://x.com/adula_raju" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaTwitter /></a>
+          <a href="https://www.linkedin.com/in/rajugoudadula/" target="_blank" rel="noopener noreferrer" className={styles.icon}><FaLinkedin /></a>
         </div>
         <p className={styles.rights}>&copy; {new Date().getFullYear()} SwiftBite. All rights reserved.</p>
       </div>
