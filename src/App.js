@@ -76,14 +76,14 @@ function App() {
               path="/*"
               element={
                 <PrivateRoute allowedRoles={['user']}>
-                   {showSplash ? (
+                   {/* {showSplash ? (
                         <VideoSplashScreen onFinish={() => setShowSplash(false)} />
                       ) : (
-                      <>
+                      <> */}
                          <Navbar />
                          <StudentRoute />
-                      </>
-                        )}
+                      {/* </>
+                        )} */}
                 </PrivateRoute>
               }
             />
